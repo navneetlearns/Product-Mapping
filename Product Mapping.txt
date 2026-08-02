@@ -1,0 +1,3451 @@
+{
+    "results": {
+        "110MM SWR COUPLER 'BIRLA'": [
+            {
+                "product_variant_id": "287535",
+                "sku_code": "96001429",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain Coupler (D/S) 110mm",
+                "price": 10200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334905",
+                "sku_code": "96002025",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Coupler Pushfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334910",
+                "sku_code": "96002023",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Coupler Solfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288527",
+                "sku_code": "98000439",
+                "hsn_code": "39174000",
+                "product_name": "SWR Coupler Pushfit 90mm",
+                "price": 12900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288620",
+                "sku_code": "96001501",
+                "hsn_code": "39174000",
+                "product_name": "SWR Coupler Solfit 160mm",
+                "price": 29800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM AGRI ENDCAP 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288046",
+                "sku_code": "96001317",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 110mm",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288265",
+                "sku_code": "96001544",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 110mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288281",
+                "sku_code": "96000897",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 110mm",
+                "price": 23200,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15MM UPVC PIPE 'BIRLA'": [
+            {
+                "product_variant_id": "288648",
+                "sku_code": "98000219",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1\"",
+                "price": 1800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288305",
+                "sku_code": "98000221",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  2\"",
+                "price": 2600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288741",
+                "sku_code": "98000218",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  3/4\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288469",
+                "sku_code": "98000217",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1/2\"",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289019",
+                "sku_code": "98000139",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1 1/4\"",
+                "price": 2100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM PVC PIPE 4KG 'BIRLA'": [
+            {
+                "product_variant_id": "287866",
+                "sku_code": "96001994",
+                "hsn_code": null,
+                "product_name": "Pressure Elbow 45D 4kg/cm2 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288287",
+                "sku_code": "96001470",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90D (4kg/cm2) 63mm",
+                "price": 7500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288035",
+                "sku_code": "96002069",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE TEE 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288118",
+                "sku_code": "96002068",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE ELBOW 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334877",
+                "sku_code": "96002217",
+                "hsn_code": "39174000",
+                "product_name": "Pressure 90D Elbow 63mm ISI 4kg TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "287619",
+                "sku_code": "96001837",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Single Y (6kg/cm2) 63mm",
+                "price": 14500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287560",
+                "sku_code": "96000894",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 63mm",
+                "price": 6600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288113",
+                "sku_code": "96000901",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 63mm",
+                "price": 8500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288039",
+                "sku_code": "96001548",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic FTA (6kg/cm2) 63mm",
+                "price": 5500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288248",
+                "sku_code": "96001550",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 63mm",
+                "price": 4900,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM AGRI ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287548",
+                "sku_code": "96001427",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (D/S) 110mm",
+                "price": 15200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334791",
+                "sku_code": "96002019",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Pushfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335024",
+                "sku_code": "96002015",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Solfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20MM UPVC ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "288928",
+                "sku_code": "96001106",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS ELBOW 1\"",
+                "price": 35700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288737",
+                "sku_code": "96000337",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 1\"",
+                "price": 3900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288623",
+                "sku_code": "96001001",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 3\"",
+                "price": 48300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288836",
+                "sku_code": "96001002",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 4\"\"",
+                "price": 80400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288744",
+                "sku_code": "96000340",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 2\"",
+                "price": 11600,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "40X20MM UPVC REDUCER TEE 'BIRLA'": [
+            {
+                "product_variant_id": "288254",
+                "sku_code": "96002048",
+                "hsn_code": null,
+                "product_name": "Pressure Reducer (6kg/cm2) 40X20mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334785",
+                "sku_code": "96002251",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducer 2\"x1 1/2\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288969",
+                "sku_code": "96000125",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1\"",
+                "price": 5700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288688",
+                "sku_code": "96000129",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 2\"",
+                "price": 17700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288650",
+                "sku_code": "96000123",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 3/4\"",
+                "price": 3300,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20MM UPVC TEE 'BIRLA'": [
+            {
+                "product_variant_id": "288969",
+                "sku_code": "96000125",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1\"",
+                "price": 5700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288688",
+                "sku_code": "96000129",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 2\"",
+                "price": 17700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288650",
+                "sku_code": "96000123",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 3/4\"",
+                "price": 3300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288649",
+                "sku_code": "96000122",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1/2\"",
+                "price": 2400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288935",
+                "sku_code": "96000127",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1 1/4\"",
+                "price": 9000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15X15MM UPVC BRASS FTA 'BIRLA'": [
+            {
+                "product_variant_id": "288313",
+                "sku_code": "96000246",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS FTA  2\"",
+                "price": 81000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288586",
+                "sku_code": "96000164",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. FTA  1''",
+                "price": 28500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288925",
+                "sku_code": "96000320",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Plastics FTA 2\"",
+                "price": 8400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334812",
+                "sku_code": "96002343",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Trans FTA 3\"",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288807",
+                "sku_code": "96000166",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. FTA  1 1/4''",
+                "price": 42000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20X15MM CPVC BRASS FTA 'BIRLA'": [
+            {
+                "product_variant_id": "287627",
+                "sku_code": "96000240",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TRANS FTA  2\"",
+                "price": 160700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288010",
+                "sku_code": "96000063",
+                "hsn_code": "39174000",
+                "product_name": "CPVC  PLASTICS FTA 1\"",
+                "price": 4950,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288030",
+                "sku_code": "96000315",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Plastics FTA 2\"",
+                "price": 27300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287597",
+                "sku_code": "96000482",
+                "hsn_code": "39174000",
+                "product_name": "Cpvc Plastic FTA 1/2\"",
+                "price": 2325,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287775",
+                "sku_code": "96000239",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TRANS FTA  1-1/2\"",
+                "price": 84300,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20X15MM CPVC BRASS TEE 'BIRLA'": [
+            {
+                "product_variant_id": "287972",
+                "sku_code": "96000044",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1\"",
+                "price": 5500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288140",
+                "sku_code": "96000047",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 2\"",
+                "price": 48100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288043",
+                "sku_code": "96000042",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1/2\"",
+                "price": 2700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287882",
+                "sku_code": "96000043",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 3/4\"",
+                "price": 3600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288240",
+                "sku_code": "96000046",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1 1/2\"",
+                "price": 22400,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25MM UPVC ENDCAP 'BIRLA'": [
+            {
+                "product_variant_id": "285917",
+                "sku_code": "990005794",
+                "hsn_code": null,
+                "product_name": "Birla HILSTA505SupMulStoneTileAdh-PP40kg",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285396",
+                "sku_code": "990005704",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL STAW510 MultpurWhtStoneTileAdh",
+                "price": 47300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285955",
+                "sku_code": "98000561",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam1000L",
+                "price": 1600000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285974",
+                "sku_code": "98000562",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam2000L",
+                "price": 3200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285972",
+                "sku_code": "98000558",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-White4LayerFoam2000L",
+                "price": 3200000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "32X25MM UPVC REDUCING BUSH 'BIRLA'": [
+            {
+                "product_variant_id": "288664",
+                "sku_code": "96000148",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X1/2\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288678",
+                "sku_code": "96000147",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X3/4\"",
+                "price": 1400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288558",
+                "sku_code": "96001559",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 3\" x 1\"",
+                "price": 12800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288985",
+                "sku_code": "96000158",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 2\"X1\"",
+                "price": 7800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288933",
+                "sku_code": "96000153",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1 1/2\"X1\"",
+                "price": 3700,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "40X25MM UPVC REDUCING COUPLER 'BIRLA'": [
+            {
+                "product_variant_id": "288064",
+                "sku_code": "96002000",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Reducing Bush 10kg/cm2 40x25mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288344",
+                "sku_code": "98000520",
+                "hsn_code": "39174000",
+                "product_name": "SWR Reducing Coupler 160x110 mm",
+                "price": 30000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288664",
+                "sku_code": "96000148",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X1/2\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288678",
+                "sku_code": "96000147",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X3/4\"",
+                "price": 1400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289028",
+                "sku_code": "96001033",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING ELBOW 2\"X3/4 \"",
+                "price": 16400,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "50X40MM UPVC REDUCING COUPLER 'BIRLA'": [
+            {
+                "product_variant_id": "288280",
+                "sku_code": "96000906",
+                "hsn_code": "39174000",
+                "product_name": "Pressure reducing bush(10kg/cm2)-50x40mm",
+                "price": 2200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288344",
+                "sku_code": "98000520",
+                "hsn_code": "39174000",
+                "product_name": "SWR Reducing Coupler 160x110 mm",
+                "price": 30000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288664",
+                "sku_code": "96000148",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X1/2\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288678",
+                "sku_code": "96000147",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X3/4\"",
+                "price": 1400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289028",
+                "sku_code": "96001033",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING ELBOW 2\"X3/4 \"",
+                "price": 16400,
+                "MRP": null,
+                "PTR": null
+            }
+        ]
+    }
+}
+{
+    "results": {
+        "32X25MM UPVC REDUCING BUSH 'BIRLA'": [
+            {
+                "product_variant_id": "288664",
+                "sku_code": "96000148",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X1/2\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288678",
+                "sku_code": "96000147",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1\"X3/4\"",
+                "price": 1400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288558",
+                "sku_code": "96001559",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 3\" x 1\"",
+                "price": 12800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288985",
+                "sku_code": "96000158",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 2\"X1\"",
+                "price": 7800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288933",
+                "sku_code": "96000153",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING BUSH 1 1/2\"X1\"",
+                "price": 3700,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "40X20MM UPVC REDUCER TEE 'BIRLA'": [
+            {
+                "product_variant_id": "288254",
+                "sku_code": "96002048",
+                "hsn_code": null,
+                "product_name": "Pressure Reducer (6kg/cm2) 40X20mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334785",
+                "sku_code": "96002251",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducer 2\"x1 1/2\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288969",
+                "sku_code": "96000125",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1\"",
+                "price": 5700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288688",
+                "sku_code": "96000129",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 2\"",
+                "price": 17700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288650",
+                "sku_code": "96000123",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 3/4\"",
+                "price": 3300,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM AGRI ENDCAP 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288046",
+                "sku_code": "96001317",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 110mm",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288265",
+                "sku_code": "96001544",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 110mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288281",
+                "sku_code": "96000897",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 110mm",
+                "price": 23200,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM AGRI DOOR BEND 4KG 'BIRLA'": [
+            {
+                "product_variant_id": "288182",
+                "sku_code": "96001698",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Long Bend Fab (4kg/cm2) 63mm",
+                "price": 9400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288035",
+                "sku_code": "96002069",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE TEE 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288118",
+                "sku_code": "96002068",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE ELBOW 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334807",
+                "sku_code": "96002282",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335035",
+                "sku_code": "96002277",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20MM UPVC BALL VALVE 'BIRLA'": [
+            {
+                "product_variant_id": "288861",
+                "sku_code": "96000992",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Ball Valve 1\" (MFG)",
+                "price": 36800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288572",
+                "sku_code": "98000212",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1/2\" (Compact)",
+                "price": 14000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288476",
+                "sku_code": "98000216",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE 2\" (Compact)",
+                "price": 114000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288391",
+                "sku_code": "96000988",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Ball Valve 1/2\" (MFG)",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288537",
+                "sku_code": "98000215",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1 1/2\" (Compact)'",
+                "price": 73500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "288281",
+                "sku_code": "96000897",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 110mm",
+                "price": 23200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288014",
+                "sku_code": "96000917",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 110mm",
+                "price": 16300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287854",
+                "sku_code": "96001546",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic FTA (6kg/cm2) 110mm",
+                "price": 18900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288046",
+                "sku_code": "96001317",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 110mm",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288265",
+                "sku_code": "96001544",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 110mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20MM CPVC TEE 'BIRLA'": [
+            {
+                "product_variant_id": "287972",
+                "sku_code": "96000044",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1\"",
+                "price": 5500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288140",
+                "sku_code": "96000047",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 2\"",
+                "price": 48100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288043",
+                "sku_code": "96000042",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1/2\"",
+                "price": 2700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287882",
+                "sku_code": "96000043",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 3/4\"",
+                "price": 3600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288240",
+                "sku_code": "96000046",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TEE 1 1/2\"",
+                "price": 22400,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "50MM UPVC ENDCAP 'BIRLA'": [
+            {
+                "product_variant_id": "285492",
+                "sku_code": "990005522",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL UNI STAINER BLACK 50ml",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285408",
+                "sku_code": "990005504",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL UNI STAINER F VOILET 50ml",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285303",
+                "sku_code": "990005507",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL UNI STAINER F YELLOW 50ml",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285456",
+                "sku_code": "990005525",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL UNI STAINER T AMBER 50ml",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285917",
+                "sku_code": "990005794",
+                "hsn_code": null,
+                "product_name": "Birla HILSTA505SupMulStoneTileAdh-PP40kg",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "287619",
+                "sku_code": "96001837",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Single Y (6kg/cm2) 63mm",
+                "price": 14500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287754",
+                "sku_code": "96000914",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 63mm",
+                "price": 4500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288248",
+                "sku_code": "96001550",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 63mm",
+                "price": 4900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287560",
+                "sku_code": "96000894",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 63mm",
+                "price": 6600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288113",
+                "sku_code": "96000901",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 63mm",
+                "price": 8500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "ASTM PIPE 1.50' SCH40 3MTR BIRLANU": [
+            {
+                "product_variant_id": "334971",
+                "sku_code": "98001052",
+                "hsn_code": "39174000",
+                "product_name": "UPVC PIPES SCH80 (3MTR) 1''Threaded-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335042",
+                "sku_code": "98001050",
+                "hsn_code": "39174000",
+                "product_name": "UPVC PIPES SCH80 (3MTR) 1/2\"Threaded-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334761",
+                "sku_code": "98001059",
+                "hsn_code": "39174000",
+                "product_name": "CPVC ISI PIPE SDR 11 (3Mtr) 1/2\"-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334800",
+                "sku_code": "98001060",
+                "hsn_code": "39174000",
+                "product_name": "CPVC ISI PIPE SDR 11 (3Mtr) 3/4\"-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334933",
+                "sku_code": "98001082",
+                "hsn_code": "39174000",
+                "product_name": "CPVC ISI PIPE SDR-13.5 (3Mtr) 3/4\"-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM SWR ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "334791",
+                "sku_code": "96002019",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Pushfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335024",
+                "sku_code": "96002015",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Solfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287548",
+                "sku_code": "96001427",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (D/S) 110mm",
+                "price": 15200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289030",
+                "sku_code": "98000441",
+                "hsn_code": "39174000",
+                "product_name": "SWR Elbow Pushfit 90mm",
+                "price": 19400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288945",
+                "sku_code": "96001500",
+                "hsn_code": "39174000",
+                "product_name": "SWR Clean Out Plug 110mm",
+                "price": 18500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15MM UPVC PIPE 'BIRLA'": [
+            {
+                "product_variant_id": "288648",
+                "sku_code": "98000219",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1\"",
+                "price": 1800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288305",
+                "sku_code": "98000221",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  2\"",
+                "price": 2600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288741",
+                "sku_code": "98000218",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  3/4\"",
+                "price": 1700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288469",
+                "sku_code": "98000217",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1/2\"",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289019",
+                "sku_code": "98000139",
+                "hsn_code": "73182910",
+                "product_name": "UPVC PIPE CLAMP (Metal)  1 1/4\"",
+                "price": 2100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20X15MM CPVC BRASS ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "287653",
+                "sku_code": "96000333",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Trans Elbow 1\"",
+                "price": 47800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287846",
+                "sku_code": "96000999",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 3\"",
+                "price": 142000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288097",
+                "sku_code": "96001000",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 4\"\"",
+                "price": 255800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287803",
+                "sku_code": "96000334",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Trans Elbow 3/4\"",
+                "price": 12100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287993",
+                "sku_code": "96000342",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 1\"",
+                "price": 5550,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM PVC PIPE 4KG 'BIRLA'": [
+            {
+                "product_variant_id": "287866",
+                "sku_code": "96001994",
+                "hsn_code": null,
+                "product_name": "Pressure Elbow 45D 4kg/cm2 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288287",
+                "sku_code": "96001470",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90D (4kg/cm2) 63mm",
+                "price": 7500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288035",
+                "sku_code": "96002069",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE TEE 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288118",
+                "sku_code": "96002068",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE ELBOW 90D 4KG/CM2 63MM DOOR",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334877",
+                "sku_code": "96002217",
+                "hsn_code": "39174000",
+                "product_name": "Pressure 90D Elbow 63mm ISI 4kg TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "75MM SWR ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "288024",
+                "sku_code": "96001432",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90D (D/S) 75mm",
+                "price": 6500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334792",
+                "sku_code": "96002014",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Solfit 75mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289030",
+                "sku_code": "98000441",
+                "hsn_code": "39174000",
+                "product_name": "SWR Elbow Pushfit 90mm",
+                "price": 19400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288943",
+                "sku_code": "96001503",
+                "hsn_code": "39174000",
+                "product_name": "SWR Elbow Solfit 160mm",
+                "price": 47000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288374",
+                "sku_code": "98000442",
+                "hsn_code": "39174000",
+                "product_name": "SWR Elbow Solfit 90mm",
+                "price": 15600,
+                "MRP": null,
+                "PTR": null
+            }
+        ]
+    }
+}
+{
+    "results": {
+        "110MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "288046",
+                "sku_code": "96001317",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 110mm",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288265",
+                "sku_code": "96001544",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 110mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288281",
+                "sku_code": "96000897",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 110mm",
+                "price": 23200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288014",
+                "sku_code": "96000917",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 110mm",
+                "price": 16300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287854",
+                "sku_code": "96001546",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic FTA (6kg/cm2) 110mm",
+                "price": 18900,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20MM UPVC BALL VALVE 'BIRLA'": [
+            {
+                "product_variant_id": "288861",
+                "sku_code": "96000992",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Ball Valve 1\" (MFG)",
+                "price": 36800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288476",
+                "sku_code": "98000216",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE 2\" (Compact)",
+                "price": 114000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288572",
+                "sku_code": "98000212",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1/2\" (Compact)",
+                "price": 14000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288391",
+                "sku_code": "96000988",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Ball Valve 1/2\" (MFG)",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288986",
+                "sku_code": "96000990",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Ball Valve 3/4\" (MFG)",
+                "price": 22900,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "287619",
+                "sku_code": "96001837",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Single Y (6kg/cm2) 63mm",
+                "price": 14500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288248",
+                "sku_code": "96001550",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 63mm",
+                "price": 4900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287754",
+                "sku_code": "96000914",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 63mm",
+                "price": 4500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287560",
+                "sku_code": "96000894",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 63mm",
+                "price": 6600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288113",
+                "sku_code": "96000901",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 63mm",
+                "price": 8500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "75MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "288117",
+                "sku_code": "96000895",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 75mm",
+                "price": 9200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287648",
+                "sku_code": "96000915",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 75mm",
+                "price": 6600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287781",
+                "sku_code": "96001547",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic FTA (6kg/cm2) 75mm",
+                "price": 8900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288233",
+                "sku_code": "96001549",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 75mm",
+                "price": 7700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287791",
+                "sku_code": "96000902",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 75mm",
+                "price": 12200,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "90MM PVC PIPE 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "288190",
+                "sku_code": "96000896",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 90mm",
+                "price": 13900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287681",
+                "sku_code": "96001315",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 90mm",
+                "price": 8700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288196",
+                "sku_code": "96000916",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain coupler (6kg/cm2) - 90mm",
+                "price": 10200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287617",
+                "sku_code": "96000903",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 90mm",
+                "price": 19300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288272",
+                "sku_code": "96001545",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic FTA (6kg/cm2) 90mm",
+                "price": 11500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "SWR SELFFIT BEND 87.50 110MM BIRLANU": [
+            {
+                "product_variant_id": "288945",
+                "sku_code": "96001500",
+                "hsn_code": "39174000",
+                "product_name": "SWR Clean Out Plug 110mm",
+                "price": 18500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288846",
+                "sku_code": "96001498",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Pushfit 110mm",
+                "price": 41000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288917",
+                "sku_code": "96001497",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Solfit 110mm",
+                "price": 34200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287869",
+                "sku_code": "96001693",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Long Bend Fab (6kg/cm2) 110mm",
+                "price": 63200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289032",
+                "sku_code": "96001493",
+                "hsn_code": "39174000",
+                "product_name": "SWR Gully Trap with Jali 110mm",
+                "price": 79800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "SWR SELFFIT BEND 87.50 75MM BIRLANU": [
+            {
+                "product_variant_id": "288395",
+                "sku_code": "96001982",
+                "hsn_code": null,
+                "product_name": "SWR Swept Tee Pushfit 75mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288634",
+                "sku_code": "96001984",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Solfit 75mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287679",
+                "sku_code": "96001699",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Long Bend Fab (4kg/cm2) 75mm",
+                "price": 15300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334962",
+                "sku_code": "96001729",
+                "hsn_code": "39172390",
+                "product_name": "SWR Pipe LW Solfit 3M 75mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288363",
+                "sku_code": "96001983",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Pushfit 75mm (Door)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "ASTM COUPLER SCH80 20MM 3/4' BIRLANU": [
+            {
+                "product_variant_id": "288163",
+                "sku_code": "96001520",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain Coupler (10kg/cm2) 20mm",
+                "price": 875,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334909",
+                "sku_code": "98001023",
+                "hsn_code": "39174000",
+                "product_name": "UPVC PIPES SCH80 (3 MTR) 1 1/4''-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "286006",
+                "sku_code": "990007078",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (060)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285978",
+                "sku_code": "990007077",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (040)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "286018",
+                "sku_code": "990007049",
+                "hsn_code": null,
+                "product_name": "BIRLANU COVERMAX PUTTY 1 KG",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "ASTM ELBOW SCH80 15MM 1/2' BIRLANU": [
+            {
+                "product_variant_id": "286018",
+                "sku_code": "990007049",
+                "hsn_code": null,
+                "product_name": "BIRLANU COVERMAX PUTTY 1 KG",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "286006",
+                "sku_code": "990007078",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (060)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334801",
+                "sku_code": "98001024",
+                "hsn_code": "39174000",
+                "product_name": "UPVC PIPES SCH80 (3 MTR) 1 1/2\"-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335042",
+                "sku_code": "98001050",
+                "hsn_code": "39174000",
+                "product_name": "UPVC PIPES SCH80 (3MTR) 1/2\"Threaded-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285978",
+                "sku_code": "990007077",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (040)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM AGRI ENDCAP 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288046",
+                "sku_code": "96001317",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Fab Coupler (6kg/cm2) - 110mm",
+                "price": 14400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288265",
+                "sku_code": "96001544",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plastic MTA (6kg/cm2) 110mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288281",
+                "sku_code": "96000897",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 110mm",
+                "price": 23200,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15MM UPVC ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "288928",
+                "sku_code": "96001106",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS ELBOW 1\"",
+                "price": 35700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288737",
+                "sku_code": "96000337",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 1\"",
+                "price": 3900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288623",
+                "sku_code": "96001001",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 3\"",
+                "price": 48300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288836",
+                "sku_code": "96001002",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 4\"\"",
+                "price": 80400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288744",
+                "sku_code": "96000340",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 2\"",
+                "price": 11600,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25MM UPVC UNION 'BIRLA'": [
+            {
+                "product_variant_id": "288701",
+                "sku_code": "96000286",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  UNION   2\"",
+                "price": 29300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288810",
+                "sku_code": "96000196",
+                "hsn_code": "39174000",
+                "product_name": "UPVC UNION 1\"",
+                "price": 8000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288308",
+                "sku_code": "96000194",
+                "hsn_code": "39174000",
+                "product_name": "UPVC UNION 1/2\"",
+                "price": 4200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288970",
+                "sku_code": "96000195",
+                "hsn_code": "39174000",
+                "product_name": "UPVC UNION 3/4\"",
+                "price": 5800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288960",
+                "sku_code": "96000285",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  UNION  1  1/2\"",
+                "price": 18800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25X20MM UPVC REDUCING TEE 'BIRLA'": [
+            {
+                "product_variant_id": "288397",
+                "sku_code": "96002185",
+                "hsn_code": "39174000",
+                "product_name": "Upvc Reducing Tee 2 1/2\"x2\"",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334771",
+                "sku_code": "96002263",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducing Tee 1 1/2\"x1\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288494",
+                "sku_code": "96002186",
+                "hsn_code": "39174000",
+                "product_name": "Upvc Reducing Tee 2 1/2\"x1 1/2\"",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288668",
+                "sku_code": "96002187",
+                "hsn_code": "39174000",
+                "product_name": "Upvc Reducing Tee 2 1/2\"x1 1/4\"",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288955",
+                "sku_code": "96000531",
+                "hsn_code": "39174000",
+                "product_name": "UPVC REDUCING TEE 2\"X2\"X3/4\" Fab",
+                "price": 18800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "AGRI PIPE 6KG 40MM (20FT) BIRLANU": [
+            {
+                "product_variant_id": "287574",
+                "sku_code": "96001842",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 40mm",
+                "price": 2900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334976",
+                "sku_code": "96002297",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 140mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334836",
+                "sku_code": "96002281",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 160mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC BALL VALVE 1.25' COMPACT TRDBIRLA": [
+            {
+                "product_variant_id": "288476",
+                "sku_code": "98000216",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE 2\" (Compact)",
+                "price": 114000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288572",
+                "sku_code": "98000212",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1/2\" (Compact)",
+                "price": 14000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288537",
+                "sku_code": "98000215",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1 1/2\" (Compact)'",
+                "price": 73500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288879",
+                "sku_code": "98000214",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE  1 1/4\" (Compact)",
+                "price": 48800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334795",
+                "sku_code": "98001263",
+                "hsn_code": "39174000",
+                "product_name": "UPVC BALL VALVE 2\"(Compact)-TRD",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "BIRLA WATER TANK 4 LAYER 1000L GREEN": [
+            {
+                "product_variant_id": "285952",
+                "sku_code": "98000512",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank- Green 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285956",
+                "sku_code": "98000507",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-White 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285970",
+                "sku_code": "98000547",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-Yellow 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285973",
+                "sku_code": "98000513",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-Green 3Layer 2000L",
+                "price": 2600000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285961",
+                "sku_code": "98000510",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-Green 3Layer 500L",
+                "price": 650000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "BIRLA WATER TANK 4 LAYER 1000L WHITE": [
+            {
+                "product_variant_id": "285956",
+                "sku_code": "98000507",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-White 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285970",
+                "sku_code": "98000547",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-Yellow 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285952",
+                "sku_code": "98000512",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank- Green 3Layer 1000L",
+                "price": 1300000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285969",
+                "sku_code": "98000505",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-White 3Layer 500L",
+                "price": 650000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285957",
+                "sku_code": "98000506",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL Water Tank-White 3Layer 750L",
+                "price": 975000,
+                "MRP": null,
+                "PTR": null
+            }
+        ]
+    }
+}
+{
+    "results": {
+        "Socket U-Birla (25/75) 1'": [
+            {
+                "product_variant_id": "286025",
+                "sku_code": "990005711",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL PUTTY-TEXTURA 25 KG (HAWA)",
+                "price": 140000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "286003",
+                "sku_code": "990005749",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL PUTTY-ACRYLIC TEXTURA 25 KG",
+                "price": 140000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288475",
+                "sku_code": "96000803",
+                "hsn_code": "39174000",
+                "product_name": "SWR Socket plug 75 mm",
+                "price": 6100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285971",
+                "sku_code": "98000560",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam 750L",
+                "price": 1200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285962",
+                "sku_code": "98000556",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-White4LayerFoam 750L",
+                "price": 1200000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "Tee U-Birla (15/75) 1'": [
+            {
+                "product_variant_id": "288461",
+                "sku_code": "96000806",
+                "hsn_code": "39174000",
+                "product_name": "SWR Tee Solfit 75 mm",
+                "price": 13000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288350",
+                "sku_code": "96000810",
+                "hsn_code": "39174000",
+                "product_name": "SWR Tee Pushfit 75 mm",
+                "price": 16100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285971",
+                "sku_code": "98000560",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam 750L",
+                "price": 1200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285962",
+                "sku_code": "98000556",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-White4LayerFoam 750L",
+                "price": 1200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288950",
+                "sku_code": "96000826",
+                "hsn_code": "39174000",
+                "product_name": "SWR Double Tee Solfit 75 mm",
+                "price": 19300,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM AGRI ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334791",
+                "sku_code": "96002019",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Pushfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335024",
+                "sku_code": "96002015",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Solfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287548",
+                "sku_code": "96001427",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (D/S) 110mm",
+                "price": 15200,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "AGRI END CAP 160MM BIRLANU": [
+            {
+                "product_variant_id": "287766",
+                "sku_code": "96000925",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain end cap (6kg/cm2) - 160mm",
+                "price": 35000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334836",
+                "sku_code": "96002281",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 160mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334956",
+                "sku_code": "96002286",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 160mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287874",
+                "sku_code": "96000301",
+                "hsn_code": "39174000",
+                "product_name": "CPVC End Cap 2\"",
+                "price": 16700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288907",
+                "sku_code": "96000138",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  END CAP 1\"",
+                "price": 2400,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC COUPLER 20MM 3/4' BIRLANU": [
+            {
+                "product_variant_id": "287760",
+                "sku_code": "96001976",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Coupler 6\" (SCH 80)",
+                "price": 359500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288163",
+                "sku_code": "96001520",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Plain Coupler (10kg/cm2) 20mm",
+                "price": 875,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287694",
+                "sku_code": "96001891",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Hex Head Trans MTA 25 x 20mm",
+                "price": 29000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "286006",
+                "sku_code": "990007078",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (060)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285978",
+                "sku_code": "990007077",
+                "hsn_code": null,
+                "product_name": "BIRLANU PUTTY-40 Kg (040)",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "110MM SWR ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "287548",
+                "sku_code": "96001427",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (D/S) 110mm",
+                "price": 15200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334791",
+                "sku_code": "96002019",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Pushfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335024",
+                "sku_code": "96002015",
+                "hsn_code": "39174000",
+                "product_name": "Silent Fit Elbow Solfit 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289030",
+                "sku_code": "98000441",
+                "hsn_code": "39174000",
+                "product_name": "SWR Elbow Pushfit 90mm",
+                "price": 19400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288945",
+                "sku_code": "96001500",
+                "hsn_code": "39174000",
+                "product_name": "SWR Clean Out Plug 110mm",
+                "price": 18500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25X15MM UPVC REDUCER TEE 'BIRLA'": [
+            {
+                "product_variant_id": "334785",
+                "sku_code": "96002251",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducer 2\"x1 1/2\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288969",
+                "sku_code": "96000125",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1\"",
+                "price": 5700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288688",
+                "sku_code": "96000129",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 2\"",
+                "price": 17700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288650",
+                "sku_code": "96000123",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 3/4\"",
+                "price": 3300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288649",
+                "sku_code": "96000122",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TEE 1/2\"",
+                "price": 2400,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "63MM AGRI ENDCAP 6KG 'BIRLA'": [
+            {
+                "product_variant_id": "334807",
+                "sku_code": "96002282",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "335035",
+                "sku_code": "96002277",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 63mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287619",
+                "sku_code": "96001837",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Single Y (6kg/cm2) 63mm",
+                "price": 14500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287560",
+                "sku_code": "96000894",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 63mm",
+                "price": 6600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288113",
+                "sku_code": "96000901",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (6kg/cm2) - 63mm",
+                "price": 8500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15MM UPVC COUPLER 'BIRLA'": [
+            {
+                "product_variant_id": "288478",
+                "sku_code": "96001977",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Coupler 6\" (SCH 80)",
+                "price": 100000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285917",
+                "sku_code": "990005794",
+                "hsn_code": null,
+                "product_name": "Birla HILSTA505SupMulStoneTileAdh-PP40kg",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288325",
+                "sku_code": "96001502",
+                "hsn_code": "39174000",
+                "product_name": "UGD Coupler 160mm",
+                "price": 45000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285396",
+                "sku_code": "990005704",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL STAW510 MultpurWhtStoneTileAdh",
+                "price": 47300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285955",
+                "sku_code": "98000561",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam1000L",
+                "price": 1600000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15X15MM UPVC BRASS ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "288928",
+                "sku_code": "96001106",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS ELBOW 1\"",
+                "price": 35700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288737",
+                "sku_code": "96000337",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 1\"",
+                "price": 3900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288623",
+                "sku_code": "96001001",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 3\"",
+                "price": 48300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288836",
+                "sku_code": "96001002",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 4\"\"",
+                "price": 80400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288744",
+                "sku_code": "96000340",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Elbow 45 D 2\"",
+                "price": 11600,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "15X15MM UPVC BRASS FTA 'BIRLA'": [
+            {
+                "product_variant_id": "288313",
+                "sku_code": "96000246",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS FTA  2\"",
+                "price": 81000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288586",
+                "sku_code": "96000164",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. FTA  1''",
+                "price": 28500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288925",
+                "sku_code": "96000320",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Plastics FTA 2\"",
+                "price": 8400,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334812",
+                "sku_code": "96002343",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Trans FTA 3\"",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288807",
+                "sku_code": "96000166",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. FTA  1 1/4''",
+                "price": 42000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25MM UPVC BRASS MTA 'BIRLA'": [
+            {
+                "product_variant_id": "288780",
+                "sku_code": "96000165",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS MTA 1\"",
+                "price": 37500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288428",
+                "sku_code": "96000233",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Trans MTA 2\"",
+                "price": 103500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288463",
+                "sku_code": "96000322",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Plastics MTA 2\"",
+                "price": 6900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334975",
+                "sku_code": "96002248",
+                "hsn_code": "39174000",
+                "product_name": "UPVC MTA 1 1/4\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289011",
+                "sku_code": "96000167",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. MTA  1 1/4''",
+                "price": 58500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25MM UPVC ENDCAP 'BIRLA'": [
+            {
+                "product_variant_id": "285917",
+                "sku_code": "990005794",
+                "hsn_code": null,
+                "product_name": "Birla HILSTA505SupMulStoneTileAdh-PP40kg",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285396",
+                "sku_code": "990005704",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL STAW510 MultpurWhtStoneTileAdh",
+                "price": 47300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285955",
+                "sku_code": "98000561",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam1000L",
+                "price": 1600000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285974",
+                "sku_code": "98000562",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam2000L",
+                "price": 3200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285469",
+                "sku_code": "990005502",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL UNISTAINER B SIENAA100mlGRPONE",
+                "price": 3800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "Cpc Reducing Tee 11/2'×1' Birla": [
+            {
+                "product_variant_id": "288120",
+                "sku_code": "96000318",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Reducing Tee 11/4\" x 11/4\" x 1/2\"",
+                "price": 16000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288951",
+                "sku_code": "96000326",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducing Tee 11/4\" x 11/4\" x 1/2\"",
+                "price": 8700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288214",
+                "sku_code": "96000317",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Reducing Tee 11/4\" x 11/4\" x 1\"",
+                "price": 18000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288413",
+                "sku_code": "96000328",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Reducing Tee 11/4\" x 11/4' x 1\"",
+                "price": 9200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287904",
+                "sku_code": "96000252",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Reducing Tee 11/4\" x 11/4\" x 3/4\"",
+                "price": 18550,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20X15MM CPVC BRASS ELBOW 'BIRLA'": [
+            {
+                "product_variant_id": "287653",
+                "sku_code": "96000333",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Trans Elbow 1\"",
+                "price": 47800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287846",
+                "sku_code": "96000999",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 3\"",
+                "price": 142000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288097",
+                "sku_code": "96001000",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 4\"\"",
+                "price": 255800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287803",
+                "sku_code": "96000334",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Trans Elbow 3/4\"",
+                "price": 12100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287993",
+                "sku_code": "96000342",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 1\"",
+                "price": 5550,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "20X15MM CPVC BRASS FTA 'BIRLA'": [
+            {
+                "product_variant_id": "287627",
+                "sku_code": "96000240",
+                "hsn_code": "39174000",
+                "product_name": "CPVC TRANS FTA  2\"",
+                "price": 160700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288010",
+                "sku_code": "96000063",
+                "hsn_code": "39174000",
+                "product_name": "CPVC  PLASTICS FTA 1\"",
+                "price": 4950,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288030",
+                "sku_code": "96000315",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Plastics FTA 2\"",
+                "price": 27300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287597",
+                "sku_code": "96000482",
+                "hsn_code": "39174000",
+                "product_name": "Cpvc Plastic FTA 1/2\"",
+                "price": 2325,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287945",
+                "sku_code": "96000062",
+                "hsn_code": "39174000",
+                "product_name": "CPVC  PLASTICS FTA 11/4\"",
+                "price": 13500,
+                "MRP": null,
+                "PTR": null
+            }
+        ]
+    }
+}
+{
+    "results": {
+        "25MM UPVC BRASS MTA 'BIRLA'": [
+            {
+                "product_variant_id": "288780",
+                "sku_code": "96000165",
+                "hsn_code": "39174000",
+                "product_name": "UPVC TRANS MTA 1\"",
+                "price": 37500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288428",
+                "sku_code": "96000233",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Trans MTA 2\"",
+                "price": 103500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288463",
+                "sku_code": "96000322",
+                "hsn_code": "39174000",
+                "product_name": "UPVC Plastics MTA 2\"",
+                "price": 6900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334975",
+                "sku_code": "96002248",
+                "hsn_code": "39174000",
+                "product_name": "UPVC MTA 1 1/4\" TPL",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289011",
+                "sku_code": "96000167",
+                "hsn_code": "39174000",
+                "product_name": "UPVC  TRANS. MTA  1 1/4''",
+                "price": 58500,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "25MM UPVC ENDCAP 'BIRLA'": [
+            {
+                "product_variant_id": "285917",
+                "sku_code": "990005794",
+                "hsn_code": null,
+                "product_name": "Birla HILSTA505SupMulStoneTileAdh-PP40kg",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285396",
+                "sku_code": "990005704",
+                "hsn_code": null,
+                "product_name": "BIRLA HIL STAW510 MultpurWhtStoneTileAdh",
+                "price": 47300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285955",
+                "sku_code": "98000561",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam1000L",
+                "price": 1600000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285974",
+                "sku_code": "98000562",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-Green4LayerFoam2000L",
+                "price": 3200000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "285972",
+                "sku_code": "98000558",
+                "hsn_code": "39251000",
+                "product_name": "BIRLA HIL WaterTank-White4LayerFoam2000L",
+                "price": 3200000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "AGRI PIPE 6KG 40MM (20FT) BIRLANU": [
+            {
+                "product_variant_id": "287574",
+                "sku_code": "96001842",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45 (6kg/cm2) - 40mm",
+                "price": 2900,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334943",
+                "sku_code": "96002280",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334976",
+                "sku_code": "96002297",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 140mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334755",
+                "sku_code": "96002285",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN6 6m 110mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334836",
+                "sku_code": "96002281",
+                "hsn_code": "39174000",
+                "product_name": "AGRI PIPES PN4 6m 160mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC ELBOW 45D 20MM 3/4' BIRLANU": [
+            {
+                "product_variant_id": "287890",
+                "sku_code": "96002003",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 45D 10kg/cm2 20mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287879",
+                "sku_code": "96002070",
+                "hsn_code": "39174000",
+                "product_name": "PRESSURE ELBOW 45D 6KG/CM2 200MM",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287803",
+                "sku_code": "96000334",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Trans Elbow 3/4\"",
+                "price": 12100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288097",
+                "sku_code": "96001000",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 4\"\"",
+                "price": 255800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287846",
+                "sku_code": "96000999",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 45 D 3\"",
+                "price": 142000,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC ELBOW 90° 20MM 3/4' BIRLANU": [
+            {
+                "product_variant_id": "288051",
+                "sku_code": "96000355",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90  4\"  (SCH 80)",
+                "price": 276000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287942",
+                "sku_code": "96000354",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90  3\"  (SCH 80)",
+                "price": 162800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287628",
+                "sku_code": "96001518",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (10kg/cm2) 20mm",
+                "price": 1100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288202",
+                "sku_code": "96000348",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90 21/2\"  (SCH 80)",
+                "price": 111300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287914",
+                "sku_code": "96001966",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90D 6\" (SCH 80)",
+                "price": 762700,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC ELBOW 90° 25MM 1' BIRLANU": [
+            {
+                "product_variant_id": "287942",
+                "sku_code": "96000354",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90  3\"  (SCH 80)",
+                "price": 162800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288051",
+                "sku_code": "96000355",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90  4\"  (SCH 80)",
+                "price": 276000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287848",
+                "sku_code": "96001522",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Elbow 90 (10kg/cm2) 25mm",
+                "price": 1450,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288202",
+                "sku_code": "96000348",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90 21/2\"  (SCH 80)",
+                "price": 111300,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287914",
+                "sku_code": "96001966",
+                "hsn_code": "39174000",
+                "product_name": "CPVC Elbow 90D 6\" (SCH 80)",
+                "price": 762700,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "CPVC REDUCER BUSHING 1X3/4 BIRLANU": [
+            {
+                "product_variant_id": "288144",
+                "sku_code": "96000076",
+                "hsn_code": "39174000",
+                "product_name": "CPVC REDUCER BUSHING 2 X 1Â½â€",
+                "price": 12200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288191",
+                "sku_code": "96000077",
+                "hsn_code": "39174000",
+                "product_name": "CPVC REDUCER BUSHING 2â€ X 1â€",
+                "price": 14250,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287688",
+                "sku_code": "96000066",
+                "hsn_code": "39174000",
+                "product_name": "CPVC REDUCER BUSHING  Â¾â€ X Â½â€",
+                "price": 1600,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287939",
+                "sku_code": "96000071",
+                "hsn_code": "39174000",
+                "product_name": "CPVC REDUCER BUSHING 1 Â¼â€ X Â½â€",
+                "price": 4700,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287924",
+                "sku_code": "96000068",
+                "hsn_code": "39174000",
+                "product_name": "CPVC REDUCER BUSHING 1â€ X Â½â€",
+                "price": 3050,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "SWR SELFFIT BEND 87.50 110MM BIRLANU": [
+            {
+                "product_variant_id": "288945",
+                "sku_code": "96001500",
+                "hsn_code": "39174000",
+                "product_name": "SWR Clean Out Plug 110mm",
+                "price": 18500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288846",
+                "sku_code": "96001498",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Pushfit 110mm",
+                "price": 41000,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288917",
+                "sku_code": "96001497",
+                "hsn_code": "39174000",
+                "product_name": "SWR Swept Tee Solfit 110mm",
+                "price": 34200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287869",
+                "sku_code": "96001693",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Long Bend Fab (6kg/cm2) 110mm",
+                "price": 63200,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "289032",
+                "sku_code": "96001493",
+                "hsn_code": "39174000",
+                "product_name": "SWR Gully Trap with Jali 110mm",
+                "price": 79800,
+                "MRP": null,
+                "PTR": null
+            }
+        ],
+        "PVC TEE 90° 75MMx4KG [BIRLA]": [
+            {
+                "product_variant_id": "288187",
+                "sku_code": "96000937",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Equal Tee 90 (6kg/cm2) - 90mm",
+                "price": 23100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287808",
+                "sku_code": "96001428",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Equal Tee 90 (D/S) 110mm",
+                "price": 20500,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "334886",
+                "sku_code": "96001975",
+                "hsn_code": "39174000",
+                "product_name": "PVC Plain Tee (FAB)-6kg 315mm",
+                "price": 100,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "287867",
+                "sku_code": "96000933",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Equal Tee 90 (10kg/cm2) - 40mm",
+                "price": 4800,
+                "MRP": null,
+                "PTR": null
+            },
+            {
+                "product_variant_id": "288107",
+                "sku_code": "96000935",
+                "hsn_code": "39174000",
+                "product_name": "Pressure Equal Tee 90 (6kg/cm2) - 63mm",
+                "price": 11000,
+                "MRP": null,
+                "PTR": null
+            }
+        ]
+    }
+}
