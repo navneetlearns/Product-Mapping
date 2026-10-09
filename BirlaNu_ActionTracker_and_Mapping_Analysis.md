@@ -1,11 +1,14 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-09-07
+Last updated: 2026-10-09
 Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem.
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
   `/mnt/f/Product/zotok/Invoice/Fake Invoices/20260714_BirlaNu_Action_Tracker_ZOTOK.pdf`
+- Cadence-meet deck (6-slide PDF, built 2026-10-09):
+  `/home/sumit/AgentWork/product-mapping/birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf`
+  (source + render/QA scripts + README in the same folder; see §5.)
 - Live pipeline trace (intent `scheme_invoice`, graph `turnover_schemes`, node `map_catalog_products`, model gpt-5.4-mini):
   invoice 495/26-27, distributor MAA SHERAWALIS MATRABHOOMI PIPES (GST 27AFPPJ3948E1Z6),
   buyer RAMDEV HARDWARE & ELECTRICALS (GST 27CEXPR0237R1ZF), dated 2026-08-23.
@@ -140,6 +143,36 @@ notes "these invoices will be partial."
 
 ---
 
+## 5. Cadence Deck — Delivered 2026-10-09 (deliverable, not analysis)
+
+Built a 6-slide cadence-meet deck for the BirlaNu team (canvas-design philosophy + claude-design
+deck rules, house style inherited from `zochief-demo-docs/sales-deck`, Playwright Chromium → PDF).
+
+- **PDF:** `birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf` — 6 pages, 16:9 (1440×810 pt).
+- **Slides:** cover · parse volume till date · August · approvals & issues · enhancements implemented · summary.
+- **Figures reported for this cadence (supplied, not re-derived from the workbook):**
+  2,323 invoices parsed till date · 30,063 line items till date · 957 parsed in August ·
+  181 approved · 36 issues resolved. Only additions are arithmetic from those: 41.2% = 957/2,323,
+  12.9 lines/invoice = 30,063/2,323, 7.8% = 181/2,323, 1,366 = 2,323−957.
+- **Source of the numbers:** cadence input from the team — NOT read from the live workbook or
+  dashboard; freshness/accuracy unverified (the tracker banner in §1 is a separate 2026-07-14 snapshot).
+- **Commits (local only, not pushed):** `de9e5ac` initial 5-slide deck, `f907ca2` enhancements slide.
+- **Rebuild/QA:** see `birlanu-cadence-deck/README.md` (`render_deck.py` + 4 QA scripts).
+
+### Enhancements reported as implemented (as-reported; not verified against the panel)
+1. **Invoice reprocessing (Man-in-the-Middle, ZoTok panel)** — single or bulk. Relates to
+   AP-32/AP-33 (reprocessing flips mapped→unmapped / 100↔98): reprocessing now being used in
+   volume makes those score-instability items more exposed, not less — keep them prioritised.
+2. **Automatic rejection of unclear/illegible images on WhatsApp** — quality rejection at upload.
+   Adjacent to AP-19/AP-20 (multi-page upload + strict edge detection): confirm the new rejection
+   path doesn't reclassify a legitimately cropped second page as "unclear".
+3. **Original-invoice link for duplicate detection** — duplicates link back to the first submission.
+   Direct mitigation for AP-35 (duplicate invoices surfaced to a retailer).
+4. **Page display limit 40 → 100** (ZoTok panel pagination) — pure UX; no AP impact.
+
+Status of 1–4: reported in the 2026-10-09 cadence input as implemented. Not yet exercised or
+confirmed in the panel by us — treat as claims pending a smoke test before citing them as fixed.
+
 ## Related AP refs
 AP-23, AP-25 (SKU-in-description-not-mapped) — directly demonstrated by line 6.
 AP-15 (invoice "not found" vs success caption) — also visible in this trace.
@@ -149,4 +182,4 @@ AP-30 (multi-page upload: user doesn't reply "no" to continue prompt) — see §
 AP-06 (multi-page merge / duplicate processing) — the merge invariant the AP-30
 fix must preserve; AP-30 is its inverse failure.
 AP-35 (duplicate invoices surfaced to a retailer) — downstream symptom fed by
-mis-batched multi-invoice uploads.
+mis-batched multi-invoice uploads. Mitigated per §5 (original-invoice link now reported shipped).
