@@ -6,7 +6,7 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
   `/mnt/f/Product/zotok/Invoice/Fake Invoices/20260714_BirlaNu_Action_Tracker_ZOTOK.pdf`
-- Cadence-meet deck (6-slide PDF, built 2026-10-09):
+- Cadence-meet deck (3-slide PDF, built 2026-10-09):
   `/home/sumit/AgentWork/product-mapping/birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf`
   (source + render/QA scripts + README in the same folder; see §5.)
 - Live pipeline trace (intent `scheme_invoice`, graph `turnover_schemes`, node `map_catalog_products`, model gpt-5.4-mini):
@@ -145,19 +145,21 @@ notes "these invoices will be partial."
 
 ## 5. Cadence Deck — Delivered 2026-10-09 (deliverable, not analysis)
 
-Built a 6-slide cadence-meet deck for the BirlaNu team (canvas-design philosophy + claude-design
+Built a 3-slide cadence-meet deck for the BirlaNu team (canvas-design philosophy + claude-design
 deck rules, house style inherited from `zochief-demo-docs/sales-deck`, Playwright Chromium → PDF).
 
-- **PDF:** `birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf` — 6 pages, 16:9 (1440×810 pt).
-- **Slides:** cover · parse volume till date · August · approvals & issues · enhancements implemented · summary.
+- **PDF:** `birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf` — 3 pages, 16:9 (1440×810 pt).
+- **Slides (3, condensed from an earlier 6-slide cut):** cover · cadence counts (all five counts +
+  August mark-matrix + approval bar on one page) · enhancements implemented.
 - **Figures reported for this cadence (supplied, not re-derived from the workbook):**
   2,323 invoices parsed till date · 30,063 line items till date · 957 parsed in August ·
   181 approved · 36 issues resolved. Only additions are arithmetic from those: 41.2% = 957/2,323,
   12.9 lines/invoice = 30,063/2,323, 7.8% = 181/2,323, 1,366 = 2,323−957.
 - **Source of the numbers:** cadence input from the team — NOT read from the live workbook or
   dashboard; freshness/accuracy unverified (the tracker banner in §1 is a separate 2026-07-14 snapshot).
-- **Commits (local only, not pushed):** `de9e5ac` initial 5-slide deck, `f907ca2` enhancements slide.
-- **Rebuild/QA:** see `birlanu-cadence-deck/README.md` (`render_deck.py` + 4 QA scripts).
+- **Commits (local only, not pushed):** `de9e5ac` initial 5-slide deck, `f907ca2` enhancements slide,
+  plus the 3-slide condensation commit in `git log`.
+- **Rebuild/QA:** see `birlanu-cadence-deck/README.md` (`render_deck.py` + QA/inspect scripts).
 
 ### Enhancements reported as implemented (as-reported; not verified against the panel)
 1. **Invoice reprocessing (Man-in-the-Middle, ZoTok panel)** — single or bulk. Relates to

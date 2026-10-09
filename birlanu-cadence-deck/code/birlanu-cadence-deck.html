@@ -29,6 +29,7 @@
   /* ---- shared chrome ---- */
   .content{ flex:1; position:relative; padding:84px 96px 132px; display:flex; flex-direction:column; }
   .content.tight{ padding-bottom:96px; }
+  .content.tight2{ padding-bottom:76px; }
   .secnum{ display:flex; align-items:center; gap:18px; font-family:'Mono'; font-size:19px; color:var(--muted); }
   .secnum .num{ font-family:'Mono'; font-size:23px; font-weight:700; color:var(--green); letter-spacing:.14em; }
   .secnum .num::after{ content:' /'; font-weight:400; color:var(--muted); }
@@ -149,6 +150,48 @@
   .impl .idesc b{ color:var(--green); font-weight:700; font-family:'Mono'; font-size:.95em;
     letter-spacing:.02em; }
 
+
+  /* ---- 3-page rebuild: counts slide ---- */
+  .rowcounts{ display:grid; grid-template-columns:repeat(5,1fr); border-top:2px solid var(--ink);
+    border-bottom:1px solid var(--hair); margin-top:40px; }
+  .rowcounts .cc{ padding:20px 24px 18px; border-right:1px solid var(--hair); }
+  .rowcounts .cc:last-child{ border-right:none; }
+  .rowcounts .cv{ font-size:62px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+  .rowcounts .cv.green{ color:var(--green); }
+  .rowcounts .cl{ font-family:'Mono'; font-size:14px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin-top:16px; line-height:1.7; }
+  .rowcounts .cs{ font-family:'Mono'; font-size:15px; font-weight:700; color:var(--green);
+    letter-spacing:.1em; margin-top:10px; }
+
+  .mrow{ display:grid; grid-template-columns:1fr 380px; gap:56px; margin-top:34px; align-items:start; }
+  .matrix.fine{ grid-template-columns:repeat(117,10px); }
+  .matrix.fine i{ width:10px; height:10px; }
+  .matrix.fine i::before{ width:6px; height:6px; }
+  .mcap{ font-family:'Mono'; font-size:14px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--muted); margin-top:14px; }
+  .mlegend .lghd{ font-family:'Mono'; font-size:14px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); }
+  .mlegend .lgbig{ font-size:78px; line-height:1; color:var(--green); font-variant-numeric:tabular-nums;
+    letter-spacing:-.03em; margin-top:14px; }
+  .mlegend .legend{ margin-top:26px; }
+  .mlegend .legend .row{ padding:16px 0; }
+
+  .duo3{ display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:30px; }
+  .p3{ background:#fff; border:1px solid var(--line); padding:26px 34px; display:flex; align-items:center;
+    gap:40px; }
+  .p3 .pv{ font-size:78px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
+    color:var(--green); }
+  .p3 .pv.ink{ color:var(--ink); }
+  .p3 .pbody{ flex:1; min-width:0; }
+  .p3 .pl{ font-family:'Mono'; font-size:15px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); }
+  .p3 .pbar{ height:14px; background:#e7ece9; margin-top:16px; position:relative; }
+  .p3 .pbar span{ position:absolute; left:0; top:0; bottom:0; background:var(--green); }
+  .p3 .pcap{ font-family:'Mono'; font-size:14px; color:var(--muted); letter-spacing:.06em; margin-top:12px; }
+  .mini36{ display:grid; grid-template-columns:repeat(12,1fr); gap:8px; margin-top:16px; max-width:330px; }
+  .mini36 i{ height:18px; display:flex; align-items:center; justify-content:flex-start; }
+  .mini36 i::before{ content:''; width:12px; height:12px; display:block; background:var(--clay); }
+
   /* ---- s5 ledger ---- */
   .ledger{ margin-top:48px; border-top:2px solid var(--ink); }
   .ledger .lrow{ display:flex; align-items:baseline; gap:40px; padding:30px 6px; border-bottom:1px solid var(--hair); }
@@ -189,108 +232,73 @@
   </div>
 </section>
 
-<!-- ============ 02 VOLUME ============ -->
+<!-- ============ 02 COUNTS ============ -->
 <section class="slide">
-  <div class="content">
-    <div class="secnum"><span class="num">01</span><span class="lbl">Parse volume · till date</span><span class="rule"></span></div>
-    <h2>2,323 invoices, <span class="serif">30,063 line items</span></h2>
-    <div class="lead">Everything parsed so far, on one shared scale.</div>
+  <div class="content tight2">
+    <div class="secnum"><span class="num">01</span><span class="lbl">Cadence counts</span><span class="rule"></span></div>
+    <h2>Five counts, <span class="serif">one page</span></h2>
 
-    <div class="split">
-      <div class="colL">
-        <div class="statrow">
-          <div class="monument">2,323</div>
-          <div class="cap"><span>Invoices parsed · till date</span><span>fig. 01</span></div>
-          <div class="bar"><span style="width:7.7%"></span></div>
-        </div>
-        <div class="statrow">
-          <div class="monument">30,063</div>
-          <div class="cap"><span>Line items parsed · till date</span><span>fig. 02</span></div>
-          <div class="bar"><span class="soft" style="width:100%"></span></div>
-          <div class="baraxis"><span>0</span><span>both bars to the same scale · max 30,063</span></div>
-        </div>
-      </div>
-
-      <div class="figbox">
-        <div class="figno">Fig. A — reading the ratio</div>
-        <h3>One invoice carries <span class="serif">about thirteen</span> line items.</h3>
-        <div class="marks">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        </div>
-        <div class="figcap">30,063 &divide; 2,323 = <b>12.9 line items per invoice</b><br>
-          each block above = one line item, as counted</div>
-      </div>
+    <div class="rowcounts">
+      <div class="cc"><div class="cv green">2,323</div>
+        <div class="cl">Invoices parsed<br>&middot; till date</div><div class="cs">cumulative</div></div>
+      <div class="cc"><div class="cv green">30,063</div>
+        <div class="cl">Line items parsed<br>&middot; till date</div><div class="cs">12.9 / invoice</div></div>
+      <div class="cc"><div class="cv">957</div>
+        <div class="cl">Invoices parsed<br>&middot; August</div><div class="cs">41.2% of total</div></div>
+      <div class="cc"><div class="cv">181</div>
+        <div class="cl">Invoices<br>&middot; approved</div><div class="cs">7.8% of parsed</div></div>
+      <div class="cc"><div class="cv">36</div>
+        <div class="cl">Issues<br>&middot; resolved</div><div class="cs">as reported</div></div>
     </div>
-  </div>
-  <div class="footbar">
-    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>02</b> / 06</span>
-  </div>
-</section>
 
-<!-- ============ 03 AUGUST ============ -->
-<section class="slide">
-  <div class="content">
-    <div class="secnum"><span class="num">02</span><span class="lbl">August · parse volume</span><span class="rule"></span></div>
-    <h2>957 invoices parsed <span class="serif">in August</span></h2>
-    <div class="lead">Every mark below is one invoice parsed till date — filled marks are August's share.</div>
-
-    <div class="matrixwrap">
-      <div class="matrix" id="matrix"></div>
-      <div class="side">
-        <div class="monument">41.2%</div>
-        <div class="lead2">of all invoices parsed<br>till date came in August</div>
+    <div class="mrow">
+      <div>
+        <div class="matrix fine" id="matrix"></div>
+        <div class="mcap">Each mark = one invoice parsed till date &middot; filled = parsed in August</div>
+      </div>
+      <div class="mlegend">
+        <div class="lghd">August share of total</div>
+        <div class="lgbig">41.2%</div>
         <div class="legend">
           <div class="row"><span class="sw"></span>
-            <span class="txt">Parsed in August<small>957 of 2,323</small></span>
+            <span class="txt">August<small>957 invoices</small></span>
             <span class="val">957</span></div>
           <div class="row"><span class="sw empty"></span>
-            <span class="txt">Parsed before August<small>58.8% of the total</small></span>
+            <span class="txt">Before August<small>58.8% of total</small></span>
             <span class="val">1,366</span></div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="footbar">
-    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>03</b> / 06</span>
-  </div>
-</section>
 
-<!-- ============ 04 APPROVALS + ISSUES ============ -->
-<section class="slide">
-  <div class="content">
-    <div class="secnum"><span class="num">03</span><span class="lbl">Approvals &amp; issue resolution</span><span class="rule"></span></div>
-    <h2>181 approved, <span class="serif">36 issues resolved</span></h2>
-    <div class="lead">Two closing counts for the cadence, drawn to scale.</div>
-
-    <div class="duo">
-      <div class="panel">
-        <div class="phd"><span class="plabel">Invoices approved</span><span class="plabel">fig. 03</span></div>
-        <div class="pval green">181</div>
-        <div class="minimatrix a" id="mmA"></div>
-        <div class="pnote"><b>7.8%</b> of the 2,323 invoices parsed till date<br>
-          each mark = one approved invoice</div>
+    <div class="duo3">
+      <div class="p3">
+        <div class="pv">181</div>
+        <div class="pbody">
+          <div class="pl">Invoices approved</div>
+          <div class="pbar"><span style="width:7.8%"></span></div>
+          <div class="pcap">7.8% of the 2,323 invoices parsed till date</div>
+        </div>
       </div>
-      <div class="panel">
-        <div class="phd"><span class="plabel">Issues resolved</span><span class="plabel">fig. 04</span></div>
-        <div class="pval">36</div>
-        <div class="minimatrix b" id="mmB"></div>
-        <div class="pnote">36 issues worked through and closed<br>
-          each mark = one resolved issue</div>
+      <div class="p3">
+        <div class="pv ink">36</div>
+        <div class="pbody">
+          <div class="pl">Issues resolved</div>
+          <div class="mini36" id="mmB"></div>
+          <div class="pcap">Each mark = one resolved issue</div>
+        </div>
       </div>
     </div>
   </div>
   <div class="footbar">
-    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>04</b> / 06</span>
+    <span>Birlanu &middot; invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>02</b> / 03</span>
   </div>
 </section>
 
-<!-- ============ 05 ENHANCEMENTS ============ -->
+<!-- ============ 03 ENHANCEMENTS ============ -->
 <section class="slide">
   <div class="content tight">
-    <div class="secnum"><span class="num">04</span><span class="lbl">Enhancements implemented</span><span class="rule"></span></div>
+    <div class="secnum"><span class="num">02</span><span class="lbl">Enhancements implemented</span><span class="rule"></span></div>
     <h2>Four improvements, <span class="serif">now in place</span></h2>
 
     <div class="impl">
@@ -332,35 +340,7 @@
   </div>
   <div class="footbar">
     <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>05</b> / 06</span>
-  </div>
-</section>
-
-<!-- ============ 06 SUMMARY ============ -->
-<section class="slide">
-  <div class="content">
-    <div class="secnum"><span class="num">05</span><span class="lbl">Cadence summary</span><span class="rule"></span></div>
-    <h2>The five counts, <span class="serif">side by side</span></h2>
-
-    <div class="ledger">
-      <div class="lrow"><span class="idx">01</span><span class="name">No. of invoices parsed till date</span>
-        <span class="basis">Till date</span><span class="v green">2,323</span></div>
-      <div class="lrow"><span class="idx">02</span><span class="name">No. of line items parsed till date</span>
-        <span class="basis">Till date</span><span class="v green">30,063</span></div>
-      <div class="lrow"><span class="idx">03</span><span class="name">No. of invoices parsed in August</span>
-        <span class="basis">August</span><span class="v">957</span></div>
-      <div class="lrow"><span class="idx">04</span><span class="name">No. of invoices approved</span>
-        <span class="basis">Reported</span><span class="v">181</span></div>
-      <div class="lrow"><span class="idx">05</span><span class="name">No. of issues resolved</span>
-        <span class="basis">Reported</span><span class="v">36</span></div>
-    </div>
-
-    <div class="closing"><span class="rule"></span>
-      <span class="serif">thank you — questions welcome</span><span class="rule"></span></div>
-  </div>
-  <div class="footbar">
-    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>06</b> / 06</span>
+    <span class="pg"><b>03</b> / 03</span>
   </div>
 </section>
 
@@ -376,13 +356,6 @@
     }
     m.appendChild(frag);
 
-    // 181 approved: 27 cols x 7 rows = 189 cells, last 8 stay off
-    var a = document.getElementById('mmA');
-    for (var j = 0; j < 189; j++) {
-      var e = document.createElement('i');
-      if (j >= 181) e.className = 'off';
-      a.appendChild(e);
-    }
     // 36 issues: 12 cols x 3 rows = 36 cells, all on
     var b = document.getElementById('mmB');
     for (var k = 0; k < 36; k++) b.appendChild(document.createElement('i'));
