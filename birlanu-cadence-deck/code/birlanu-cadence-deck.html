@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BirlaNu · Invoice Digitisation Cadence</title>
+<style>
+  @font-face { font-family:'Inst'; src:url('assets/fonts/InstrumentSans-Regular.ttf'); font-weight:400; }
+  @font-face { font-family:'Inst'; src:url('assets/fonts/InstrumentSans-Bold.ttf'); font-weight:700; }
+  @font-face { font-family:'Serif'; src:url('assets/fonts/InstrumentSerif-Italic.ttf'); font-weight:400; font-style:italic; }
+  @font-face { font-family:'Mono'; src:url('assets/fonts/JetBrainsMono-Regular.ttf'); font-weight:400; }
+  @font-face { font-family:'Mono'; src:url('assets/fonts/JetBrainsMono-Bold.ttf'); font-weight:700; }
+
+  @page { size: 1920px 1080px; margin: 0; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  :root{
+    --paper:#f4f6f5; --ink:#111c16; --muted:#5c6f66; --hair:#dfe6e2;
+    --green:#1f5c3d; --teal:#5e9575; --pine:#14402a; --clay:#b0812c;
+    --line:#cbd6d0;
+  }
+
+  html,body{ background:var(--paper); }
+  body{ font-family:'Inst',sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+
+  .slide{ width:1920px; height:1080px; position:relative; overflow:hidden; background:var(--paper);
+    page-break-after:always; display:flex; flex-direction:column; }
+  .slide:last-child{ page-break-after:auto; }
+
+  /* ---- shared chrome ---- */
+  .content{ flex:1; position:relative; padding:84px 96px 132px; display:flex; flex-direction:column; }
+  .secnum{ display:flex; align-items:center; gap:18px; font-family:'Mono'; font-size:19px; color:var(--muted); }
+  .secnum .num{ font-family:'Mono'; font-size:23px; font-weight:700; color:var(--green); letter-spacing:.14em; }
+  .secnum .num::after{ content:' /'; font-weight:400; color:var(--muted); }
+  .secnum .lbl{ letter-spacing:.18em; text-transform:uppercase; }
+  .secnum .rule{ flex:1; height:1px; background:var(--hair); }
+  h2{ font-weight:400; font-size:78px; line-height:1.05; letter-spacing:-.015em; margin-top:22px; }
+  h2 .serif{ font-family:'Serif'; font-style:italic; font-weight:400; color:var(--green); }
+  .lead{ font-size:25px; color:var(--muted); margin-top:18px; line-height:1.5; max-width:1400px; }
+  .lead b{ color:var(--ink); font-weight:700; }
+
+  .footbar{ position:absolute; left:96px; right:96px; bottom:44px; display:flex; align-items:center; gap:18px;
+    font-family:'Mono'; font-size:16px; color:var(--muted); letter-spacing:.08em; }
+  .footbar .rule{ flex:1; height:1px; background:var(--hair); }
+  .footbar .pg b{ color:var(--green); font-weight:700; }
+
+  .lbl-mono{ font-family:'Mono'; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .monument{ font-weight:400; font-size:150px; line-height:1; letter-spacing:-.03em; color:var(--ink);
+    font-variant-numeric:tabular-nums; }
+
+  /* ---- cover ---- */
+  .cover{ background:var(--pine); color:#fff; }
+  .cover .grid-bg{ position:absolute; inset:0; opacity:.07;
+    background-image:radial-gradient(#fff 1px, transparent 1px); background-size:36px 36px; }
+  .cover .inner{ position:relative; z-index:2; flex:1; display:flex; flex-direction:column; padding:96px 120px 64px; }
+  .cover .kicker{ display:flex; align-items:center; gap:20px; font-family:'Mono'; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase; color:#c9e3d4; }
+  .cover .kicker .chip{ border:1px solid rgba(201,227,212,.45); border-radius:999px; padding:7px 18px; }
+  .cover h1{ font-weight:400; font-size:124px; line-height:1.03; letter-spacing:-.02em; margin-top:76px; }
+  .cover h1 .serif{ font-family:'Serif'; font-style:italic; color:#a9d3bd; }
+  .cover .sub{ font-size:30px; line-height:1.5; color:#d6e6dd; margin-top:34px; max-width:1150px; }
+  .cover .ruler{ margin-top:auto; height:58px; border-bottom:1px solid rgba(255,255,255,.28);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, transparent 1px 200px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.3) 0 1px, transparent 1px 40px);
+    background-size:100% 58px, 100% 24px;
+    background-position:left bottom, left bottom;
+    background-repeat:no-repeat, no-repeat; }
+  .cover .band{ margin-top:56px; display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border-top:none; padding-top:0; }
+  .cover .band .cell{ padding-right:40px; border-right:1px solid rgba(255,255,255,.12); }
+  .cover .band .cell:last-child{ border-right:none; }
+  .cover .band .cell:not(:first-child){ padding-left:40px; }
+  .cover .band .v{ font-size:64px; line-height:1; font-variant-numeric:tabular-nums; }
+  .cover .band .k{ font-family:'Mono'; font-size:15px; letter-spacing:.16em; text-transform:uppercase;
+    color:#9db8aa; margin-top:14px; }
+
+  /* ---- s2 ---- */
+  .split{ display:grid; grid-template-columns:1.05fr .95fr; gap:64px; margin-top:60px; flex:1; }
+  .split > .colL{ display:flex; flex-direction:column; justify-content:space-between; }
+  .statrow{ padding-bottom:38px; margin-bottom:38px; border-bottom:1px solid var(--hair); }
+  .statrow:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .statrow .monument{ font-size:132px; }
+  .statrow .cap{ font-family:'Mono'; font-size:16px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); margin-top:16px; display:flex; justify-content:space-between; align-items:baseline; }
+  .bar{ height:18px; background:#e7ece9; margin-top:26px; position:relative; }
+  .bar span{ position:absolute; left:0; top:0; bottom:0; background:var(--green); }
+  .bar span.soft{ background:var(--teal); }
+  .baraxis{ display:flex; justify-content:space-between; font-family:'Mono'; font-size:14px;
+    color:var(--muted); margin-top:10px; letter-spacing:.08em; }
+
+  .figbox{ border:1px solid var(--line); background:#fff; padding:44px 46px; height:100%;
+    display:flex; flex-direction:column; }
+  .figbox .figno{ font-family:'Mono'; font-size:15px; letter-spacing:.2em; color:var(--green);
+    text-transform:uppercase; font-weight:700; }
+  .figbox h3{ font-weight:400; font-size:44px; line-height:1.15; margin-top:20px; letter-spacing:-.01em; }
+  .figbox h3 .serif{ font-family:'Serif'; font-style:italic; color:var(--green); }
+  .marks{ display:grid; grid-template-columns:repeat(13,1fr); gap:10px; margin-top:52px; }
+  .marks i{ display:block; height:140px; background:var(--green); }
+  .marks i:nth-child(13){ background:var(--teal); }
+  .figcap{ font-family:'Mono'; font-size:16px; color:var(--muted); line-height:1.7; margin-top:auto;
+    padding-top:36px; letter-spacing:.06em; }
+  .figcap b{ color:var(--ink); }
+
+  /* ---- dot matrix ---- */
+  .matrixwrap{ display:grid; grid-template-columns:1fr 440px; gap:72px; margin-top:46px; align-items:start; flex:1; }
+  .matrix{ display:grid; grid-template-columns:repeat(61,16px); gap:0; }
+  .matrix i{ width:16px; height:16px; display:flex; align-items:center; justify-content:center; }
+  .matrix i::before{ content:''; width:8px; height:8px; display:block; background:#d3ddd7; }
+  .matrix i.on::before{ background:var(--green); }
+  .side .monument{ font-size:118px; color:var(--green); }
+  .side .lead2{ font-family:'Mono'; font-size:16px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin-top:14px; }
+  .legend{ margin-top:52px; border-top:1px solid var(--hair); }
+  .legend .row{ display:flex; align-items:center; gap:16px; padding:22px 0; border-bottom:1px solid var(--hair); }
+  .legend .sw{ width:22px; height:22px; flex-shrink:0; background:var(--green); }
+  .legend .sw.empty{ background:#d3ddd7; }
+  .legend .txt{ font-family:'Mono'; font-size:16px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); }
+  .legend .txt small{ display:block; font-size:14px; color:var(--muted); letter-spacing:.1em; margin-top:7px; }
+  .legend .val{ margin-left:auto; font-family:'Inst'; font-size:34px; font-variant-numeric:tabular-nums; }
+
+  /* ---- s4 ---- */
+  .duo{ display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:56px; flex:1; }
+  .panel{ background:#fff; border:1px solid var(--line); padding:44px 48px 40px; display:flex; flex-direction:column; }
+  .panel .phd{ display:flex; align-items:baseline; justify-content:space-between; }
+  .panel .plabel{ font-family:'Mono'; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .panel .pval{ font-size:118px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums; margin-top:26px; }
+  .panel .pval.green{ color:var(--green); }
+  .minimatrix{ display:grid; gap:0; margin-top:38px; }
+  .minimatrix.a{ grid-template-columns:repeat(27,1fr); }
+  .minimatrix.b{ grid-template-columns:repeat(12,1fr); }
+  .minimatrix i{ height:30px; display:flex; align-items:center; justify-content:center; }
+  .minimatrix i::before{ content:''; width:11px; height:11px; display:block; background:var(--green); }
+  .minimatrix i.off::before{ background:#e2e9e5; }
+  .minimatrix.b i::before{ background:var(--clay); }
+  .minimatrix.b i{ height:70px; }
+  .panel .pnote{ font-family:'Mono'; font-size:16px; color:var(--muted); letter-spacing:.06em;
+    line-height:1.7; margin-top:auto; padding-top:56px; border-top:1px solid var(--hair); }
+  .panel .pnote b{ color:var(--ink); }
+
+  /* ---- s5 ledger ---- */
+  .ledger{ margin-top:48px; border-top:2px solid var(--ink); }
+  .ledger .lrow{ display:flex; align-items:baseline; gap:40px; padding:30px 6px; border-bottom:1px solid var(--hair); }
+  .ledger .idx{ font-family:'Mono'; font-size:16px; color:var(--green); font-weight:700; width:56px; letter-spacing:.1em; }
+  .ledger .name{ font-size:32px; color:var(--ink); }
+  .ledger .basis{ font-family:'Mono'; font-size:15px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); width:280px; }
+  .ledger .v{ margin-left:auto; font-size:64px; line-height:1; font-variant-numeric:tabular-nums;
+    letter-spacing:-.02em; }
+  .ledger .v.green{ color:var(--green); }
+  .closing{ display:flex; align-items:center; gap:24px; margin-top:auto; font-family:'Mono'; font-size:17px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .closing .rule{ flex:1; height:1px; background:var(--hair); }
+  .closing .serif{ font-family:'Serif'; font-style:italic; text-transform:none; letter-spacing:0;
+    font-size:30px; color:var(--green); }
+</style>
+</head>
+<body>
+
+<!-- ============ 01 COVER ============ -->
+<section class="slide cover">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="kicker">
+      <span>Birlanu &times; ZoTok</span>
+      <span class="chip">Cadence Meet</span>
+    </div>
+    <h1>Invoice digitisation,<br><span class="serif">the count so far</span></h1>
+    <div class="sub">Parsing volume, approvals and issue resolution reported for this cadence —
+      counted line by line, in full.</div>
+    <div class="ruler"></div>
+    <div class="band">
+      <div class="cell"><div class="v">2,323</div><div class="k">Invoices parsed · till date</div></div>
+      <div class="cell"><div class="v">30,063</div><div class="k">Line items parsed · till date</div></div>
+      <div class="cell"><div class="v">181</div><div class="k">Invoices approved</div></div>
+      <div class="cell"><div class="v">36</div><div class="k">Issues resolved</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 VOLUME ============ -->
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num">01</span><span class="lbl">Parse volume · till date</span><span class="rule"></span></div>
+    <h2>2,323 invoices, <span class="serif">30,063 line items</span></h2>
+    <div class="lead">Everything parsed so far, on one shared scale.</div>
+
+    <div class="split">
+      <div class="colL">
+        <div class="statrow">
+          <div class="monument">2,323</div>
+          <div class="cap"><span>Invoices parsed · till date</span><span>fig. 01</span></div>
+          <div class="bar"><span style="width:7.7%"></span></div>
+        </div>
+        <div class="statrow">
+          <div class="monument">30,063</div>
+          <div class="cap"><span>Line items parsed · till date</span><span>fig. 02</span></div>
+          <div class="bar"><span class="soft" style="width:100%"></span></div>
+          <div class="baraxis"><span>0</span><span>both bars to the same scale · max 30,063</span></div>
+        </div>
+      </div>
+
+      <div class="figbox">
+        <div class="figno">Fig. A — reading the ratio</div>
+        <h3>One invoice carries <span class="serif">about thirteen</span> line items.</h3>
+        <div class="marks">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="figcap">30,063 &divide; 2,323 = <b>12.9 line items per invoice</b><br>
+          each block above = one line item, as counted</div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar">
+    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>02</b> / 05</span>
+  </div>
+</section>
+
+<!-- ============ 03 AUGUST ============ -->
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num">02</span><span class="lbl">August · parse volume</span><span class="rule"></span></div>
+    <h2>957 invoices parsed <span class="serif">in August</span></h2>
+    <div class="lead">Every mark below is one invoice parsed till date — filled marks are August's share.</div>
+
+    <div class="matrixwrap">
+      <div class="matrix" id="matrix"></div>
+      <div class="side">
+        <div class="monument">41.2%</div>
+        <div class="lead2">of all invoices parsed<br>till date came in August</div>
+        <div class="legend">
+          <div class="row"><span class="sw"></span>
+            <span class="txt">Parsed in August<small>957 of 2,323</small></span>
+            <span class="val">957</span></div>
+          <div class="row"><span class="sw empty"></span>
+            <span class="txt">Parsed before August<small>58.8% of the total</small></span>
+            <span class="val">1,366</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar">
+    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>03</b> / 05</span>
+  </div>
+</section>
+
+<!-- ============ 04 APPROVALS + ISSUES ============ -->
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num">03</span><span class="lbl">Approvals &amp; issue resolution</span><span class="rule"></span></div>
+    <h2>181 approved, <span class="serif">36 issues resolved</span></h2>
+    <div class="lead">Two closing counts for the cadence, drawn to scale.</div>
+
+    <div class="duo">
+      <div class="panel">
+        <div class="phd"><span class="plabel">Invoices approved</span><span class="plabel">fig. 03</span></div>
+        <div class="pval green">181</div>
+        <div class="minimatrix a" id="mmA"></div>
+        <div class="pnote"><b>7.8%</b> of the 2,323 invoices parsed till date<br>
+          each mark = one approved invoice</div>
+      </div>
+      <div class="panel">
+        <div class="phd"><span class="plabel">Issues resolved</span><span class="plabel">fig. 04</span></div>
+        <div class="pval">36</div>
+        <div class="minimatrix b" id="mmB"></div>
+        <div class="pnote">36 issues worked through and closed<br>
+          each mark = one resolved issue</div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar">
+    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>04</b> / 05</span>
+  </div>
+</section>
+
+<!-- ============ 05 SUMMARY ============ -->
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num">04</span><span class="lbl">Cadence summary</span><span class="rule"></span></div>
+    <h2>The five counts, <span class="serif">side by side</span></h2>
+
+    <div class="ledger">
+      <div class="lrow"><span class="idx">01</span><span class="name">No. of invoices parsed till date</span>
+        <span class="basis">Till date</span><span class="v green">2,323</span></div>
+      <div class="lrow"><span class="idx">02</span><span class="name">No. of line items parsed till date</span>
+        <span class="basis">Till date</span><span class="v green">30,063</span></div>
+      <div class="lrow"><span class="idx">03</span><span class="name">No. of invoices parsed in August</span>
+        <span class="basis">August</span><span class="v">957</span></div>
+      <div class="lrow"><span class="idx">04</span><span class="name">No. of invoices approved</span>
+        <span class="basis">Reported</span><span class="v">181</span></div>
+      <div class="lrow"><span class="idx">05</span><span class="name">No. of issues resolved</span>
+        <span class="basis">Reported</span><span class="v">36</span></div>
+    </div>
+
+    <div class="closing"><span class="rule"></span>
+      <span class="serif">thank you — questions welcome</span><span class="rule"></span></div>
+  </div>
+  <div class="footbar">
+    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>05</b> / 05</span>
+  </div>
+</section>
+
+<script>
+  // 2,323 marks: first 957 filled (August)
+  (function(){
+    var m = document.getElementById('matrix');
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 2323; i++) {
+      var el = document.createElement('i');
+      if (i < 957) el.className = 'on';
+      frag.appendChild(el);
+    }
+    m.appendChild(frag);
+
+    // 181 approved: 27 cols x 7 rows = 189 cells, last 8 stay off
+    var a = document.getElementById('mmA');
+    for (var j = 0; j < 189; j++) {
+      var e = document.createElement('i');
+      if (j >= 181) e.className = 'off';
+      a.appendChild(e);
+    }
+    // 36 issues: 12 cols x 3 rows = 36 cells, all on
+    var b = document.getElementById('mmB');
+    for (var k = 0; k < 36; k++) b.appendChild(document.createElement('i'));
+  })();
+</script>
+</body>
+</html>
