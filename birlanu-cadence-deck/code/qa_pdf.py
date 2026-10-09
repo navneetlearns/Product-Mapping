@@ -28,7 +28,7 @@ for f in sorted(glob.glob(f"{BASE}/qa/pdf/pg-*.png")):
     print("   ", bands)
 
 print("== screen slides vs pdf pages pixel diff ==")
-for i in range(1, 6):
+for i in range(1, len(glob.glob(f"{BASE}/qa/slide_*.png")) + 1):
     a = Image.open(f"{BASE}/qa/slide_{i:02d}.png").convert("RGB")
     b = Image.open(f"{BASE}/qa/pdf/pg-{i}.png").convert("RGB").resize(a.size)
     diff = ImageChops.difference(a, b).convert("L")

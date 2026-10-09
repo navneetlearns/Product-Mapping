@@ -28,6 +28,7 @@
 
   /* ---- shared chrome ---- */
   .content{ flex:1; position:relative; padding:84px 96px 132px; display:flex; flex-direction:column; }
+  .content.tight{ padding-bottom:96px; }
   .secnum{ display:flex; align-items:center; gap:18px; font-family:'Mono'; font-size:19px; color:var(--muted); }
   .secnum .num{ font-family:'Mono'; font-size:23px; font-weight:700; color:var(--green); letter-spacing:.14em; }
   .secnum .num::after{ content:' /'; font-weight:400; color:var(--muted); }
@@ -137,6 +138,17 @@
     line-height:1.7; margin-top:auto; padding-top:56px; border-top:1px solid var(--hair); }
   .panel .pnote b{ color:var(--ink); }
 
+  /* ---- enhancements manifest ---- */
+  .impl{ margin-top:40px; border-top:2px solid var(--ink); flex:1; display:flex; flex-direction:column; }
+  .impl .irow{ display:grid; grid-template-columns:92px 1fr; gap:30px; padding:12px 6px;
+    border-bottom:1px solid var(--hair); flex:1; align-items:start; min-height:0; }
+  .impl .iidx{ font-family:'Mono'; font-size:26px; font-weight:700; color:var(--green);
+    letter-spacing:.08em; padding-top:14px; }
+  .impl .ititle{ font-size:48px; line-height:1.2; letter-spacing:-.01em; }
+  .impl .idesc{ font-size:22px; color:var(--muted); line-height:1.75; margin-top:20px; max-width:1480px; }
+  .impl .idesc b{ color:var(--green); font-weight:700; font-family:'Mono'; font-size:.95em;
+    letter-spacing:.02em; }
+
   /* ---- s5 ledger ---- */
   .ledger{ margin-top:48px; border-top:2px solid var(--ink); }
   .ledger .lrow{ display:flex; align-items:baseline; gap:40px; padding:30px 6px; border-bottom:1px solid var(--hair); }
@@ -212,7 +224,7 @@
   </div>
   <div class="footbar">
     <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>02</b> / 05</span>
+    <span class="pg"><b>02</b> / 06</span>
   </div>
 </section>
 
@@ -241,7 +253,7 @@
   </div>
   <div class="footbar">
     <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>03</b> / 05</span>
+    <span class="pg"><b>03</b> / 06</span>
   </div>
 </section>
 
@@ -271,14 +283,63 @@
   </div>
   <div class="footbar">
     <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>04</b> / 05</span>
+    <span class="pg"><b>04</b> / 06</span>
   </div>
 </section>
 
-<!-- ============ 05 SUMMARY ============ -->
+<!-- ============ 05 ENHANCEMENTS ============ -->
+<section class="slide">
+  <div class="content tight">
+    <div class="secnum"><span class="num">04</span><span class="lbl">Enhancements implemented</span><span class="rule"></span></div>
+    <h2>Four improvements, <span class="serif">now in place</span></h2>
+
+    <div class="impl">
+      <div class="irow">
+        <span class="iidx">01</span>
+        <div>
+          <div class="ititle">Invoice Reprocessing</div>
+          <div class="idesc">Introduced the invoice reprocessing functionality for Man-in-the-Middle in zotok panel,
+            allowing users to reprocess invoices either individually or in bulk, improving operational efficiency
+            and reducing manual effort.</div>
+        </div>
+      </div>
+      <div class="irow">
+        <span class="iidx">02</span>
+        <div>
+          <div class="ititle">Automatic Rejection of Unclear Images</div>
+          <div class="idesc">Implemented automated rejection of unclear or illegible invoice images directly on WhatsApp,
+            enabling users to identify image quality issues immediately and upload clearer images for processing.</div>
+        </div>
+      </div>
+      <div class="irow">
+        <span class="iidx">03</span>
+        <div>
+          <div class="ititle">Original Invoice Link for Duplicate Detection</div>
+          <div class="idesc">Enhanced duplicate invoice identification by providing a direct link to the original invoice,
+            allowing users to quickly access and verify the previously submitted invoice.</div>
+        </div>
+      </div>
+      <div class="irow">
+        <span class="iidx">04</span>
+        <div>
+          <div class="ititle">Increased Page Display Limit</div>
+          <div class="idesc">Enhanced the pagination functionality in the Zotok panel by increasing the number of entries
+            displayed per page from <b>40 &rarr; 100</b>, making it easier for users to review and manage larger volumes
+            of invoice records with fewer page navigations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar">
+    <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
+    <span class="pg"><b>05</b> / 06</span>
+  </div>
+</section>
+
+<!-- ============ 06 SUMMARY ============ -->
 <section class="slide">
   <div class="content">
-    <div class="secnum"><span class="num">04</span><span class="lbl">Cadence summary</span><span class="rule"></span></div>
+    <div class="secnum"><span class="num">05</span><span class="lbl">Cadence summary</span><span class="rule"></span></div>
     <h2>The five counts, <span class="serif">side by side</span></h2>
 
     <div class="ledger">
@@ -299,7 +360,7 @@
   </div>
   <div class="footbar">
     <span>Birlanu · invoice digitisation cadence</span><span class="rule"></span>
-    <span class="pg"><b>05</b> / 05</span>
+    <span class="pg"><b>06</b> / 06</span>
   </div>
 </section>
 
