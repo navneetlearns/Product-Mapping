@@ -150,9 +150,9 @@ deck rules, house style inherited from `zochief-demo-docs/sales-deck`, Playwrigh
 
 - **PDF:** `birlanu-cadence-deck/outputs/BirlaNu-Cadence-Deck.pdf` — 3 pages, 16:9 (1440×810 pt).
 - **Slides (3, condensed from an earlier 6-slide cut):** cover · cadence counts (all five counts +
-  August mark-matrix + approval bar on one page) · enhancements implemented.
+  September mark-matrix + approval bar on one page) · enhancements implemented.
 - **Figures reported for this cadence (supplied, not re-derived from the workbook):**
-  2,323 invoices parsed till date · 30,063 line items till date · 957 parsed in August ·
+  2,323 invoices parsed till date · 30,063 line items till date · 957 parsed in September ·
   181 approved · 36 issues resolved. Only additions are arithmetic from those: 41.2% = 957/2,323,
   12.9 lines/invoice = 30,063/2,323, 7.8% = 181/2,323, 1,366 = 2,323−957.
 - **Source of the numbers:** cadence input from the team — NOT read from the live workbook or

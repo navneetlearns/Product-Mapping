@@ -9,8 +9,8 @@ plus the four enhancements implemented this cycle. Condensed from an earlier 6-s
 ## Slides
 1. Cover — title + the four headline counts.
 2. Cadence counts — all five counts on one page: a 5-cell count strip (2,323 · 30,063 · 957 · 181 · 36,
-   each with its derived sub-figure), a 2,323-mark matrix with 957 filled = August (41.2%, 1,366 before
-   August), the approval bar (7.8% of invoices parsed) and a 36-mark matrix for issues resolved.
+   each with its derived sub-figure), a 2,323-mark matrix with 957 filled = September (41.2%, 1,366 before
+   September), the approval bar (7.8% of invoices parsed) and a 36-mark matrix for issues resolved.
 3. Enhancements implemented — invoice reprocessing (MITM, ZoTok panel), automatic rejection of unclear
    images on WhatsApp, original-invoice link for duplicate detection, page display limit 40 → 100.
 
