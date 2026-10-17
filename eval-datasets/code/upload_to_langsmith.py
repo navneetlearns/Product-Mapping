@@ -27,6 +27,9 @@ USAGE
 NOTES
     - If the target dataset already has examples, the script refuses to add
       more unless --append is passed (prevents accidental duplicates on retry).
+    - If the target dataset exists in a broken state from a failed UI import
+      (empty but carrying an unusable inferred schema), pass --recreate to
+      delete and recreate it.
     - Chunked upload (default 50/call) with progress output; safe to re-run
       only after deleting the dataset if a run was interrupted mid-way.
 """
@@ -106,15 +109,27 @@ def upload_one(file_name: Optional[str], dataset_name: str, args):
 
     from langsmith import Client  # imported late so --dry-run needs no SDK
     client = Client()
+    ds = None
     try:
         ds = client.read_dataset(dataset_name=dataset_name)
         n = ds.example_count or 0
         print(f"   dataset exists: {ds.id} ({n} examples)")
-        if n > 0 and not args.append:
+        if args.recreate:
+            # Clear a dataset that a previous UI import may have left in a
+            # broken state (empty but carrying an unusable inferred schema).
+            client.delete_dataset(dataset_id=ds.id)
+            print("   --recreate: deleted existing dataset")
+            ds = None
+        elif n > 0 and not args.append:
             print("   SKIP: dataset already has examples; pass --append to add more "
                   "(or delete it in the UI first).")
             return
+        elif n == 0:
+            print("   note: dataset exists with 0 examples; if a previous UI import "
+                  "left a broken schema here, pass --recreate.")
     except Exception:
+        ds = None
+    if ds is None:
         ds = client.create_dataset(dataset_name=dataset_name, description=DESCRIPTION)
         print(f"   created dataset: {ds.id}")
 
@@ -137,6 +152,9 @@ def main():
     ap.add_argument("--chunk", type=int, default=50)
     ap.add_argument("--append", action="store_true",
                     help="allow adding to an existing non-empty dataset")
+    ap.add_argument("--recreate", action="store_true",
+                    help="delete an existing target dataset first (clears a broken "
+                         "schema left by a failed UI import), then recreate empty")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
