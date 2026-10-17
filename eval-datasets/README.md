@@ -68,5 +68,14 @@ different sizes or re-sample different titles (availability per bucket above).
   dataset. failed input schema validation")
 - `outputs/*.jsonl` — the three datasets
 - `outputs/selection_summary.csv` — flat list of all 300 chosen cases for eyeballing
+- `code/build_linewise_payload.py` — product-line-wise rebuild of a downloaded experiment
+  export → upload payload (one row per product line; recorded results + the 5 house scores
+  recomputed per line — totals reproduce the source exports exactly)
+- `code/upload_experiment.py` — fires a payload at POST /datasets/upload-experiment
+  (`--dry-run` = offline validation; needs `LANGSMITH_API_KEY` to send). This endpoint is
+  the only route to make recorded results appear as an EXPERIMENT in LangSmith
+- `outputs/linewise/` — line-wise artifacts per experiment: `<slug>_linewise_review.csv`
+  (flat, Excel-friendly), `<slug>_linewise_rows.jsonl` (lean records),
+  `<slug>_upload_payload.json` (the exact POST body)
 - `PLAN-title-level-eval-runs.md` — proposal for running these via LangSmith experiments
   (adapted from the copilot eval harness); §0 decision gates pending user answers
