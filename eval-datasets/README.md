@@ -61,5 +61,8 @@ different sizes or re-sample different titles (availability per bucket above).
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
+- `code/verify_datasets.py` — independent lineage verifier (300/300 pass)
 - `outputs/*.jsonl` — the three datasets
 - `outputs/selection_summary.csv` — flat list of all 300 chosen cases for eyeballing
+- `PLAN-title-level-eval-runs.md` — proposal for running these via LangSmith experiments
+  (adapted from the copilot eval harness); §0 decision gates pending user answers
