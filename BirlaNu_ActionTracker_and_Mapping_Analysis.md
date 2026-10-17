@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-10-09
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem.
+Last updated: 2026-10-17
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -12,6 +12,9 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
 - Live pipeline trace (intent `scheme_invoice`, graph `turnover_schemes`, node `map_catalog_products`, model gpt-5.4-mini):
   invoice 495/26-27, distributor MAA SHERAWALIS MATRABHOOMI PIPES (GST 27AFPPJ3948E1Z6),
   buyer RAMDEV HARDWARE & ELECTRICALS (GST 27CEXPR0237R1ZF), dated 2026-08-23.
+- LangSmith eval export — turnover product-mapping (dataset example version 2026-10-16,
+  mapping revision v8.4.19-2):
+  `/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv` — see §6.
 
 ---
 
@@ -175,6 +178,70 @@ deck rules, house style inherited from `zochief-demo-docs/sales-deck`, Playwrigh
 Status of 1–4: reported in the 2026-10-09 cadence input as implemented. Not yet exercised or
 confirmed in the panel by us — treat as claims pending a smoke test before citing them as fixed.
 
+## 6. LangSmith Eval Export — turnover-product-mapping-136d0d1e (71 invoices / 899 lines)
+
+Analyzed the export at `/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv`
+(LangSmith project agent-playground; mapping revision v8.4.19-2-ga863d2082d4; dataset split
+"base"; example version 2026-10-16). All 71 runs success; avg 21.2s / 8,624 tokens / $0.0015
+per invoice, $0.10 for the whole eval. All numbers reconciled against the export's own
+evaluator columns.
+
+### Headline
+- Model mapped 661/899 lines (73.5%); expected/GT 607/899 (67.5%).
+- Status correct 835/899 (92.9% = 899 − 59 false maps − 5 missed); SKU correct 815/899 (90.7%)
+  after equivalence-aware scoring (20 wrong SKUs; 32 if equivalence ignored).
+- 30/71 invoices carry ≥1 wrong line; 41 clean. Invoice level: fully mapped 25 (GT wants 20),
+  partial 42, fully unmapped 4 (those 4 hold 8 lines total).
+- Confidence bands (mapped / wrong): 80–84: 43/30 · 85–89: 103/39 · 90–94: 198/10 · 95–100: 317/0.
+  Nothing maps at ≤79; the 5 should-have-mapped died under the ≤80 gate at conf 65–76 (correct SKU
+  was in the candidate set for all 5). The 80–89 zone holds 69 of the 79 mapping errors.
+
+### Brand census
+- 709/899 lines (79%) carry a Birla/HIL brand token in the title; 190 don't (~15 of those carry
+  another brand: PRINCE 10, ASTRAL 3, VECTUS 1, SUPREME 1).
+- Invoice level: all 71 invoices have ≥1 branded line; 34/71 fully branded.
+- Candidate side: only 74/899 candidate sets (8%) contain any brand token; of the 709 branded
+  lines just 64 (9%) had a same-brand candidate (645 had none). No non-Birla brand token appears
+  in candidates at all (260/4,450 candidate entries branded; 69 of 1,031 distinct candidates).
+- Brand is a label only: detected to fill matched_brand, then stripped from both sides before
+  matching (title tokens + dimensions only). 621 of the 825 lines with zero branded candidates
+  still mapped.
+
+### MBNF semantics (user-confirmed) + full status rule
+MAPPED_BRAND_NOT_FOUND = "mapped, but the Birla brand keyword (birla/hil) was not found in the
+line title". Complete rule, reproduces 893/899 statuses:
+- brand in title + mapped → MAPPED
+- no brand + exact match (embedded SKU equal to a candidate SKU, or exact normalized title) →
+  MAPPED (both GT and model apply this exception)
+- no brand + fuzzy name match → MBNF
+- no match → UNMAPPED
+Counts (model / GT): MAPPED-brand 535/489 · MAPPED-exact 69/69 · MBNF 57/49 · UNMAPPED 238/292.
+Model vs GT on MBNF: same 49 + 8 over-maps GT wants unmapped (ASTM ELBOW SCH80 25MM ×2, AGRI PVC
+Solvent 500 ML, Upvc Elbow 1", ASTRAL CPVC BRASS TEE 1", 40x25 Reducer, 160mm Elbow, PRINCE UPVC
+SCH 80 UNION 3/4"). Non-Birla brand tokens (ASTRAL/PRINCE/ASHIRVAD/SUPREME…) count as "brand not
+found" → MBNF. 'sku_matched' never surfaces in outputs; code-carrying lines show matched_brand
+None (138) or birla (62) — not a defect.
+
+### Embedded-SKU lines
+200/899 lines carry an 8-digit code that matches a candidate SKU (137 branded / 63 unbranded);
+all 200 mapped via the exact path. Contrast §2: the line-6 failure was the irregular
+`code96000872` extraction, not the code path itself.
+
+### False maps (59) — families
+51 of 59 sit on Birla-branded lines. 39 elbow/bend lines → an angle or series sibling (45° /
+Trans picks, or the "Pressure (kg/cm2)" series in place of CPVC); 4 SELFFIT/Solfit lines →
+Pushfit/SilentFit series; 5 CPVC coupler/brass-tee → Pressure/Reducing picks; 11 other (SWR
+tee/coupler, reducer, solvent, pipe, end cap; incl. the ASTRAL/PRINCE picks).
+
+### Data limits
+The export's candidates (~top-5 per line; 1,031 distinct products) are the mapper's actual
+universe — "exists in master" is testable only against them; the full catalog file on disk
+(`/mnt/f/Product/zotok/Product Mapping/Map Product Zotok Catalogue(Sheet1).csv`, ~2.3k rows)
+is available for a true master pass. The status rule above is inferred from labels + outputs
+(893/899 fit), not read from pipeline source.
+
+---
+
 ## Related AP refs
 AP-23, AP-25 (SKU-in-description-not-mapped) — directly demonstrated by line 6.
 AP-15 (invoice "not found" vs success caption) — also visible in this trace.
@@ -185,3 +252,5 @@ AP-06 (multi-page merge / duplicate processing) — the merge invariant the AP-3
 fix must preserve; AP-30 is its inverse failure.
 AP-35 (duplicate invoices surfaced to a retailer) — downstream symptom fed by
 mis-batched multi-invoice uploads. Mitigated per §5 (original-invoice link now reported shipped).
+AP-23, AP-25 (SKU-in-description) — §6: 200/899 turnover lines carried an embedded code and all
+mapped (clean codes work; §2's failure was the irregular `code96000872` extraction).
