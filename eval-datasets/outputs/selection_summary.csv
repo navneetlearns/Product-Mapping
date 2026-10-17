@@ -1,0 +1,301 @@
+category,normalized_title,expected_status,expected_sku,source_experiment,source_invoice_id,source_serial_no,n_candidates
+sku,96000002 birla cpvc 25mm sdr11 pipe,MAPPED,96000002,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,9,5
+sku,"96000007 cpvc sdr 13.5 3m 3/4""",MAPPED,96000007,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,18,5
+sku,96000007 cpvc sdr 13.5 pipe 3/4 20mm birla,MAPPED,96000007,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,3,5
+sku,96000007- cpvc pipe sdr 13.5 20mm & 96000007- cpvc pipe sdr 13.5 20mm,MAPPED,96000007,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000008 cpvc 13.5 sdr 25mm 1 ’’ pipe birla,MAPPED,96000008,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,2,5
+sku,"96000008 cpvc pipe sdr 13.5 3m 1""",MAPPED,96000008,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,19,5
+sku,96000008- cpvc pipe sdr 13.5 25mm & 96000008- cpvc pipe sdr 13.5 25mm,MAPPED,96000008,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000009- cpvc pipe sdr 13.5 32mm & 96000009- cpvc pipe sdr 13.5 32mm,MAPPED,96000009,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000014 upvc pipe sch 40 1’’,MAPPED,96000014,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,3,5
+sku,"96000043 cpvc tee 3/4""",MAPPED,96000043,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,22,5
+sku,"96000044 cpvc tee 1""",MAPPED,96000044,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,23,5
+sku,96000045 - cpvc tee 32mm & 96000045 - cpvc tee 32mm,MAPPED,96000045,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,"96000049 cpvc socket 3/4""",MAPPED,96000049,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,24,5
+sku,96000050 cpvc coupler 1’’ 25mm birla,MAPPED,96000050,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,4,5
+sku,96000052 cpvc socket 40mm 1 1/2 birla,MAPPED,96000052,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,5,5
+sku,"96000091 cpvc trans mta 3/4*1/2""",MAPPED,96000091,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,33,5
+sku,"96000094 cpvc trans elbow 3/4*1/2""",MAPPED,96000094,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,31,5
+sku,"96000118 upvc elbo 90 1""",MAPPED,96000118,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,6,5
+sku,"96000145 upvc plastic fta 1""",MAPPED,96000145,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,7,5
+sku,"96000172 upvc trans tee 1/2""x1/2""x1/2""",MAPPED,96000172,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,15,5
+sku,"96000174 upvc trans tee 1""x1""x1/2""",MAPPED,96000174,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,12,5
+sku,"96000175 upvc trans elbow 1/2""x1/2""",MAPPED,96000175,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,14,5
+sku,96000181 upvc tank nipple 1,MAPPED,96000181,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,11,5
+sku,96000234 birla cpvc 40mm t.nipple,MAPPED,96000234,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,8,5
+sku,"96000241 cpvc reducing socket 1*3/4""",MAPPED,96000241,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,27,5
+sku,"96000243 cpvc reducing tee 1*1*3/4""",MAPPED,96000243,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,26,5
+sku,96000502 red socket 1*1/2,MAPPED,96000502,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,9,5
+sku,96000674 - swr pipe type a pushfit s/s 3m 75mm & 96000674 - swr pipe type a pushfit s/s 3m 75mm,MAPPED,96000674,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000676 - swr pipe type a pushfit s/s 3m 110mm & 96000676 - swr pipe type a pushfit s/s 3m 110mm,MAPPED,96000676,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000676 swr pipe type a pushfit 3m 110mm,MAPPED,96000676,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,1,5
+sku,96000708 - swr pipe type a pushfit d/s 6ft 110mm & 96000708 - swr pipe type a pushfit d/s 6ft 110mm,MAPPED,96000708,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000712 - swr pipe type a pushfit d/s 3m 110mm & 96000712 - swr pipe type a pushfit d/s 3m 110mm,MAPPED,96000712,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000747 - swr 45 elbow pushfit 110mm & 96000747 - swr 45 elbow pushfit 110mm,MAPPED,96000747,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000754 - swr elbow pushfit 110mm & 96000754 - swr elbow pushfit 110mm,MAPPED,96000754,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000754 bend 110mm swr birla,MAPPED,96000754,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,9,5
+sku,96000757 elbow wth door 110mm swr birla,MAPPED,96000757,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,11,5
+sku,96000788 - swr p trap small 110x110mm & 96000788 - swr p trap small 110x110mm,MAPPED,96000788,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000899 - pressure elbow 90 (10kg/cm2) 40mm & 96000899 - pressure elbow 90 (10kg/cm2) 40mm,MAPPED,96000899,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96000900 - pressure elbow 90 (10kg/cm2) 50mm & 96000900 - pressure elbow 90 (10kg/cm2) 50mm,MAPPED,96000900,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,"96000914 birla pvc 63mm (2"") coupler 6kg",MAPPED,96000914,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,3,5
+sku,96000966 birla pvc 90mm 1/2ft.pipe,MAPPED,96000966,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,6,5
+sku,"96000992 upvc bal valve 1"" mfg",MAPPED,96000992,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,5,5
+sku,96000995 - cpvc elbow 45 d 32mm & 96000995 - cpvc elbow 45 d 32mm,MAPPED,96000995,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,96001397 - pressure pipe class-1 3m 160mm & 96001397 - pressure pipe class-1 3m 160mm,MAPPED,96001397,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+sku,"96001470 birla pvc 63mm (2"") elbow 4kg",MAPPED,96001470,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,1,5
+sku,"96001471 birla pvc 63mm (2"") tee 4kg",MAPPED,96001471,turnover-product-mapping-136d0d1e,a2de1264-ea0a-476b-96c0-bb965af6de73,2,5
+sku,96001487 swr nahani trap 110x75 birla,MAPPED,96001487,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,16,5
+sku,98000410 upvc clear solvent 59.5ml can,MAPPED,98000410,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,36,5
+sku,agri elbow 6 kg - 63 mm birlanu (96000901),MAPPED,96000901,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,22,5
+sku,agri pipe class- 2 6m 63mm long socket birlanu (96001282),MAPPED,96001282,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,2,5
+sku,agri pipe class-2 6m 90mm long socket birlanu (96001284),MAPPED,96001284,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,1,5
+sku,"cpvc ball valve long handle 1 1/2"" birlanu (98000575)",MAPPED,98000575,turnover-product-mapping-136d0d1e,9da40cfb-eee4-4bee-8a37-1331021a644f,6,5
+sku,cpvc elbo 90 deg - 1 1/2’ birlanu (96000040),MAPPED,96000040,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,2,5
+sku,cpvc elbo 90 deg - 1' birlanu (96000038),MAPPED,96000038,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,4,5
+sku,cpvc elbo 90 deg - 1’ birlanu (96000038),MAPPED,96000038,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,1,5
+sku,"cpvc elbo 90 deg - 2"" birlanu (96000041)",MAPPED,96000041,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,34,5
+sku,cpvc elbo 90 deg - 3/4' birlanu (96000037),MAPPED,96000037,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,3,5
+sku,"cpvc pipe sdr 11 - 1"" birlanu (96000002)",MAPPED,96000002,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,10,5
+sku,cpvc pipe sdr 13.5 ( 3 mtr ) - 1 1/2' bilranu (96000010),MAPPED,96000010,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,13,5
+sku,cpvc pipe sdr 13.5 ( 3 mtr ) - 1' birlanu (96000008),MAPPED,96000008,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,14,5
+sku,"cpvc pipe sdr 13.5(3 mtr)- 3/4"" birlanu (96000007)",MAPPED,96000007,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,15,5
+sku,"cpvc reducer bushing 2 x 1 "" birlanu (96000077)",MAPPED,96000077,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,38,5
+sku,"cpvc reducing socket 1 1/4 x 1"" birlanu (96000310)",MAPPED,96000310,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,8,5
+sku,cpvc reducing socket 1' x 3/4' birlanu (96000241),MAPPED,96000241,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,5,5
+sku,cpvc socket 1 1/2’ birlanu (96000052),MAPPED,96000052,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,6,5
+sku,cpvc socket 1’ birlanu (96000050),MAPPED,96000050,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,5,5
+sku,cpvc tee 1 1/2’ birlanu (96000046),MAPPED,96000046,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,3,5
+sku,cpvc tee 1 1/4' birlanu (96000045),MAPPED,96000045,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,7,5
+sku,cpvc tee 1' birlanu (96000044),MAPPED,96000044,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,41,5
+sku,cpvc tee 1’ birlanu (96000044),MAPPED,96000044,turnover-product-mapping-136d0d1e,848bfb26-fc22-4349-9982-78d52ab4e9c6,4,5
+sku,"cpvc trans fta 3/4 x 1/2"" birlanu (96000083)",MAPPED,96000083,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,1,5
+sku,cpvc trans mta 1' birlanu (96000092),MAPPED,96000092,turnover-product-mapping-136d0d1e,0cf09a62-4a0e-4794-ae70-eb07244ad929,2,5
+sku,"pipe 6 kg - 3 mtr 40 mm 1 1/4"" birlanu (96000871)",MAPPED,96000871,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,7,5
+sku,"pipe 6 kg - 3 mtr 50 mm 1 1/2"" birlanu (96000872)",MAPPED,96000872,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,6,5
+sku,swr 45 deg single y solfit 110 mm birlanu (96000837),MAPPED,96000837,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,16,5
+sku,swr 45 elbow pushfit 110 mm birlanu (96000747),MAPPED,96000747,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,10,5
+sku,swr coupler s/f 90 mm birlanu (98000440),MAPPED,98000440,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,6,5
+sku,swr coupler solfit 110 mm birlanu (96000767),MAPPED,96000767,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,7,5
+sku,swr elbow pushfit 75 mm birlanu (96000753),MAPPED,96000753,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,12,5
+sku,swr elbow solfit 110 mm birlanu (96000750),MAPPED,96000750,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,24,5
+sku,swr pipe 3 mtr pushfit 110 mm birlanu (96000676),MAPPED,96000676,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,3,5
+sku,swr pipe 3 mtr pushfit 75 mm birlanu (96000674),MAPPED,96000674,turnover-product-mapping-136d0d1e,823f251a-6953-437a-8e93-e230167eff3f,4,5
+sku,swr pipe 3 mtr solfit 110 mm birlanu (96000604),MAPPED,96000604,turnover-product-mapping-136d0d1e,1881b343-8c7c-4632-aef7-b382a07a4f06,1,5
+sku,swr pipe 3 mtr solfit 160 mm birlanu (96000605),MAPPED,96000605,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,5,5
+sku,swr tee solfit 110 mm birlanu (96000807),MAPPED,96000807,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,3,5
+sku,"upvc ball valve long handel compact 3/4"" birlanu (98000608)",MAPPED,98000608,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,26,5
+sku,upvc elbo 90 deg - 1' birlanu (96000118),MAPPED,96000118,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,22,5
+sku,upvc elbo 90 deg - 1/2' birlanu (96000116),MAPPED,96000116,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,21,5
+sku,upvc elbo 90 deg - 3/4' birlanu (96000117),MAPPED,96000117,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,12,5
+sku,"upvc pipe sch 40 ( 3 mtr ) - 1 1/4"" birlanu (96000015)",MAPPED,96000015,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,17,5
+sku,upvc pipes sch 40 ( 3 mtr ) - 1' birlanu (96000014),MAPPED,96000014,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,10,5
+sku,upvc pipes sch 40 ( 3 mtr ) - 1/2' birlanu (96000012),MAPPED,96000012,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,11,5
+sku,upvc pipes sch 40 ( 3 mtr ) - 3/4 birlanu (96000013),MAPPED,96000013,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,15,5
+sku,upvc pipes sch 40 (3 mtr) - 1 1/2'' birlanu (96000016),MAPPED,96000016,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,9,5
+sku,"upvc plastic fta 1 1/4"" birlanu (96000388)",MAPPED,96000388,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,26,5
+sku,"upvc plastics fta 1 1/2"" (96000319)",MAPPED,96000319,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,24,5
+sku,"upvc plastics fta 2"" birlanu (96000320)",MAPPED,96000320,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,27,5
+sku,"upvc plastics mta 2"" (96000322)",MAPPED,96000322,turnover-product-mapping-136d0d1e,4b2b902d-fc69-40c5-bf9e-c258d46b9e16,25,5
+sku,upvc reducing socket 1' x 3/4' fab (96000503),MAPPED,96000503,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,14,5
+sku,"upvc trans tee 3/4 x 3/4 x 1/2"" birlanu (96000173)",MAPPED,96000173,turnover-product-mapping-136d0d1e,a49f1921-c892-4700-a3a2-a118e1dc3960,13,5
+brand,"1 1/2"" upvc tee birla",MAPPED,96000128,turnover-product-mapping-136d0d1e,22233416-5bf7-40a3-b333-225b3fc8b357,3,5
+brand,"1 1/4"" cpvc elb birla",MAPPED,96000039,turnover-product-mapping-136d0d1e,576fd760-f266-4293-ba2c-8a19f60f24a3,2,5
+brand,"1 1/4"" cpvc elbow birla",UNMAPPED,,turnover-product-mapping-136d0d1e,576fd760-f266-4293-ba2c-8a19f60f24a3,1,5
+brand,"1 1/4"" cpvc socket birla",MAPPED,96000051,turnover-product-mapping-136d0d1e,22233416-5bf7-40a3-b333-225b3fc8b357,10,5
+brand,"1 1/4"" cpvc union birla",MAPPED,96000307,turnover-product-mapping-136d0d1e,576fd760-f266-4293-ba2c-8a19f60f24a3,6,5
+brand,"1"" cpvc tank nipple birla",MAPPED,96000099,turnover-product-mapping-136d0d1e,915c5c73-c68e-42a0-9e77-1e2ddcadcd65,9,5
+brand,"1"" upvc soc sub v4-12.5 pipe (lc) birla",MAPPED,96001811,turnover-product-mapping-136d0d1e,915c5c73-c68e-42a0-9e77-1e2ddcadcd65,1,5
+brand,110mm pvc end cap 6kg birlanu,MAPPED,96000924,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,17,5
+brand,110mm swr door tee birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,4,5
+brand,110mm swr vent cowl birlanu,MAPPED,96000835,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,12,5
+brand,20 x 15mm cpvc brass elbow 90* birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,23,5
+brand,20mm cpvc elbow 'birla',UNMAPPED,,turnover-product-mapping-136d0d1e,823a25b3-88e4-47fa-8e60-6fed33f63dd5,3,5
+brand,20mm cpvc elbow 90* birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,18,5
+brand,25mm pvc elbow 45* 10kg birlanu,MAPPED,96002004,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,38,5
+brand,25mm pvc elbow 90* 10kg birla,MAPPED,96001522,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,35,5
+brand,25mm pvc mta 10kg birlanu,MAPPED,96001965,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,36,5
+brand,"3/4""x1/2""x6"" cpvc mixer adopter birla",MAPPED,96001489,turnover-product-mapping-136d0d1e,56041d4a-a1bf-4824-b37c-1d54f831d426,2,5
+brand,32 x 25mm cpvc red.elbow 90* birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,25,5
+brand,32mm cpvc mapt (birlanu),UNMAPPED,,turnover-product-mapping-136d0d1e,4aca66e8-3c03-439f-9975-07f154d56819,8,5
+brand,32mm upvc pipe sch 40 [6 mtr] birlanu,MAPPED,96000021,turnover-product-mapping-136d0d1e,3c691d46-d4c8-4150-805b-efb297cfcc47,2,5
+brand,75mm swr elbow 45* birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,11,5
+brand,90mm swr elbow 90*birlanu,MAPPED,98000441,turnover-product-mapping-136d0d1e,6f6943f2-9843-4469-ba0c-16739a3d4ddc,7,5
+brand,agri elbow 90d 10kg 40mm birlanu,MAPPED,96000899,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,27,5
+brand,agri pipe 160mm class-1 (birlanu),MAPPED,96001397,turnover-product-mapping-136d0d1e,c80ebf6b-9925-4572-8357-c404fab0ffde,19,5
+brand,agri reducer 160x110 mm birlanu,MAPPED,96000932,turnover-product-mapping-136d0d1e,12b375b8-1099-4eb6-9768-ce3153942604,5,5
+brand,"astm ball valve 1/2"" long birlanu",MAPPED,98000605,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,26,5
+brand,"astm elbow sch80 15mm 1/2"" birlanu",UNMAPPED,,turnover-product-mapping-136d0d1e,6db21831-331a-4697-b1ac-5eac8e932b18,7,5
+brand,"astm pipe 1"" sch40 6mtr birlanu",UNMAPPED,,turnover-product-mapping-136d0d1e,8a95c508-63b7-4d63-92ad-0c0b2f1a8c5a,5,5
+brand,"birla - cpvc is pipe sdr 11 (3 mtr) 3/4""",MAPPED,96000001,turnover-product-mapping-136d0d1e,ad8d736e-832f-4f8a-9b9c-64626c706588,1,5
+brand,"birla - cpvc trans elbow 3/4"" x 1/2""",MAPPED,96000094,turnover-product-mapping-136d0d1e,ad8d736e-832f-4f8a-9b9c-64626c706588,2,5
+brand,"birla cpvc 45 d elbow 1 1/4""",MAPPED,96000995,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,30,5
+brand,"birla cpvc 46 d elbow 2""",MAPPED,96000997,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,23,5
+brand,birla cpvc coupler 32mm,UNMAPPED,,turnover-product-mapping-136d0d1e,a021e4b0-b7c1-4d04-8a54-c2fe6b0af2c2,8,5
+brand,"birla cpvc elbo 90° 3/4""",MAPPED,96000037,turnover-product-mapping-136d0d1e,ccc510ec-0aca-4c2d-be13-83ba06bc1948,4,5
+brand,"birla cpvc elbow 1"" x 1/2""",MAPPED,96000325,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,16,5
+brand,"birla cpvc elbow 2""",MAPPED,96000997,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,17,5
+brand,"birla cpvc elbow 3/4""",UNMAPPED,,turnover-product-mapping-136d0d1e,69d5c2e3-beaf-4a06-ba9b-339cbf5151a0,2,5
+brand,"birla cpvc end cap 2""",MAPPED,96000301,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,24,5
+brand,"birla cpvc isi pipe sdr 11(3mtr) 3/4""",MAPPED,96000001,turnover-product-mapping-136d0d1e,a22136d8-e9bf-4bdc-a48f-d65a7fbe3c16,4,5
+brand,"birla cpvc reducer bushing 1 1/2""x1""",MAPPED,96000074,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,37,5
+brand,"birla cpvc sdr 11 ballvalve 1-1/4""",UNMAPPED,,turnover-product-mapping-136d0d1e,e66b3721-c9d0-44b9-a303-1fcf1f73dc22,12,5
+brand,"birla cpvc socket 11/4""",UNMAPPED,,turnover-product-mapping-136d0d1e,ccc510ec-0aca-4c2d-be13-83ba06bc1948,22,5
+brand,"birla cpvc stop over bend 1""",MAPPED,96000115,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,33,5
+brand,"birla cpvc union 11/4""",MAPPED,96000307,turnover-product-mapping-136d0d1e,ccc510ec-0aca-4c2d-be13-83ba06bc1948,18,5
+brand,birla hil water tank-white 3lyr 1000l & birla hil water tank -white 3lyr 1000l,MAPPED,98000507,turnover-product-mapping-136d0d1e,df06ab58-9f41-4214-9796-05194dd535f0,,5
+brand,birla pvc elbow 6kg 110mm,MAPPED,96000904,turnover-product-mapping-136d0d1e,d33410ab-e086-46ed-bf20-8712850f2a93,2,5
+brand,birla pvc pipe 6kg 110mm,UNMAPPED,,turnover-product-mapping-136d0d1e,401bb202-9bce-401a-a9f2-8ace824b0ca8,9,5
+brand,birla pvc pipe 6kg 50mm,UNMAPPED,,turnover-product-mapping-136d0d1e,401bb202-9bce-401a-a9f2-8ace824b0ca8,7,5
+brand,birla pvc pipe 6kg 90mm,UNMAPPED,,turnover-product-mapping-136d0d1e,401bb202-9bce-401a-a9f2-8ace824b0ca8,8,5
+brand,birla swr pipe type a s/f (6mtr) 110mm,UNMAPPED,,turnover-product-mapping-136d0d1e,2d8178f9-6eb9-4cc8-addf-ea3bf16d1997,10,5
+brand,birla swr pipe type a s/f (6mtr) 75mm,UNMAPPED,,turnover-product-mapping-136d0d1e,2d8178f9-6eb9-4cc8-addf-ea3bf16d1997,11,5
+brand,birla swr pipe type b 160 mm,MAPPED,96000963,turnover-product-mapping-136d0d1e,1de6a180-e83a-4133-a1d9-5ef250708fbd,3,5
+brand,birla tank white 3layer 500l,MAPPED,98000505,turnover-product-mapping-136d0d1e,5e5e3c1e-987d-4fbc-9584-444a55520262,38,5
+brand,"birla upvc brass elbow 1/2""",MAPPED,96000175,turnover-product-mapping-136d0d1e,2d8178f9-6eb9-4cc8-addf-ea3bf16d1997,26,5
+brand,"birla upvc end cap 1 1/2""",MAPPED,96000303,turnover-product-mapping-136d0d1e,35a1823d-51e9-424c-9eb1-646ec300c3b7,9,5
+brand,"birla upvc fta 1""",MAPPED,96000145,turnover-product-mapping-136d0d1e,2d8178f9-6eb9-4cc8-addf-ea3bf16d1997,13,5
+brand,"birla upvc mta 1/2""",MAPPED,96000139,turnover-product-mapping-136d0d1e,401bb202-9bce-401a-a9f2-8ace824b0ca8,10,5
+brand,birla upvc pipe 25mm sch40 3mtr,UNMAPPED,,turnover-product-mapping-136d0d1e,a021e4b0-b7c1-4d04-8a54-c2fe6b0af2c2,1,5
+brand,"birla upvc pipe 40sch 6mtr. 1""",UNMAPPED,,turnover-product-mapping-136d0d1e,d33410ab-e086-46ed-bf20-8712850f2a93,7,5
+brand,"birla upvc tee 1/2""",MAPPED,96000122,turnover-product-mapping-136d0d1e,d33410ab-e086-46ed-bf20-8712850f2a93,13,5
+brand,"birla upvc union 1""",MAPPED,96000196,turnover-product-mapping-136d0d1e,2d8178f9-6eb9-4cc8-addf-ea3bf16d1997,29,5
+brand,birlanu rotto tank 3l 750litre,MAPPED,98000506,turnover-product-mapping-136d0d1e,8e3090a7-1a75-4a4a-89da-277adfb15d6f,3,5
+brand,"ck birla cpvc 1"" elbow",UNMAPPED,,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,10,5
+brand,"ck birla cpvc 1"" tee",MAPPED,96000044,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,36,5
+brand,"ck birla upvc 3/4x1/2"" bush",MAPPED,96000146,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,42,5
+brand,"cpvc ball valve 1.25"" compact trdbirla",UNMAPPED,,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,13,5
+brand,"cpvc ball valve 1.50"" long birlanu",UNMAPPED,,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,14,5
+brand,"cpvc coupler 40mm 1.50"" birlanu",UNMAPPED,,turnover-product-mapping-136d0d1e,12b375b8-1099-4eb6-9768-ce3153942604,8,5
+brand,"cpvc elbow 90' 1.25""x1"" birlanu",MAPPED,96000478,turnover-product-mapping-136d0d1e,8a95c508-63b7-4d63-92ad-0c0b2f1a8c5a,16,5
+brand,"cpvc elbow 90' 1x3/4"" birlanu",UNMAPPED,,turnover-product-mapping-136d0d1e,8a95c508-63b7-4d63-92ad-0c0b2f1a8c5a,15,5
+brand,"cpvc end plug 3/4"" birla",MAPPED,98000312,turnover-product-mapping-136d0d1e,0b24f448-66a6-4f1a-af50-ff2706150f45,9,5
+brand,"cpvc isi pipe sdr13.50 3/4"" 3mtr birla",MAPPED,96000007,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,3,5
+brand,cpvc reducing tee 1.25x3/4 birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,8a95c508-63b7-4d63-92ad-0c0b2f1a8c5a,19,5
+brand,"cpvc soc tank nipple 1"" birlanu",MAPPED,96000518,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,11,5
+brand,cpvc solvent 118 ml can birla nu,MAPPED,98000122,turnover-product-mapping-136d0d1e,3f3daf32-562f-45a7-bfb3-c553e7a7d875,9,5
+brand,cpvc solvent 118ml birlanu,MAPPED,98001250,turnover-product-mapping-136d0d1e,5d23848f-3e0c-41db-8046-13f53714067a,19,5
+brand,cpvc solvent 237ml birlanu,MAPPED,98001251,turnover-product-mapping-136d0d1e,6db21831-331a-4697-b1ac-5eac8e932b18,17,5
+brand,"hil cpvc brass elbow 3/4"" x 1/2""",MAPPED,96000094,turnover-product-mapping-136d0d1e,18604086-3bf8-463d-bab6-c7f16216365a,5,5
+brand,"hil pvc pipe 4"" type-a",MAPPED,96000943,turnover-product-mapping-136d0d1e,18604086-3bf8-463d-bab6-c7f16216365a,2,5
+brand,pressure elbow 90' (d/s) 75mm birla,MAPPED,96001432,turnover-product-mapping-136d0d1e,f620f60d-cd41-4d28-a0ea-5d5035428232,3,5
+brand,pvc coupler 110mm 6kg birla,MAPPED,96000917,turnover-product-mapping-136d0d1e,07fbc4b7-0988-49a7-a942-7c530858b732,4,5
+brand,pvc pipe 90mm 2.5kg birla,MAPPED,96001405,turnover-product-mapping-136d0d1e,72665597-32c3-4705-a281-06690518ccdf,4,5
+brand,pvc pipe 90mmx4kg (birla),UNMAPPED,,turnover-product-mapping-136d0d1e,0b24f448-66a6-4f1a-af50-ff2706150f45,1,5
+brand,pvc plain bend 160mm -birlanu,MAPPED,96001504,turnover-product-mapping-136d0d1e,a13ef73c-2b51-48ca-a0b7-6f10bf7946a8,2,5
+brand,pvc swr pipe 90mm birla,UNMAPPED,,turnover-product-mapping-136d0d1e,72665597-32c3-4705-a281-06690518ccdf,2,5
+brand,swr pipe 110mmx4kg (birla),UNMAPPED,,turnover-product-mapping-136d0d1e,4aff1fdc-c1eb-4491-821b-3e2f89450efa,1,5
+brand,swr pipe push fit 3m 110mm birla nu,MAPPED,98000874,turnover-product-mapping-136d0d1e,3f3daf32-562f-45a7-bfb3-c553e7a7d875,5,5
+brand,swr pipe selffit type a 75m 6mt birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,6db21831-331a-4697-b1ac-5eac8e932b18,11,5
+brand,swr selffit tee 110x75mm birlanu,UNMAPPED,,turnover-product-mapping-136d0d1e,12b375b8-1099-4eb6-9768-ce3153942604,6,5
+brand,swr single tee 110mm (birla),MAPPED,412102014,turnover-product-mapping-136d0d1e,adf0b535-e11f-4f01-a46d-40c93c9ecdd4,2,5
+brand,"upvc coupler 1"" birla",UNMAPPED,,turnover-product-mapping-136d0d1e,691920c0-2a00-4632-9464-6535946755a9,17,5
+brand,"upvc coupler 1/2"" birla",UNMAPPED,,turnover-product-mapping-136d0d1e,ef084eb5-c55a-46f7-9de6-cbe944763aea,3,5
+brand,"upvc elbow 90 deg 3/4"" birla",UNMAPPED,,turnover-product-mapping-136d0d1e,b3ecee94-6940-4118-9814-b2c7f4313794,6,5
+brand,"upvc elbow 90* 1 1/4"" (birlanu)",UNMAPPED,,turnover-product-mapping-136d0d1e,c80ebf6b-9925-4572-8357-c404fab0ffde,8,5
+brand,upvc pipe 40sch 1 1/4 birla,MAPPED,96000021,turnover-product-mapping-136d0d1e,72665597-32c3-4705-a281-06690518ccdf,7,5
+brand,"upvc pipe sch 40 1 1/2"" (birlanu)",MAPPED,96000016,turnover-product-mapping-136d0d1e,c80ebf6b-9925-4572-8357-c404fab0ffde,2,5
+brand,"upvc pipe sch 40 1"" birla",MAPPED,96000014,turnover-product-mapping-136d0d1e,691920c0-2a00-4632-9464-6535946755a9,1,5
+brand,upvc pipe sch 40 3 m 15mm pipe birla nu,UNMAPPED,,turnover-product-mapping-136d0d1e,3f3daf32-562f-45a7-bfb3-c553e7a7d875,1,5
+brand,upvc pipes sch 40 (6mrt) 1 inchi birla,MAPPED,96000020,turnover-product-mapping-136d0d1e,ba685842-6fca-4c04-a8d3-dc38a80c00e4,2,5
+brand,"upvc tee 1"" (birlanu)",MAPPED,96000125,turnover-product-mapping-136d0d1e,c80ebf6b-9925-4572-8357-c404fab0ffde,14,5
+titleonly,100ml solvent swr,MAPPED,98001276,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,29,5
+titleonly,110mm 45 elbow,MAPPED,96000897,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,2,5
+titleonly,110mm y,UNMAPPED,,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,5,5
+titleonly,"2""x3/4"" pvc saddle",UNMAPPED,,turnover-product-mapping-136d0d1e,22233416-5bf7-40a3-b333-225b3fc8b357,16,5
+titleonly,20mm consilled,UNMAPPED,,turnover-product-mapping-676119ee,a3fcab39-0b98-4253-9552-c7552f94d866,2,5
+titleonly,20mm socket,UNMAPPED,,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,24,5
+titleonly,25mm cpvc fabt (sudhakar),UNMAPPED,,turnover-product-mapping-136d0d1e,4aca66e8-3c03-439f-9975-07f154d56819,10,5
+titleonly,32mm cpvc mabt (sudhakar),UNMAPPED,,turnover-product-mapping-136d0d1e,4aca66e8-3c03-439f-9975-07f154d56819,13,5
+titleonly,32mm cpvc sweep bend with socket (ashirvad),MAPPED_BRAND_NOT_FOUND,96001719,turnover-product-mapping-136d0d1e,4aca66e8-3c03-439f-9975-07f154d56819,14,5
+titleonly,75mm socket,UNMAPPED,,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,8,5
+titleonly,75mm y,UNMAPPED,,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,9,5
+titleonly,"cpvc 1"" sweep bend",MAPPED_BRAND_NOT_FOUND,96002350,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,17,5
+titleonly,cpvc 25mm elbow,UNMAPPED,,turnover-product-mapping-676119ee,97485bac-2499-459a-a2bd-e7b9b80c46f0,15,5
+titleonly,"cpvc 3/4"" brass fta",MAPPED_BRAND_NOT_FOUND,96000082,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,35,5
+titleonly,"cpvc ball valve 1 1/2""",MAPPED,98000575,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,43,5
+titleonly,"cpvc ball valve 3/4""",MAPPED_BRAND_NOT_FOUND,96000991,turnover-product-mapping-676119ee,3c22c722-4c0c-4c23-a540-3495c2db759b,6,5
+titleonly,"cpvc elbo 3/4""",MAPPED_BRAND_NOT_FOUND,96000037,turnover-product-mapping-136d0d1e,0b24f448-66a6-4f1a-af50-ff2706150f45,10,5
+titleonly,"cpvc elbo 90* 1""",MAPPED,96000038,turnover-product-mapping-676119ee,d5a61731-1756-4910-bfb9-9d9ddb116141,12,5
+titleonly,"cpvc elbo 90° 1""",MAPPED,96000038,turnover-product-mapping-676119ee,6405b313-b522-4c38-ba4c-33c8ede94dde,2,5
+titleonly,"cpvc elbow 90deg plain 20mm (3/4"")",UNMAPPED,,turnover-product-mapping-676119ee,e8a036ac-5988-4e15-b940-bf03f4b384e7,3,5
+titleonly,"cpvc pipe sdr 13.5 (3 mtr) 1""",MAPPED,96000008,turnover-product-mapping-676119ee,2534280d-03c6-42ba-a6d7-e18b6b48c5c7,2,5
+titleonly,"cpvc reducing elbow 1 1/4""x3/4""",MAPPED,96000477,turnover-product-mapping-676119ee,2dc1615b-56b9-49b5-9315-bdc21f5b659d,26,5
+titleonly,"cpvc reducing elbow 1""x3/4""",UNMAPPED,,turnover-product-mapping-676119ee,2dc1615b-56b9-49b5-9315-bdc21f5b659d,13,5
+titleonly,"cpvc reducing tee 1""x1""x3/4""",UNMAPPED,,turnover-product-mapping-676119ee,2dc1615b-56b9-49b5-9315-bdc21f5b659d,12,5
+titleonly,"cpvc soc tank nipple 1""",MAPPED,96000518,turnover-product-mapping-676119ee,d5a61731-1756-4910-bfb9-9d9ddb116141,4,5
+titleonly,"cpvc socket 1""",MAPPED,96000050,turnover-product-mapping-676119ee,e22533b0-c387-4b51-b416-ef0cdb261cb0,28,5
+titleonly,"cpvc socket 3/4""",MAPPED_BRAND_NOT_FOUND,96000049,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000049,5
+titleonly,"cpvc trans fta 3/4""x1/2""",UNMAPPED,,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,38,5
+titleonly,"cpvc trans mta 1/2""",MAPPED_BRAND_NOT_FOUND,96000089,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000089,5
+titleonly,"cpvc trans mta 1x3/4""",MAPPED,96000346,turnover-product-mapping-136d0d1e,fdfd0f70-3375-44d8-80c0-1cccc9749b50,6,5
+titleonly,"cpvc trans tea 3/4""x1/2""",UNMAPPED,,turnover-product-mapping-676119ee,2534280d-03c6-42ba-a6d7-e18b6b48c5c7,3,5
+titleonly,"cpvc trasition bushing 3/4""",MAPPED_BRAND_NOT_FOUND,96000480,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000480,5
+titleonly,"elbow 11/4""",UNMAPPED,,turnover-product-mapping-136d0d1e,ccc510ec-0aca-4c2d-be13-83ba06bc1948,20,5
+titleonly,"elbow 1x1/2""",UNMAPPED,,turnover-product-mapping-136d0d1e,a22136d8-e9bf-4bdc-a48f-d65a7fbe3c16,8,5
+titleonly,eldo sink cock,UNMAPPED,,turnover-product-mapping-676119ee,fda09b35-abdb-4a0d-8909-922fd5b09a41,9,5
+titleonly,eldo swan neck,UNMAPPED,,turnover-product-mapping-676119ee,fda09b35-abdb-4a0d-8909-922fd5b09a41,8,5
+titleonly,eldo twin bib cock,UNMAPPED,,turnover-product-mapping-676119ee,fda09b35-abdb-4a0d-8909-922fd5b09a41,13,5
+titleonly,flr-2603/cpf,UNMAPPED,,turnover-product-mapping-676119ee,29e6a94d-56dc-4a6a-bfb6-3a73d3374230,7,0
+titleonly,"g.i clip 1/2"" heavy",UNMAPPED,,turnover-product-mapping-136d0d1e,691920c0-2a00-4632-9464-6535946755a9,8,5
+titleonly,indian-ss kitchen sink 18x16-hand made,UNMAPPED,,turnover-product-mapping-136d0d1e,8c4d80e1-77ed-4be9-bc8f-f6f878c777ee,14,5
+titleonly,indian-ss kitchen sink 24x18-hand made,UNMAPPED,,turnover-product-mapping-136d0d1e,8c4d80e1-77ed-4be9-bc8f-f6f878c777ee,13,5
+titleonly,kaju clamp 1 1/2 cpvc,MAPPED_BRAND_NOT_FOUND,98000120,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,8,5
+titleonly,kaju clamp 1’’ cpvc,MAPPED_BRAND_NOT_FOUND,98000207,turnover-product-mapping-136d0d1e,0acb9193-ff22-4a34-a827-160d10ba1576,7,5
+titleonly,metalic wire mesh,UNMAPPED,,turnover-product-mapping-136d0d1e,ccc510ec-0aca-4c2d-be13-83ba06bc1948,27,0
+titleonly,p.csp-2822-angle cock-casper plus-w.blue,UNMAPPED,,turnover-product-mapping-136d0d1e,8c4d80e1-77ed-4be9-bc8f-f6f878c777ee,5,5
+titleonly,pearl-ball pen-promotional,UNMAPPED,,turnover-product-mapping-136d0d1e,8c4d80e1-77ed-4be9-bc8f-f6f878c777ee,7,5
+titleonly,pearl-key ring-promotional,UNMAPPED,,turnover-product-mapping-136d0d1e,8c4d80e1-77ed-4be9-bc8f-f6f878c777ee,8,4
+titleonly,pressure elbow 90 110mm,MAPPED_BRAND_NOT_FOUND,96001427,turnover-product-mapping-676119ee,3c22c722-4c0c-4c23-a540-3495c2db759b,2,5
+titleonly,pressure elbow 90 110mm (lw),MAPPED,96001427,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,23,5
+titleonly,pressure elbow 90 4kg 63mm,MAPPED,96001470,turnover-product-mapping-676119ee,127ab923-12a0-4613-8edc-e01b40be8700,1,5
+titleonly,pressure elbow 90d d/s (4kg/cm2) 90mm lw,MAPPED_BRAND_NOT_FOUND,96001476,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,pressure equal tee 90 4kg 63mm,MAPPED,96001471,turnover-product-mapping-676119ee,127ab923-12a0-4613-8edc-e01b40be8700,2,5
+titleonly,pressure pipe class 1 6m 110mm,MAPPED,96001406,turnover-product-mapping-676119ee,d5a61731-1756-4910-bfb9-9d9ddb116141,15,5
+titleonly,pressure pipe class 3 6m 160mm,MAPPED,96000891,turnover-product-mapping-676119ee,afc6c699-ce20-49c0-8bc1-077ad1b7c566,1,5
+titleonly,pressure plain coupler (d/s) 110mm,MAPPED_BRAND_NOT_FOUND,96001429,turnover-product-mapping-676119ee,0dd33c98-d544-41e0-859a-6568743fa8cd,1,5
+titleonly,pressure plain end cap 6kg 90mm,MAPPED,96000923,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,20,5
+titleonly,pressure reducer (6kg/cm2) - 110x90mm,MAPPED,96000931,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,prg 701 gracia cistern single flush (white),UNMAPPED,,turnover-product-mapping-136d0d1e,06bddf7e-b29a-4819-a848-d438cf1fc3d0,11,5
+titleonly,pvc 110mm end cap,MAPPED_BRAND_NOT_FOUND,96000924,turnover-product-mapping-136d0d1e,ccfe5b2a-1fec-465e-8bfb-ae47760ac514,15,5
+titleonly,pvc elbow 90mmx4kg,UNMAPPED,,turnover-product-mapping-136d0d1e,0b24f448-66a6-4f1a-af50-ff2706150f45,6,5
+titleonly,sink cock t.m pan 4235,UNMAPPED,,turnover-product-mapping-676119ee,fda09b35-abdb-4a0d-8909-922fd5b09a41,10,5
+titleonly,swr 3inch nahani trap 110x90mm,MAPPED,96001488,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,swr 45 deg single y 90mm,MAPPED,96001839,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,swr cleaning pipe pushfit 110 mm,MAPPED_BRAND_NOT_FOUND,96000764,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000764,5
+titleonly,swr elbow pushfit 75 mm,MAPPED,96000753,turnover-product-mapping-676119ee,d5a61731-1756-4910-bfb9-9d9ddb116141,19,5
+titleonly,swr elbow pushfit 75mm,MAPPED,96000753,turnover-product-mapping-676119ee,c0d634dc-3668-4cfc-89fc-c2c895f76e9b,10,5
+titleonly,swr pipe type a pushfit s/s 3m 110 mm,MAPPED,96000676,turnover-product-mapping-676119ee,307f1bf8-6785-48a8-ad15-a2ab847eae0e,2,5
+titleonly,swr pipe type a pushfit s/s 3mtr 110 mm,MAPPED,96000676,turnover-product-mapping-136d0d1e,ba685842-6fca-4c04-a8d3-dc38a80c00e4,3,5
+titleonly,swr single tee pushfit 90mm,MAPPED_BRAND_NOT_FOUND,98000443,turnover-product-mapping-676119ee,0dd33c98-d544-41e0-859a-6568743fa8cd,3,5
+titleonly,swr single y pushfit 110 mm,MAPPED_BRAND_NOT_FOUND,96000841,turnover-product-mapping-676119ee,0dd33c98-d544-41e0-859a-6568743fa8cd,2,5
+titleonly,swr vent cowel 75 mm,MAPPED,96000834,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,24,5
+titleonly,taplon tape,MAPPED_BRAND_NOT_FOUND,98000503,turnover-product-mapping-136d0d1e,691920c0-2a00-4632-9464-6535946755a9,18,2
+titleonly,"upvc 2"" sch 40 pipes",MAPPED_BRAND_NOT_FOUND,96000017,turnover-product-mapping-136d0d1e,8b4380b6-9e68-430e-880a-3f3ad5d40d15,1,5
+titleonly,"upvc ball valve 1/2""",MAPPED,96000988,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,11,5
+titleonly,"upvc ball valve non nsf 1"" - hp",MAPPED_BRAND_NOT_FOUND,96000992,turnover-product-mapping-136d0d1e,691920c0-2a00-4632-9464-6535946755a9,6,5
+titleonly,"upvc cross tee 1""",MAPPED,96001049,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,"upvc elbo 90* 1/2""",MAPPED,96000116,turnover-product-mapping-676119ee,e22533b0-c387-4b51-b416-ef0cdb261cb0,26,5
+titleonly,upvc elbow 1’’,UNMAPPED,,turnover-product-mapping-136d0d1e,72665597-32c3-4705-a281-06690518ccdf,11,5
+titleonly,"upvc elbow 45 d 1 1/2""",MAPPED,96000339,turnover-product-mapping-676119ee,2dc1615b-56b9-49b5-9315-bdc21f5b659d,6,5
+titleonly,"upvc elbow 90° 1 1/2""",UNMAPPED,,turnover-product-mapping-676119ee,c0d634dc-3668-4cfc-89fc-c2c895f76e9b,6,5
+titleonly,"upvc end cap 1""",MAPPED,96000138,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,3,5
+titleonly,"upvc pipes sch 40 (3 mtr) 1""",MAPPED,96000014,turnover-product-mapping-676119ee,de2610bb-2775-4769-9570-66876b781fbf,,5
+titleonly,"upvc red tee 3/4""x3/4""x1/2""",MAPPED_BRAND_NOT_FOUND,96000124,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000124,5
+titleonly,"upvc reducing socket 1""x1/2"" fab",MAPPED,96000502,turnover-product-mapping-676119ee,ecbfeb05-e851-48bd-a789-5cfd33651c0c,20,5
+titleonly,"upvc reducing tee 1 1/2""x1 1/2""x1"" fab",MAPPED_BRAND_NOT_FOUND,96000528,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000528,5
+titleonly,"upvc reducing tee 11/4"" x 11/4"" x 1/2""",MAPPED_BRAND_NOT_FOUND,96000326,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000326,5
+titleonly,"upvc reducing tee 2""x2""x1 1/4"" fab",MAPPED_BRAND_NOT_FOUND,96000533,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000533,5
+titleonly,"upvc socket 1 1/2""",MAPPED_BRAND_NOT_FOUND,96000134,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000134,5
+titleonly,"upvc socket 1 1/4""",MAPPED_BRAND_NOT_FOUND,96000133,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000133,5
+titleonly,upvc solvent tube 59 ml,MAPPED,98000149,turnover-product-mapping-676119ee,762b161b-2922-4b5b-9b65-d1a5db6e91f0,15,5
+titleonly,"upvc tank nipple 1""",MAPPED_BRAND_NOT_FOUND,96000181,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000181,5
+titleonly,"upvc tee 21/2"" (sch 80)",MAPPED_BRAND_NOT_FOUND,96000385,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000385,5
+titleonly,"upvc tee 4"" (sch 80)",MAPPED_BRAND_NOT_FOUND,96000369,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000369,5
+titleonly,"upvc trans elbow 1/2""x1/2""",MAPPED,96000175,turnover-product-mapping-676119ee,44490bc7-abf6-4154-800c-e427fc578c09,2,5
+titleonly,"upvc trans fta 2""",MAPPED,96000246,turnover-product-mapping-676119ee,c0d634dc-3668-4cfc-89fc-c2c895f76e9b,2,5
+titleonly,"upvc trans mta 2""",MAPPED_BRAND_NOT_FOUND,96000233,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000233,5
+titleonly,"upvc union 1 1/2""",MAPPED_BRAND_NOT_FOUND,96000285,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000285,5
+titleonly,"upvc union 1 1/4""",MAPPED_BRAND_NOT_FOUND,96000284,turnover-product-mapping-676119ee,2fafbcf7-9e68-438d-bd24-5a937e84143c,96000284,5
+titleonly,watertec m-series sink cock,UNMAPPED,,turnover-product-mapping-136d0d1e,ed338f1c-101a-49d3-89bf-c722db9f9a35,4,5
+titleonly,watertec m-serirs bib tap,UNMAPPED,,turnover-product-mapping-136d0d1e,915c5c73-c68e-42a0-9e77-1e2ddcadcd65,2,5
