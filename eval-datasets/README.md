@@ -96,12 +96,17 @@ parts).
 
 Output summary (manual verification pending):
 - **48/100** inputs matched above threshold (scores 0.70–1.00, median 0.86; 24 of them ≥ 0.85).
-- 52 below threshold — but **10 of those carry an embedded SKU that resolves in the
-  catalogue**; fuzzy matching missed them because brand + code tokens dilute the score.
-  "Blank" ≠ "absent" — check the code column first.
+- 52 below threshold — of which **10 carry an embedded SKU that resolves in the catalogue**
+  (fuzzy missed them: brand + code tokens dilute the score). 16 titles carry codes in total,
+  and **6 of those the fuzzy run caught anyway** — so the running tally is **58/100
+  matched-or-code-confirmed, 42 still open** (48 + 10; adding all 16 would double-count the 6).
+  "Blank" ≠ "absent" — always check the code column first.
 - Eyeball notes: a few CPVC inputs matched UPVC catalogue items (family slips), and one
   product's coded title came out blank while its uncoded twin matched (similarity
   ignores codes).
+- Input-set census: every one of the 100 titles carries a brand token — 98 Birla/Birlanu,
+  2 HIL-only ("HIL PVC PIPE…"); a brand scan looking for birla/birlanu alone would miss
+  exactly those 2.
 
 `fuzzy_match_offline_preview.csv` / `.xlsx` — OFFLINE STAND-IN computed the same day while
 the in-workbook load was still failing (approx token-Jaccard with fraction normalization +
@@ -114,7 +119,8 @@ python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_matc
 ```
 
 `below_threshold_candidates.csv` / `.xlsx` — top-3 proxy candidates (best-first, with SKUs) for
-the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid for the manual pass.
+the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid for the manual pass
+(a copy sits in the F: drop folder next to the workbook).
 
 ## Files
 
@@ -131,7 +137,7 @@ the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid f
 - `outputs/selection_summary.csv` — flat list of all 300 chosen cases for eyeballing
 - `code/build_catalogue_check.py` — manual-verification workbook builder (Catalogue check section above)
 - `code/build_fuzzy_candidates.py` — offline fuzzy-match preview generator (Phase 2 section above)
-- `outputs/catalogue_check/` — manual-verification workbook + cleaned CSVs + `fuzzy_match_offline_preview.{csv,xlsx}`
+- `outputs/catalogue_check/` — manual-verification workbook + cleaned CSVs + `fuzzy_match_offline_preview.{csv,xlsx}` + `below_threshold_candidates.{csv,xlsx}`
 - `code/build_linewise_payload.py` — product-line-wise rebuild of a downloaded experiment
   export → upload payload (one row per product line; recorded results + the 5 house scores
   recomputed per line — totals reproduce the source exports exactly)
