@@ -66,7 +66,9 @@ product catalogue export (`F:\Product\zotok\Product Mapping\Eval Related Product
 
 - `eval_inputs_vs_catalogue_vlookup.xlsx` — sheets: `How to use` | `Input products`
   (the 100 unique products sent into run `turnover-product-mapping-c4cce19d`; the 2
-  hang+rerun duplicates collapsed to one entry) | `Catalogue` (Sku Code | Product Name).
+  hang+rerun duplicates collapsed to one entry) | `Catalogue` (Sku Code | Product Name) |
+  `Catalogue A-Z` (Product Name sorted A→Z | Sku Code — for VLOOKUP approximate lookups,
+  which require an ascending-sorted first column).
 - `eval_run_input_products.csv`, `catalogue_cleaned.csv` — the two sides as CSV.
 
 Rebuild / refresh for a new run or a new catalogue export:

@@ -11,7 +11,7 @@ Default sources (the two files in the F: drop folder):
   - run       : products-.../Eval Related Product Mapping/turnover-product-mapping-c4cce19d.csv
   - catalogue : products-.../Eval Related Product Mapping/products-18-October-2026-10-52-16.csv
 
-Output workbook sheets: How to use | Input products | Catalogue
+Output workbook sheets: How to use | Input products | Catalogue | Catalogue A-Z
 All SKU/code columns are written as TEXT so VLOOKUPs stay type-consistent.
 
 Usage:
@@ -150,7 +150,13 @@ def main():
         ("a catalogue name exactly — invoice titles differ from catalogue names (brand tokens,", False),
         ("word order, quotes) — so scan by the key words (e.g. 'UPVC TEE 1 1/2') or use Excel's", False),
         ("fuzzy lookup (Power Query).", False),
-        ("Example formula (exact-match only):  =VLOOKUP(A2, Catalogue!$B:$B, 1, FALSE)", False),
+        ("Formulas (A2 = an input product):", False),
+        ("  nearest-in-A-Z guide:  =VLOOKUP(A2, 'Catalogue A-Z'!$A$2:$B$2336, 2, TRUE)", False),
+        ("     TRUE = lower-bound: returns the SKU of the last catalogue name alphabetically", False),
+        ("     <= A2 - jump to that spot in the A-Z list and scan around it. It is NOT a", False),
+        ("     similarity match, and it NEEDS the ascending sort (why 'Catalogue A-Z' exists).", False),
+        ("  exact match only:      =VLOOKUP(A2, Catalogue!$B$2:$B$2336, 1, FALSE)", False),
+        ("     The 3rd argument must be a NUMBER (2 = 2nd column of the table), never C:C.", False),
         ("All SKU/code columns are stored as TEXT — keep them text in your lookups.", False),
     ]
     for i, (t, b) in enumerate(lines, 1):
@@ -182,6 +188,20 @@ def main():
     ws.freeze_panes = "A2"
     ws.auto_filter.ref = f"A1:B{len(cat_rows)+1}"
 
+    ws = wb.create_sheet("Catalogue A-Z")
+    for j, h in enumerate(["Product Name", "Sku Code"], 1):
+        c = ws.cell(row=1, column=j, value=h)
+        c.font = bold
+        c.fill = HEAD_FILL
+    az = sorted(cat_rows, key=lambda t: (t[1].casefold(), t[1]))
+    for i, (sku, name) in enumerate(az, 2):
+        ws.cell(row=i, column=1, value=name)
+        ws.cell(row=i, column=2, value=sku).number_format = "@"
+    ws.column_dimensions["A"].width = 70
+    ws.column_dimensions["B"].width = 14
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:B{len(az)+1}"
+
     xlsx = OUTDIR / "eval_inputs_vs_catalogue_vlookup.xlsx"
     wb.save(xlsx)
     print("saved:", xlsx)
@@ -211,6 +231,7 @@ def main():
     wb2 = openpyxl.load_workbook(xlsx, read_only=True)
     print("QA Input products rows:", wb2["Input products"].max_row - 1)
     print("QA Catalogue rows:", wb2["Catalogue"].max_row - 1)
+    print("QA Catalogue A-Z rows:", wb2["Catalogue A-Z"].max_row - 1)
     wb2.close()
 
 
