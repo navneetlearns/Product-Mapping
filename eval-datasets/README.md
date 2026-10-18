@@ -121,6 +121,9 @@ python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_matc
   file-import fails on this data: its schema inference can't handle the dynamic-key
   `catalog_results` or mixed null/number fields — see the run error "Couldn't modify
   dataset. failed input schema validation")
+- `code/make_ui_variant.py` — UI-import-friendly variants of the three sets (recursively omits
+  null-valued dict fields; canonical files untouched; also a 3-row starter) → `outputs/ui_upload/`
+- `outputs/ui_upload/` — the variants (`*_cases_100_ui.jsonl`) + `test_3rows.jsonl`
 - `outputs/*.jsonl` — the three datasets
 - `outputs/selection_summary.csv` — flat list of all 300 chosen cases for eyeballing
 - `code/build_catalogue_check.py` — manual-verification workbook builder (Catalogue check section above)
