@@ -85,6 +85,34 @@ NOTE: the catalogue export carries only 9000/9600/9800/9900-prefix SKUs — the
 `412xxx` family seen live in eval candidates is absent, so such rows read as
 "not in catalogue" regardless.
 
+### Phase 2 — Power Query run + verification (2026-10-18)
+
+The comparison was then done as a Power Query **fuzzy merge** inside the workbook
+(Merge Queries in the `Input Products` query — `Table.FuzzyNestedJoin` on
+`Input Product (from eval run)` ↔ `Product Name`, LeftOuter, threshold **0.70**,
+1 match per row, similarity score shown; result expanded and loaded to a new sheet
+`Input Products (2)` — wiring verified from the saved file's stored M code + queryTable
+parts).
+
+Output summary (manual verification pending):
+- **48/100** inputs matched above threshold (scores 0.70–1.00, median 0.86; 24 of them ≥ 0.85).
+- 52 below threshold — but **10 of those carry an embedded SKU that resolves in the
+  catalogue**; fuzzy matching missed them because brand + code tokens dilute the score.
+  "Blank" ≠ "absent" — check the code column first.
+- Eyeball notes: a few CPVC inputs matched UPVC catalogue items (family slips), and one
+  product's coded title came out blank while its uncoded twin matched (similarity
+  ignores codes).
+
+`fuzzy_match_offline_preview.csv` / `.xlsx` — OFFLINE STAND-IN computed the same day while
+the in-workbook load was still failing (approx token-Jaccard with fraction normalization +
+embedded-code pinning; top-3 candidates per input; CSV byte-reproducible from the script).
+Superseded by the PQ run above for official numbers; kept as fallback + alternate-candidate
+source. Regenerate (deterministic):
+
+```
+python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_match_offline_preview.{csv,xlsx}
+```
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -95,6 +123,9 @@ NOTE: the catalogue export carries only 9000/9600/9800/9900-prefix SKUs — the
   dataset. failed input schema validation")
 - `outputs/*.jsonl` — the three datasets
 - `outputs/selection_summary.csv` — flat list of all 300 chosen cases for eyeballing
+- `code/build_catalogue_check.py` — manual-verification workbook builder (Catalogue check section above)
+- `code/build_fuzzy_candidates.py` — offline fuzzy-match preview generator (Phase 2 section above)
+- `outputs/catalogue_check/` — manual-verification workbook + cleaned CSVs + `fuzzy_match_offline_preview.{csv,xlsx}`
 - `code/build_linewise_payload.py` — product-line-wise rebuild of a downloaded experiment
   export → upload payload (one row per product line; recorded results + the 5 house scores
   recomputed per line — totals reproduce the source exports exactly)
