@@ -113,6 +113,9 @@ source. Regenerate (deterministic):
 python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_match_offline_preview.{csv,xlsx}
 ```
 
+`below_threshold_candidates.csv` / `.xlsx` — top-3 proxy candidates (best-first, with SKUs) for
+the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid for the manual pass.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
