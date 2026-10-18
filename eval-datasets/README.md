@@ -58,6 +58,32 @@ cd code && python3 build_datasets.py     # reads the two F: exports, rewrites ..
 Change `quotas(...)` target / the per-bucket title cap in `build_datasets.py` to cut
 different sizes or re-sample different titles (availability per bucket above).
 
+## Catalogue check (VLOOKUP workbook, 2026-10-18)
+
+`outputs/catalogue_check/` — the 300 test cases vs the current product catalogue
+(`F:\Product\zotok\Product Mapping\Eval Related Product Mapping\products-18-October-2026-10-52-16.csv`,
+2,335 products), cleaned so each test-case product can be mapped one-to-one to a
+catalogue product MANUALLY in Excel:
+
+- `eval_testcases_vs_catalogue_vlookup.xlsx` — sheets: `How to use` | `Catalogue` |
+  `SKU cases` | `Brand cases` | `Titleonly cases` | `Candidates` (one row per
+  candidate product per case). Case sheets carry yellow-fill manual-entry columns
+  (In Catalogue? / Catalogue SKU / Catalogue Product Name / Notes).
+- `catalogue_cleaned.csv` — the cleaned catalogue (Sku Code, Product Name) as CSV.
+
+Rebuild/refresh when a new catalogue export arrives:
+
+```
+python3 code/build_catalogue_check.py [--catalogue <new.csv>] [--copy-to <dir>]
+```
+
+Cleaning applied to the catalogue: whitespace/nbsp collapse, zero-width removal,
+mojibake repair (121 names), duplicate `Description` column dropped, sorted by SKU;
+all SKU columns written as TEXT for type-consistent VLOOKUPs.
+NOTE: this export carries only 9000/9600/9800/9900-prefixed SKUs — the `412xxx`
+family seen live in eval candidates (e.g. BRAND-090) is absent, so such rows read
+as "not in catalogue" regardless.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
