@@ -60,29 +60,28 @@ different sizes or re-sample different titles (availability per bucket above).
 
 ## Catalogue check (VLOOKUP workbook, 2026-10-18)
 
-`outputs/catalogue_check/` — the 300 test cases vs the current product catalogue
-(`F:\Product\zotok\Product Mapping\Eval Related Product Mapping\products-18-October-2026-10-52-16.csv`,
-2,335 products), cleaned so each test-case product can be mapped one-to-one to a
-catalogue product MANUALLY in Excel:
+`outputs/catalogue_check/` — the brand-name eval run's INPUT products vs the current
+product catalogue export (`F:\Product\zotok\Product Mapping\Eval Related Product Mapping\products-18-October-2026-10-52-16.csv`,
+2,335 products), cleaned for MANUAL one-to-one comparison of the two name columns:
 
-- `eval_testcases_vs_catalogue_vlookup.xlsx` — sheets: `How to use` | `Catalogue` |
-  `SKU cases` | `Brand cases` | `Titleonly cases` | `Candidates` (one row per
-  candidate product per case). Case sheets carry yellow-fill manual-entry columns
-  (In Catalogue? / Catalogue SKU / Catalogue Product Name / Notes).
-- `catalogue_cleaned.csv` — the cleaned catalogue (Sku Code, Product Name) as CSV.
+- `eval_inputs_vs_catalogue_vlookup.xlsx` — sheets: `How to use` | `Input products`
+  (the 100 unique products sent into run `turnover-product-mapping-c4cce19d`; the 2
+  hang+rerun duplicates collapsed to one entry) | `Catalogue` (Sku Code | Product Name).
+- `eval_run_input_products.csv`, `catalogue_cleaned.csv` — the two sides as CSV.
 
-Rebuild/refresh when a new catalogue export arrives:
+Rebuild / refresh for a new run or a new catalogue export:
 
 ```
-python3 code/build_catalogue_check.py [--catalogue <new.csv>] [--copy-to <dir>]
+python3 code/build_catalogue_check.py [--run <run.csv>] [--catalogue <cat.csv>] [--copy-to <dir>]
 ```
 
-Cleaning applied to the catalogue: whitespace/nbsp collapse, zero-width removal,
-mojibake repair (121 names), duplicate `Description` column dropped, sorted by SKU;
-all SKU columns written as TEXT for type-consistent VLOOKUPs.
-NOTE: this export carries only 9000/9600/9800/9900-prefixed SKUs — the `412xxx`
-family seen live in eval candidates (e.g. BRAND-090) is absent, so such rows read
-as "not in catalogue" regardless.
+Cleaning (both sides, same rules): whitespace/nbsp collapse, zero-width removal,
+mojibake repair, duplicate `Description` column dropped, sorted by SKU; all SKU
+columns written as TEXT. None of the 100 input titles matches a catalogue name
+exactly — comparison is by key words / fuzzy lookup, not bare VLOOKUP.
+NOTE: the catalogue export carries only 9000/9600/9800/9900-prefix SKUs — the
+`412xxx` family seen live in eval candidates is absent, so such rows read as
+"not in catalogue" regardless.
 
 ## Files
 

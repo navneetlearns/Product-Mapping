@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
-"""Build a VLOOKUP-ready workbook: eval test cases (sku / brand / titleonly)
-vs the current product catalogue.
+"""Build a VLOOKUP-ready workbook: eval-run INPUT products vs the product catalogue.
 
-Purpose: let the user MANUALLY verify, one product at a time, how many of the
-eval test-case products exist in the catalogue (products-18-October-2026
-export), per mapping logic. This script only CLEANS and lays out the data —
-it computes no coverage counts.
+Purpose: take the eval run's input products (the invoice product titles the
+brand-name eval run sent in — one per case) and lay them out as a clean column
+so they can be compared, product per product, against the catalogue's
+Product Name column — manually / by VLOOKUP.
+This script only CLEANS and lays out the data; it computes no coverage counts.
 
-Inputs (defaults):
-  - catalogue : /mnt/f/Product/zotok/Product Mapping/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv
-  - case sets : ../outputs/{sku_cases_100,brand_in_title_cases_100,titleonly_cases_100}.jsonl
+Default sources (the two files in the F: drop folder):
+  - run       : products-.../Eval Related Product Mapping/turnover-product-mapping-c4cce19d.csv
+  - catalogue : products-.../Eval Related Product Mapping/products-18-October-2026-10-52-16.csv
 
-Output:
-  - ../outputs/catalogue_check/eval_testcases_vs_catalogue_vlookup.xlsx
-  - ../outputs/catalogue_check/catalogue_cleaned.csv (same cleaned catalogue)
+Output workbook sheets: How to use | Input products | Catalogue
+All SKU/code columns are written as TEXT so VLOOKUPs stay type-consistent.
 
-Sheets: How to use | Catalogue | SKU cases | Brand cases | Titleonly cases | Candidates
-All SKU / code columns are written as TEXT so VLOOKUPs stay type-consistent.
+Usage:
+  python3 build_catalogue_check.py [--run <run.csv>] [--catalogue <cat.csv>] [--copy-to <dir>]
 """
 import argparse
 import csv
@@ -26,21 +25,15 @@ import unicodedata
 from pathlib import Path
 
 import openpyxl
-from openpyxl.styles import Font, PatternFill, Alignment
+from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
 
 HERE = Path(__file__).resolve().parent
 OUTDIR = HERE.parent / "outputs" / "catalogue_check"
 
-DEF_CAT = Path("/mnt/f/Product/zotok/Product Mapping/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv")
-DEF_SETS = {
-    "SKU cases": OUTDIR.parent / "sku_cases_100.jsonl",
-    "Brand cases": OUTDIR.parent / "brand_in_title_cases_100.jsonl",
-    "Titleonly cases": OUTDIR.parent / "titleonly_cases_100.jsonl",
-}
-LOGIC_TAG = {"SKU cases": "sku", "Brand cases": "brand", "Titleonly cases": "titleonly"}
-
-CODE_RE = re.compile(r"\d{8}")
+DROP = Path("/mnt/f/Product/zotok/Product Mapping/Eval Related Product Mapping")
+DEF_RUN = DROP / "turnover-product-mapping-c4cce19d.csv"
+DEF_CAT = DROP / "products-18-October-2026-10-52-16.csv"
 
 
 def _to_bytes(s: str) -> bytes:
@@ -61,156 +54,104 @@ def _to_bytes(s: str) -> bytes:
     return bytes(out)
 
 
-def clean(s: str) -> str:
+def clean(s) -> str:
     """Repair mojibake, strip zero-widths/C1 controls, collapse whitespace."""
     if s is None:
         return ""
     s = str(s)
-    # 1) mojibake repair: byte round trip -> utf-8 when it cleanly decodes
     if any(ch in s for ch in ("Â", "â", "€", "Ã")):
         try:
-            fixed = _to_bytes(s).decode("utf-8")
-            s = fixed
+            s = _to_bytes(s).decode("utf-8")
         except (UnicodeEncodeError, UnicodeDecodeError):
             pass
-    # 2) drop zero-width & C1 control chars, nbsp -> space
-    s = "".join(ch for ch in s if unicodedata.category(ch) not in ("Cf",) and not (0x80 <= ord(ch) <= 0x9F))
+    s = "".join(ch for ch in s if unicodedata.category(ch) != "Cf" and not (0x80 <= ord(ch) <= 0x9F))
     s = s.replace("\xa0", " ").replace("\u200b", "")
-    # 3) collapse whitespace
-    s = " ".join(s.split())
-    return s
+    return " ".join(s.split())
 
 
 def sku_sort_key(s):
-    return (len(s), s)  # numeric-ish ordering by length then digits
+    return (len(s), s)
+
+
+def load_run_inputs(path):
+    """Unique input products in first-appearance order (hang+rerun pairs collapse)."""
+    rows = list(csv.DictReader(open(path, newline="", encoding="utf-8")))
+    order, info, collapsed = [], {}, []
+    for r in rows:
+        li = json.loads(r["inputs"])["line_items"][0]
+        t = li["product_name"]
+        if t in info:
+            collapsed.append((t, info[t]["status"], r["status"]))
+            continue
+        info[t] = {"status": r["status"], "rep": r["repetition"]}
+        order.append(t)
+    return rows, order, info, collapsed
 
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--run", default=str(DEF_RUN))
     ap.add_argument("--catalogue", default=str(DEF_CAT))
     ap.add_argument("--copy-to")
     args = ap.parse_args()
 
     OUTDIR.mkdir(parents=True, exist_ok=True)
 
+    # ---------------- eval run inputs ----------------
+    run_rows, order, info, collapsed = load_run_inputs(args.run)
+    inputs = [clean(t) for t in order]
+    print(f"run: {len(run_rows)} export rows -> {len(inputs)} unique input products; "
+          f"collapsed duplicates: {len(collapsed)}")
+    for c in collapsed:
+        print("   collapsed (hang+rerun):", c)
+    moji_in = [t for t in order if any(ch in t for ch in ("Â", "â", "Ã", "€", "\x9d", "\u200b", "\xa0"))]
+    print("   inputs with mojibake/zero-width markers:", len(moji_in))
+    for t in moji_in[:5]:
+        print("      cleaned:", repr(t), "->", repr(clean(t)))
+
     # ---------------- catalogue ----------------
     raw = list(csv.DictReader(open(args.catalogue, newline="", encoding="utf-8")))
-    cat_rows = []
-    desc_ne_name = []
+    cat_rows, seen = [], {}
     for r in raw:
         name = clean(r.get("Product Name"))
-        desc = clean(r.get("Description"))
         sku = clean(r.get("Sku Code"))
-        if desc and desc != name:
-            desc_ne_name.append((sku, name, desc, r.get("Description")))
-        cat_rows.append((sku, name))
-    # dedupe check (keep first occurrence, report)
-    seen, dedup = {}, []
-    for sku, name in cat_rows:
         if sku in seen:
-            print(f"WARN duplicate sku {sku}: {name!r} vs {seen[sku]!r} -> keeping first")
+            print(f"WARN duplicate sku {sku} -> keeping first")
             continue
         seen[sku] = name
-        dedup.append((sku, name))
-    cat_rows = sorted(dedup, key=lambda t: sku_sort_key(t[0]))
-    print(f"catalogue: {len(raw)} raw rows -> {len(cat_rows)} clean rows; "
-          f"desc!=name: {len(desc_ne_name)}")
-    for d in desc_ne_name[:3]:
-        print("   desc oddity:", d)
-    bad = [s for s, _ in cat_rows if not re.fullmatch(r"\d+", s)]
-    print("   non-digit skus after clean:", len(bad), bad[:5])
-    moji_raw = [r.get("Product Name") for r in raw
-                if any(ch in (r.get("Product Name") or "") for ch in ("Â", "â", "Ã", "€"))]
-    still = [(s, n) for s, n in cat_rows if any(ch in n for ch in ("Â", "â", "Ã", "€"))]
-    print(f"   mojibake in raw names: {len(moji_raw)} | remaining after clean: {len(still)}")
-    for n in moji_raw:
-        print("      fixed:", repr(n), "->", repr(clean(n)))
-
-    # ---------------- case sets ----------------
-    case_sheets = {}
-    candidates_rows = []
-    for sheet, path in DEF_SETS.items():
-        rows = [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
-        tag = LOGIC_TAG[sheet]
-        out = []
-        for i, ex in enumerate(rows, 1):
-            li = ex["inputs"]["line_items"][0]
-            exp = ex["outputs"]["expected"][0]
-            md = ex.get("metadata", {})
-            title = clean(li.get("product_name"))
-            m = CODE_RE.search(title)
-            code = m.group(0) if m else ""
-            cr = (ex["inputs"].get("catalog_results") or {})
-            cands = list(cr.values())[0] if cr else []
-            cand_txt = "; ".join(f"{c.get('sku_code')} | {clean(c.get('product_name'))}" for c in cands)
-            cid = f"{tag.upper() if tag!='sku' else 'SKU'}-{i:03d}"
-            out.append([
-                cid, title, code, clean(li.get("hsn_sac_code")),
-                exp["expected_status"], str(exp["expected_sku"] or ""),
-                cand_txt, "", "", "", "",
-                md.get("source_experiment", ""), md.get("source_invoice_id", ""),
-                md.get("source_serial_no", ""), len(cands),
-            ])
-            for c in cands:
-                candidates_rows.append([
-                    cid, tag, title, str(c.get("sku_code") or ""),
-                    clean(c.get("product_name")), clean(c.get("hsn_code")),
-                ])
-        case_sheets[sheet] = out
-        print(f"{sheet}: {len(out)} cases, {sum(1 for r in out if r[2])} with code, "
-              f"candidates rows {len(candidates_rows)} so far")
+        cat_rows.append((sku, name))
+    cat_rows = sorted(cat_rows, key=lambda t: sku_sort_key(t[0]))
+    moji_cat = sum(1 for s, n in cat_rows if any(ch in n for ch in ("Â", "â", "Ã", "€")))
+    print(f"catalogue: {len(raw)} raw rows -> {len(cat_rows)} clean rows; mojibake remaining: {moji_cat}")
 
     # ---------------- workbook ----------------
     wb = openpyxl.Workbook()
     HEAD_FILL = PatternFill("solid", fgColor="D9D9D9")
-    FILL_FILL = PatternFill("solid", fgColor="FFF2CC")  # manual-fill columns
     bold = Font(bold=True)
 
-    def write_sheet(ws, headers, rows, widths, fill_cols=(), freeze="A2", filt=True):
-        for j, h in enumerate(headers, 1):
-            c = ws.cell(row=1, column=j, value=h)
-            c.font = bold
-            c.fill = FILL_FILL if j in fill_cols else HEAD_FILL
-        for i, row in enumerate(rows, 2):
-            for j, v in enumerate(row, 1):
-                if v == "":
-                    v = None
-                ws.cell(row=i, column=j, value=v)
-        for j, w in enumerate(widths, 1):
-            ws.column_dimensions[get_column_letter(j)].width = w
-        if freeze:
-            ws.freeze_panes = freeze
-        if filt:
-            ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{len(rows)+1}"
-
-    # How to use
     ws = wb.active
     ws.title = "How to use"
+    run_name = Path(args.run).stem
     lines = [
-        ("Eval test cases vs Catalogue — VLOOKUP check", True),
+        ("Eval run inputs vs Catalogue — for manual one-to-one comparison", True),
         ("", False),
-        ("What: the 300 eval test cases we built (100 per mapping logic) + the current product catalogue,", False),
-        ("cleaned so each test-case product can be mapped one-to-one to a catalogue product by hand.", False),
+        (f"Input products: the 100 products sent into the brand-name eval run '{run_name}'", False),
+        ("(LangSmith experiment; the invoice product titles as they entered the mapping pipeline).", False),
+        ("  The export has 102 rows -> 100 unique products: 2 titles appear twice because they hung", False),
+        ("  and were rerun (same product, kept once; the 100-row list is the deduped set).", False),
         ("", False),
-        ("Test case sets (built 2026-10-17, source: ~/AgentWork/product-mapping/eval-datasets):", False),
-        ("  SKU cases       — title carries an embedded 8-digit SKU code (exact-code path); 100 cases.", False),
-        ("  Brand cases     — brand name in the title, no code (brand + fuzzy name path); 100 cases.", False),
-        ("  Titleonly cases — plain title, no code, no brand (pure name/dimension path); 100 cases.", False),
+        ("Compare against: the 'Catalogue' sheet's Product Name column.", False),
+        ("  Catalogue = products-18-October-2026 export (2,335 products), cleaned: whitespace/", False),
+        ("  zero-width/mojibake fixed, duplicate Description column dropped, no duplicate SKUs,", False),
+        ("  sorted by Sku Code. Both sheets' text was cleaned the same way.", False),
         ("", False),
-        ("Catalogue: products-18-October-2026-10-52-16.csv, exported 2026-10-18 — 2,335 products.", False),
-        ("  Cleaned: whitespace / zero-width / mojibake fixed; duplicate 'Description' column dropped", False),
-        ("  (it simply repeated Product Name); no duplicate SKUs; sorted by Sku Code.", False),
-        ("", False),
-        ("How to check a case: find its product in the 'Catalogue' sheet, then fill the yellow columns:", False),
-        ("  In Catalogue? (Y/N) | Catalogue SKU | Catalogue Product Name (+ Notes).", False),
-        ("  VLOOKUP example:  =VLOOKUP(C2, Catalogue!$A:$B, 2, FALSE)   (C2 = embedded_code)", False),
-        ("", False),
-        ("Column notes:", False),
-        ("  embedded_code = 8-digit code inside the title (SKU cases only; equals expected SKU).", False),
-        ("  gt_status / gt_sku = ground truth for that case on the original eval.", False),
-        ("  candidates = the 5 retrieval candidates the eval model saw (sku | product name).", False),
-        ("  'Candidates' sheet = same candidates exploded one-per-row, for VLOOKUP against the Catalogue.", False),
-        ("  ALL SKU/code columns are stored as TEXT — keep them text in your lookups.", False),
+        ("How to compare: for each input product, find its product in the Catalogue sheet and", False),
+        ("record it next to the input (add columns B/C as needed). None of these 100 titles match", False),
+        ("a catalogue name exactly — invoice titles differ from catalogue names (brand tokens,", False),
+        ("word order, quotes) — so scan by the key words (e.g. 'UPVC TEE 1 1/2') or use Excel's", False),
+        ("fuzzy lookup (Power Query).", False),
+        ("Example formula (exact-match only):  =VLOOKUP(A2, Catalogue!$B:$B, 1, FALSE)", False),
+        ("All SKU/code columns are stored as TEXT — keep them text in your lookups.", False),
     ]
     for i, (t, b) in enumerate(lines, 1):
         c = ws.cell(row=i, column=1, value=t)
@@ -218,45 +159,47 @@ def main():
             c.font = bold
     ws.column_dimensions["A"].width = 110
 
-    # Catalogue
+    ws = wb.create_sheet("Input products")
+    c = ws.cell(row=1, column=1, value="Input Product (from eval run)")
+    c.font = bold
+    c.fill = HEAD_FILL
+    for i, t in enumerate(inputs, 2):
+        ws.cell(row=i, column=1, value=t)
+    ws.column_dimensions["A"].width = 70
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:A{len(inputs)+1}"
+
     ws = wb.create_sheet("Catalogue")
-    write_sheet(ws, ["Sku Code", "Product Name"], [[s, n] for s, n in cat_rows], [14, 70])
-    # force text on sku col
-    for i in range(2, len(cat_rows) + 2):
-        ws.cell(row=i, column=1).number_format = "@"
+    for j, h in enumerate(["Sku Code", "Product Name"], 1):
+        c = ws.cell(row=1, column=j, value=h)
+        c.font = bold
+        c.fill = HEAD_FILL
+    for i, (sku, name) in enumerate(cat_rows, 2):
+        ws.cell(row=i, column=1, value=sku).number_format = "@"
+        ws.cell(row=i, column=2, value=name)
+    ws.column_dimensions["A"].width = 14
+    ws.column_dimensions["B"].width = 70
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:B{len(cat_rows)+1}"
 
-    # case sheets
-    case_headers = [
-        "case_id", "input_title", "embedded_code", "hsn", "gt_status", "gt_sku", "candidates",
-        "In Catalogue? (Y/N)", "Catalogue SKU", "Catalogue Product Name", "Notes",
-        "src_experiment", "src_invoice_id", "src_serial", "n_candidates",
-    ]
-    widths = [11, 55, 14, 11, 22, 12, 75, 15, 13, 38, 25, 11, 38, 9, 11]
-    for sheet in ("SKU cases", "Brand cases", "Titleonly cases"):
-        ws = wb.create_sheet(sheet)
-        write_sheet(ws, case_headers, case_sheets[sheet], widths, fill_cols=(8, 9, 10, 11))
-        for i in range(2, len(case_sheets[sheet]) + 2):
-            for col in (3, 6):
-                ws.cell(row=i, column=col).number_format = "@"
-
-    # candidates
-    ws = wb.create_sheet("Candidates")
-    write_sheet(ws, ["case_id", "logic", "input_title", "candidate_sku", "candidate_name", "candidate_hsn"],
-                candidates_rows, [11, 9, 48, 13, 60, 12])
-    for i in range(2, len(candidates_rows) + 2):
-        ws.cell(row=i, column=4).number_format = "@"
-
-    xlsx = OUTDIR / "eval_testcases_vs_catalogue_vlookup.xlsx"
+    xlsx = OUTDIR / "eval_inputs_vs_catalogue_vlookup.xlsx"
     wb.save(xlsx)
     print("saved:", xlsx)
 
-    # csv sidecar of cleaned catalogue
-    csv_path = OUTDIR / "catalogue_cleaned.csv"
+    csv_path = OUTDIR / "eval_run_input_products.csv"
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["Input Product (from eval run)"])
+        for t in inputs:
+            w.writerow([t])
+    print("saved:", csv_path)
+
+    cat_csv = OUTDIR / "catalogue_cleaned.csv"
+    with open(cat_csv, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["Sku Code", "Product Name"])
         w.writerows(cat_rows)
-    print("saved:", csv_path)
+    print("saved:", cat_csv)
 
     if args.copy_to:
         import shutil
@@ -264,17 +207,11 @@ def main():
         shutil.copy2(xlsx, dest)
         print("copied to:", dest)
 
-    # ---------------- QA: reload and count ----------------
+    # ---------------- QA ----------------
     wb2 = openpyxl.load_workbook(xlsx, read_only=True)
-    for name in wb2.sheetnames:
-        ws2 = wb2[name]
-        print(f"QA {name}: {ws2.max_row - 1 if name not in ('How to use',) else ws2.max_row} rows")
-    # spot checks
-    ws2 = wb2["SKU cases"]
-    print("QA spot SKU case 2:", [ws2.cell(row=3, column=j).value for j in (1, 3, 6)])
-    ws2 = wb2["Catalogue"]
-    print("QA spot catalogue row 2:", [ws2.cell(row=2, column=j).value for j in (1, 2)])
-    print("QA done")
+    print("QA Input products rows:", wb2["Input products"].max_row - 1)
+    print("QA Catalogue rows:", wb2["Catalogue"].max_row - 1)
+    wb2.close()
 
 
 if __name__ == "__main__":
