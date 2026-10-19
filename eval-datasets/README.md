@@ -122,6 +122,15 @@ python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_matc
 the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid for the manual pass
 (a copy sits in the F: drop folder next to the workbook).
 
+### Open — resolving the 42 (proposed 2026-10-19)
+
+The 42 blank, code-less cases remain for resolution ("which of these exist in the
+catalogue, title-only"). Proposed approach: `PLAN-resolve-42-open-cases.md` —
+deterministic title-only resolver (normalization v2 + synonym/class tables +
+mm↔inch size canon; unit-tested against the 21 GT pairs found in the run export)
+producing an `open_42_resolution.xlsx` verification workbook with per-component
+flags and an empty verdict column for the user. §0 decision gates pending answers.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -149,3 +158,6 @@ the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid f
   `<slug>_upload_payload.json` (the exact POST body)
 - `PLAN-title-level-eval-runs.md` — proposal for running these via LangSmith experiments
   (adapted from the copilot eval harness); §0 decision gates pending user answers
+- `PLAN-resolve-42-open-cases.md` — proposed approach for resolving the 42 open catalogue-check
+  cases from title only (GT leads from the run export + synonym/size resolver + verification
+  workbook); §0 decision gates pending user answers
