@@ -122,14 +122,28 @@ python3 code/build_fuzzy_candidates.py   # -> outputs/catalogue_check/fuzzy_matc
 the 42 test cases the PQ run left blank (the non-code blanks) — the scan aid for the manual pass
 (a copy sits in the F: drop folder next to the workbook).
 
-### Open — resolving the 42 (proposed 2026-10-19)
+### Resolving the 42 — resolver BUILT (2026-10-19)
 
-The 42 blank, code-less cases remain for resolution ("which of these exist in the
-catalogue, title-only"). Proposed approach: `PLAN-resolve-42-open-cases.md` —
-deterministic title-only resolver (normalization v2 + synonym/class tables +
-mm↔inch size canon; unit-tested against the 21 GT pairs found in the run export)
-producing an `open_42_resolution.xlsx` verification workbook with per-component
-flags and an empty verdict column for the user. §0 decision gates pending answers.
+`code/build_open_case_resolution.py` (deterministic; `cd code && python3 build_open_case_resolution.py`)
+resolves the 42 blank, code-less cases from TITLE TEXT ONLY: normalization v2
+(quotes/fractions/spelling), synonym + class tables (COUPLER→SOCKET, REDUCER→Reducing
+Socket/Elbow/Bush, AGRI / pipe-kg→Pressure Pipe CLASS-n/LW, SHOE→45-deg elbow, COLUMN
+PIPE→submersible, ROTTO→BIRLA HIL Water Tank, S/F→Solfit, END CAP→"Plain end cap", …),
+and an mm↔inch size canon (CPVC/CTS vs pressure-pipe conventions). Candidate gates =
+type + size; class/length/material are scored and flagged; variant gaps are reported on
+the dimensions the title leaves open. Strictness: exact-variant "found" bar (user
+decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
+
+- Outputs: `open_42_resolution.{xlsx,csv}` (sheets: How to use | Resolve 42 |
+  All candidates | Not-found evidence; the VERDICT column ships EMPTY for the user's
+  manual pass) + `open_42_candidates_long.csv` + `open_cases_42.csv` (manifest).
+  A copy of the workbook sits in the F: folder next to the PQ workbook.
+- Read of the 42: **21 GT-LEAD / 4 EXACT candidate / 17 AMBIG-VARIANT** (one with an
+  unrecognized type word: HALFSET, flagged with token evidence). GT leads all verify
+  present in the 18-Oct export.
+- QA: GT unit test 19/21 leads in top-3 — both misses are genuinely under-specified
+  titles (75mm door tee: 7 candidates; "4\" TYPE-A" pipe: 24 variants); rebuilds are
+  byte-identical (md5-verified); F: copy md5-identical to the repo build.
 
 ## Files
 
@@ -158,6 +172,9 @@ flags and an empty verdict column for the user. §0 decision gates pending answe
   `<slug>_upload_payload.json` (the exact POST body)
 - `PLAN-title-level-eval-runs.md` — proposal for running these via LangSmith experiments
   (adapted from the copilot eval harness); §0 decision gates pending user answers
-- `PLAN-resolve-42-open-cases.md` — proposed approach for resolving the 42 open catalogue-check
-  cases from title only (GT leads from the run export + synonym/size resolver + verification
-  workbook); §0 decision gates pending user answers
+- `PLAN-resolve-42-open-cases.md` — approach for resolving the 42 open catalogue-check
+  cases from title only (gates answered 2026-10-19; resolver built same day)
+- `code/build_open_case_resolution.py` — the title-only resolver (synonym/class tables +
+  mm↔inch canon + GT-lead cross-check; deterministic)
+- `outputs/catalogue_check/open_42_resolution.{xlsx,csv}`, `open_42_candidates_long.csv`,
+  `open_cases_42.csv` — resolver outputs (workbook copy in the F: folder; verdicts pending)
