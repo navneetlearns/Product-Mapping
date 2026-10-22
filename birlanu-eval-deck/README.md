@@ -15,7 +15,11 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
 ## Slides
 
 1. Cover — title, scope line, four lane scores (hits / total).
-2. What was tested — one dataset per logic, what each set exercises.
+2. What was tested — one dataset per logic, what each set exercises, and two real
+   sample titles per lane (from `eval-datasets/outputs/*.jsonl`). The MRP lane samples
+   carry no price figure: none of the available exports has an MRP column, so the row
+   states the signal in words ("matched on the invoice rate against the catalogue
+   MRP") instead of inventing a value.
 3. How it was run and scored — the sets, one live run per logic, scoring against the
    expected SKU recorded before the run.
 4. What we found — one row per logic with a bar and hits / total, plus a two-line note

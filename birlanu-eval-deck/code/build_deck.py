@@ -34,6 +34,16 @@ with open(NUMBERS, encoding="utf-8") as f:
 LANES = [("SKU-based", "HITS_SKU"), ("Brand-based", "HITS_BRAND"),
          ("Plain title", "HITS_PLAIN"), ("MRP-based", "HITS_MRP")]
 
+# Real titles from the eval sets, shown as examples of each logic's input.
+SAMPLES = {
+    "SKU-based": (["96000007 Cpvc Sdr 13.5 3m 3/4\"",
+                   "UPVC PIPES SCH 40 (3 MTR) - 1 1/2'' Birlanu (96000016)"], ""),
+    "Brand-based": (["1 1/2\" UPVC TEE BIRLA", "1 1/4\" cpvc Socket Birla"], ""),
+    "Plain title": (["110MM 45 ELBOW", "CPVC SOCKET 1\""], ""),
+    "MRP-based": (["CPVC PIPE SDR 13.5 (3 Mtr) 1\"", "PRESSURE ELBOW 90 4KG 63MM"],
+                  " · matched on the invoice rate against the catalogue MRP"),
+}
+
 
 def is_num(v):
     return isinstance(v, (int, float)) and not isinstance(v, bool)
@@ -170,12 +180,13 @@ CSS = r"""
   .step .b{ font-size:23px; line-height:1.5; color:var(--muted); }
 
   /* logic table */
-  .lanes{ margin-top:52px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+  .lanes{ margin-top:38px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
     justify-content:space-between; padding-bottom:18px; }
   .lane{ display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:baseline;
-    padding:34px 0; border-bottom:1px solid var(--hair); }
-  .lane .t{ font-size:40px; line-height:1.15; }
-  .lane .b{ font-size:23px; line-height:1.5; color:var(--muted); }
+    padding:20px 0; border-bottom:1px solid var(--hair); }
+  .lane .t{ font-size:36px; line-height:1.15; }
+  .lane .b{ font-size:22px; line-height:1.45; color:var(--muted); }
+  .lane .s{ font-family:'Mono'; font-size:17px; color:#7c8d84; margin-top:9px; line-height:1.5; }
 
   /* results */
   .results{ margin-top:56px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
@@ -210,6 +221,27 @@ def slide_cover():
 </section>"""
 
 
+def lane_rows():
+    out = []
+    for name, _ in LANES:
+        samples, suffix = SAMPLES[name]
+        quoted = " · ".join(f"“{html.escape(x)}”" for x in samples)
+        out.append(
+            f'<div class="lane"><div class="t">{name}</div>'
+            f'<div class="b">{LANE_COPY[name]}'
+            f'<div class="s">{quoted}{html.escape(suffix)}</div></div></div>'
+        )
+    return "".join(out)
+
+
+LANE_COPY = {
+    "SKU-based": "Titles that carry an embedded product code — the code path on its own.",
+    "Brand-based": "Titles carrying the brand token and no code — the brand path on its own.",
+    "Plain title": "No code and no brand token — matching on the words alone.",
+    "MRP-based": "Title plus price — the price-led path, with MRP in the picture.",
+}
+
+
 def slide_tested():
     return f"""
 <section class="slide">
@@ -217,16 +249,7 @@ def slide_tested():
     <div class="secnum"><span class="num2">01</span><span class="lbl">What was tested</span><span class="rule"></span></div>
     <h2>One dataset per mapping logic, each built to <span class="serif">exercise that logic</span>.</h2>
     <div class="lead">Each logic was run on its own set of {V('TITLES')} product titles, so the four results read lane by lane.</div>
-    <div class="lanes">
-      <div class="lane"><div class="t">SKU-based</div>
-        <div class="b">Titles that carry an embedded product code — the code path on its own.</div></div>
-      <div class="lane"><div class="t">Brand-based</div>
-        <div class="b">Titles carrying the brand token and no code — the brand path on its own.</div></div>
-      <div class="lane"><div class="t">Plain title</div>
-        <div class="b">No code and no brand token — matching on the words alone.</div></div>
-      <div class="lane"><div class="t">MRP-based</div>
-        <div class="b">Title plus price — the price-led path, with MRP in the picture.</div></div>
-    </div>
+    <div class="lanes">{lane_rows()}</div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
 </section>"""
@@ -337,7 +360,10 @@ async def render():
             await s.screenshot(path=os.path.join(OUT, f"slide_{i:02d}.png"))
         print(json.dumps({"errors": errors, "report": report}, indent=1))
         await browser.close()
+    bad = bool(errors or report["overflow"] or report["outside"] or report["tight"])
     print("rendered", PDF)
+    if bad:
+        sys.exit("LAYOUT CHECK FAILED — fix overflow/off-canvas/tight text before shipping")
 
 
 if __name__ == "__main__":
