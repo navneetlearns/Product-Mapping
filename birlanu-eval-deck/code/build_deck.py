@@ -317,7 +317,7 @@ def slide_scored():
       </div>
     </div>
     <div class="closing">Status accuracy = (titles − wrong maps − misses) ÷ titles · SKU accuracy = (titles − wrong maps − misses − wrong SKU) ÷ titles.
-      Every title is scored the same way; each set was run once against the live catalogue under the same conditions.</div>
+      Every title is scored the same way; each set was run once against the live production catalogue, under the same conditions.</div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 05</span></div>
 </section>"""
@@ -340,8 +340,7 @@ def slide_found():
     <div class="secnum"><span class="num2">03</span><span class="lbl">What we found</span><span class="rule"></span></div>
     <h2>How each mapping logic <span class="serif">performed</span>.</h2>
     <div class="results">{''.join(rows)}</div>
-    <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.
-      The MRP lane ran on the live search chain against the product set loaded for that test; the other lanes ran against the full production catalogue.</div>
+    <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.</div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>05</b> / 05</span></div>
 </section>"""

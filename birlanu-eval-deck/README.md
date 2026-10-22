@@ -25,9 +25,8 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
    byte-identical, every case traced to its invoice line.
 4. How it was scored — status rule, SKU + equivalence, and the error definitions, with
    the two accuracy formulas printed on the slide.
-5. What we found — one row per logic with a bar and hits / total, plus a two-line note
-   on how the MRP lane was run (live search chain, product set loaded for that test)
-   versus the other lanes (full production catalogue).
+5. What we found — one row per logic with a bar and hits / total. All four runs searched
+   the live production catalogue; there is no per-lane setup caveat.
 
 No recommendations, no causes-of-misses slide, no QA/Sentinel content, no brand-097
 label note, no local tooling.
@@ -77,10 +76,10 @@ Last verified: 5 pages, no overflow, no clipped text, no edge-band ink.
 
 ## Open items
 
-1. **Live search vs saved search.** Slide 3 says the runs searched the live catalogue,
-   per instruction. The source report says the LangSmith stage was "mapping on saved
-   search results" and that live search arrived later. One of the two documents is
-   wrong; the deck is client-facing, so this must be settled before it is shared.
+1. **Run setup — settled.** All four lanes ran live search against the real production
+   data; traces sit in LangSmith and the exports can be shared with the client. The
+   source report's "mapping on saved search results" wording for the first stage is
+   therefore stale — do not circulate that file as-is alongside the deck.
 2. **Source report is deliberately untracked.** `birlanu-product-mapping-eval.html`
    carries internal PR numbers, commit hashes, branch names, workspace ids and
    "uncommitted / not deployed" status. This repo is public, so the file is left out of

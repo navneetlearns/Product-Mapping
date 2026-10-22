@@ -32,14 +32,12 @@ Source: `birlanu-product-mapping-eval.html` (the eval report dropped in the fold
   2 missed, top-5 100, #1 85, MRR, progression, by-case, MRP split, failure table,
   catalogue MRP defects), the engineering status table, and the next-steps list.
 
-## Open question — resolve before sharing
+## Run setup — settled 2026-10-22
 
-The deck's method slide says the runs searched the **live catalogue**. The source report
-says the opposite for the LangSmith stage: stage 01 is titled "Mapping on saved search
-results", and its summary describes the move to live search as happening at the Sentinel
-stage. If the 1.00 / 0.94 / 0.90 figures come from the saved-candidate run, the deck's
-method line is wrong and must be reworded; if they were re-run live, the report is the
-stale document and should be corrected instead.
+All four lanes ran live search against the real production data; traces are in LangSmith
+and the CSV/Excel exports are shareable. The source report's "mapping on saved search
+results" wording for stage 01 is stale and must not be circulated as-is. The earlier
+per-lane caveat (MRP lane on a separate product set) was removed from the deck.
 
 ## Note carried on slide 4
 
