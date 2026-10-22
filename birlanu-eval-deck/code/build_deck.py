@@ -203,6 +203,32 @@ CSS = r"""
 """
 
 
+def slide_overview():
+    return f"""
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="lbl">Overview</span><span class="rule"></span></div>
+    <h2>Four mapping logics, {V('TITLES')} titles each, scored against the <span class="serif">recorded result</span>.</h2>
+    <div class="lead">What we tested, how each run was scored, and where every logic landed — detail on the pages that follow.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="idx">01</div><div class="t">What was tested</div>
+        <div class="b">Four datasets, one per mapping logic — SKU-based, brand-based, plain title, MRP-based — each holding {V('TITLES')} product titles exactly as the agent receives them.</div>
+      </div>
+      <div class="step">
+        <div class="idx">02</div><div class="t">How it was run</div>
+        <div class="b">One live run per logic, under the same conditions; every title carries its expected SKU and status, fixed before the run, and is scored against it.</div>
+      </div>
+      <div class="step">
+        <div class="idx">03</div><div class="t">What we found</div>
+        <div class="b">SKU-based {score('HITS_SKU')} · plain title {score('HITS_PLAIN')} · brand-based {score('HITS_BRAND')} · MRP-based {score('HITS_MRP')}.</div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>01</b> / 05</span></div>
+</section>"""
+
+
 def slide_cover():
     cells = "".join(
         f'<div class="cell"><div class="v">{score(key, dark=True)}</div><div class="k">{name}</div></div>'
@@ -251,7 +277,7 @@ def slide_tested():
     <div class="lead">Each logic was run on its own set of {V('TITLES')} product titles, so the four results read lane by lane.</div>
     <div class="lanes">{lane_rows()}</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 05</span></div>
 </section>"""
 
 
@@ -276,7 +302,7 @@ def slide_method():
       </div>
     </div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 05</span></div>
 </section>"""
 
 
@@ -300,12 +326,12 @@ def slide_found():
     <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.
       The MRP lane ran on the live search chain against the product set loaded for that test; the other lanes ran against the full production catalogue.</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>05</b> / 05</span></div>
 </section>"""
 
 
 def build_html():
-    body = slide_cover() + slide_tested() + slide_method() + slide_found()
+    body = slide_overview() + slide_cover() + slide_tested() + slide_method() + slide_found()
     doc = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <title>BirlaNu · Product Mapping Eval</title>

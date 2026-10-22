@@ -23,6 +23,7 @@ PDF = _arg("--pdf", os.path.join(BASE, "outputs", "BirlaNu-Mapping-Eval-Deck.pdf
 QA = _arg("--qa", os.path.join(BASE, "outputs", "qa"))
 NUM = json.load(open(_arg("--numbers", os.path.join(BASE, "code", "numbers.json")), encoding="utf-8"))
 PAPER = (244, 246, 245)
+COVER = 2   # slide position of the dark cover
 FAIL = []
 
 
@@ -39,10 +40,13 @@ def pdf_meta():
     info = subprocess.run(["pdfinfo", PDF], capture_output=True, text=True).stdout
     pages = re.search(r"Pages:\s+(\d+)", info)
     size = re.search(r"Page size:\s+([\d.]+ x [\d.]+) pts", info)
-    if not pages or int(pages.group(1)) != 4:
-        fail(f"page count: {pages.group(1) if pages else 'missing'}, expected 4")
+    import re as _re
+    deck = open(os.path.join(BASE, "code", "deck.html"), encoding="utf-8").read()
+    expected = deck.count('class="slide')
+    if not pages or int(pages.group(1)) != expected:
+        fail(f"page count: {pages.group(1) if pages else 'missing'}, expected {expected}")
     else:
-        ok("4 pages")
+        ok(f"{expected} pages")
     if not size or size.group(1) != "1440 x 810":
         fail(f"page size: {size.group(1) if size else 'missing'}, expected 1440 x 810 pts")
     else:
@@ -100,15 +104,15 @@ def band_ink(im, box, bg=PAPER, tol=10):
 
 
 def pixels():
-    for i in range(1, 5):
+    for i in range(1, 6):
         p = os.path.join(QA, f"slide_{i:02d}.png")
         if not os.path.exists(p):
             fail(f"missing capture {p}")
             continue
         dens, im = ink_stats(p)
         w, h = im.size
-        if i == 1:  # cover bleeds
-            ok(f"slide 1 density {dens:.2f} (cover, full bleed)")
+        if i == COVER:  # cover bleeds
+            ok(f"slide {i} density {dens:.2f} (cover, full bleed)")
             continue
         edges = {
             "top": (0, 0, w, 3), "bottom": (0, h - 3, w, h),
