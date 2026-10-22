@@ -316,8 +316,8 @@ def slide_scored():
         <div class="b">A wrong map is a title mapped where the record says unmapped; a miss is a title left unmapped where the record wants a mapping.</div>
       </div>
     </div>
-    <div class="closing">Status accuracy = (titles − wrong maps − misses) ÷ titles · SKU accuracy = (titles − wrong maps − misses − wrong SKU) ÷ titles.
-      Every title is scored the same way; each set was run once against the live production catalogue, under the same conditions.</div>
+    <div class="closing">A title scores on status only if the recorded label comes back unchanged, and on SKU only if the product is the expected one or a recorded equivalent.
+      Each set was run once against the live production catalogue, under the same conditions.</div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 05</span></div>
 </section>"""

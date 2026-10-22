@@ -23,8 +23,10 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
 3. How the sets were built — pool sizes per bucket (176 / 495 / 405 = 1,076 distinct
    titles), one case per title, stratified cut to exactly 100 per logic, rebuilds
    byte-identical, every case traced to its invoice line.
-4. How it was scored — status rule, SKU + equivalence, and the error definitions, with
-   the two accuracy formulas printed on the slide.
+4. How it was scored — status rule, SKU + equivalence, and the error definitions. The
+   counting rules are stated, not as algebra: the export's status column is an exact
+   three-way label match, which diverges from (N − wrong maps − misses)/N when a mapped
+   line takes the wrong mapped sub-label (one line in 1,842 — see Open items).
 5. What we found — one row per logic with a bar and hits / total. All four runs searched
    the live production catalogue; there is no per-lane setup caveat.
 
@@ -87,3 +89,10 @@ Last verified: 5 pages, no overflow, no clipped text, no edge-band ink.
 3. **MRP lane has no price shown.** No export available here has an MRP column, so the
    lane states the signal in words. If real rates are wanted on the slide, supply the
    QA catalogue CSV or two rate values.
+4. **Status is a three-way label match, not a two-way one.** Replaying the scoring rules
+   against both prod exports (150 invoices, 1,842 lines) reproduces every published
+   evaluator column except one line: status `MAPPED` recorded, `MAPPED_BRAND_NOT_FOUND`
+   produced, so that invoice scores 12/13 on status while `false_map` and `missed` both
+   read zero. The formula (N − wrong maps − misses)/N therefore overstates status
+   accuracy in that one case, which is why slide 4 states the counting rules instead of
+   printing the algebra.
