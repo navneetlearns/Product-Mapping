@@ -1,4 +1,4 @@
-# BirlaNu mapping-eval deck (5 slides)
+# BirlaNu mapping-eval deck (4 slides)
 
 Client-facing update for the BirlaNu team on the product-mapping eval: four mapping
 logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its own set of
@@ -6,7 +6,7 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
 
 ## Deliverable
 
-- `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 5 slides, 16:9 (1440×810 pt = 1920×1080 px),
+- `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 4 slides, 16:9 (1440×810 pt = 1920×1080 px),
   Chromium-rendered, numbers filled.
 - `code/deck.html` — the generated source for that build.
 - `birlanu-product-mapping-eval.html` (folder root) — the source report the figures were
@@ -14,16 +14,15 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
 
 ## Slides
 
-1. Overview — what was tested, how it was run, where each logic landed (one page).
-2. Cover — title, scope line, four lane scores (hits / total).
-3. What was tested — one dataset per logic, what each set exercises, and two real
+1. Cover — title, scope line, four lane scores (hits / total).
+2. What was tested — one dataset per logic, what each set exercises, and two real
    sample titles per lane (from `eval-datasets/outputs/*.jsonl`). The MRP lane samples
    carry no price figure: none of the available exports has an MRP column, so the row
    states the signal in words ("matched on the invoice rate against the catalogue
    MRP") instead of inventing a value.
-4. How it was run and scored — the sets, one live run per logic, scoring against the
+3. How it was run and scored — the sets, one live run per logic, scoring against the
    expected SKU recorded before the run.
-5. What we found — one row per logic with a bar and hits / total, plus a two-line note
+4. What we found — one row per logic with a bar and hits / total, plus a two-line note
    on how the MRP lane was run (live search chain, product set loaded for that test)
    versus the other lanes (full production catalogue).
 
@@ -65,4 +64,4 @@ cost fields); no ink in the outer 3 px frame or right strip; plausible density; 
 empty band. The build also reports DOM overflow, off-canvas text and text that
 overflows its own box.
 
-Last verified: 5 pages, no overflow, no clipped text, no edge-band ink.
+Last verified: 4 pages, no overflow, no clipped text, no edge-band ink.

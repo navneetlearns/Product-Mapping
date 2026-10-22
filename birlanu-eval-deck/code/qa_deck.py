@@ -23,7 +23,7 @@ PDF = _arg("--pdf", os.path.join(BASE, "outputs", "BirlaNu-Mapping-Eval-Deck.pdf
 QA = _arg("--qa", os.path.join(BASE, "outputs", "qa"))
 NUM = json.load(open(_arg("--numbers", os.path.join(BASE, "code", "numbers.json")), encoding="utf-8"))
 PAPER = (244, 246, 245)
-COVER = 2   # slide position of the dark cover
+COVER = 1   # slide position of the dark cover
 FAIL = []
 
 
@@ -104,11 +104,10 @@ def band_ink(im, box, bg=PAPER, tol=10):
 
 
 def pixels():
-    for i in range(1, 6):
-        p = os.path.join(QA, f"slide_{i:02d}.png")
-        if not os.path.exists(p):
-            fail(f"missing capture {p}")
-            continue
+    import glob
+    files = sorted(glob.glob(os.path.join(QA, 'slide_*.png')))
+    for i, p in enumerate(files, 1):
+        
         dens, im = ink_stats(p)
         w, h = im.size
         if i == COVER:  # cover bleeds

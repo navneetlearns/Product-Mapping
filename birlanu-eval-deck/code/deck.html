@@ -106,28 +106,6 @@
     padding-top:22px; max-width:1560px; }
 </style></head>
 <body>
-<section class="slide">
-  <div class="content">
-    <div class="secnum"><span class="lbl">Overview</span><span class="rule"></span></div>
-    <h2>Four mapping logics, <span class="num">100</span> titles each, scored against the <span class="serif">recorded result</span>.</h2>
-    <div class="lead">What we tested, how each run was scored, and where every logic landed — detail on the pages that follow.</div>
-    <div class="steps">
-      <div class="step">
-        <div class="idx">01</div><div class="t">What was tested</div>
-        <div class="b">Four datasets, one per mapping logic — SKU-based, brand-based, plain title, MRP-based — each holding <span class="num">100</span> product titles exactly as the agent receives them.</div>
-      </div>
-      <div class="step">
-        <div class="idx">02</div><div class="t">How it was run</div>
-        <div class="b">One live run per logic, under the same conditions; every title carries its expected SKU and status, fixed before the run, and is scored against it.</div>
-      </div>
-      <div class="step">
-        <div class="idx">03</div><div class="t">What we found</div>
-        <div class="b">SKU-based <span class="num">100</span><span class="of"> / 100</span> · plain title <span class="num">94</span><span class="of"> / 100</span> · brand-based <span class="num">90</span><span class="of"> / 100</span> · MRP-based <span class="num">95</span><span class="of"> / 100</span>.</div>
-      </div>
-    </div>
-  </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>01</b> / 05</span></div>
-</section>
 <section class="slide cover">
   <div class="grid-bg"></div>
   <div class="inner">
@@ -145,7 +123,7 @@
     <div class="lead">Each logic was run on its own set of <span class="num">100</span> product titles, so the four results read lane by lane.</div>
     <div class="lanes"><div class="lane"><div class="t">SKU-based</div><div class="b">Titles that carry an embedded product code — the code path on its own.<div class="s">“96000007 Cpvc Sdr 13.5 3m 3/4&quot;” · “UPVC PIPES SCH 40 (3 MTR) - 1 1/2&#x27;&#x27; Birlanu (96000016)”</div></div></div><div class="lane"><div class="t">Brand-based</div><div class="b">Titles carrying the brand token and no code — the brand path on its own.<div class="s">“1 1/2&quot; UPVC TEE BIRLA” · “1 1/4&quot; cpvc Socket Birla”</div></div></div><div class="lane"><div class="t">Plain title</div><div class="b">No code and no brand token — matching on the words alone.<div class="s">“110MM 45 ELBOW” · “CPVC SOCKET 1&quot;”</div></div></div><div class="lane"><div class="t">MRP-based</div><div class="b">Title plus price — the price-led path, with MRP in the picture.<div class="s">“CPVC PIPE SDR 13.5 (3 Mtr) 1&quot;” · “PRESSURE ELBOW 90 4KG 63MM” · matched on the invoice rate against the catalogue MRP</div></div></div></div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 05</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
 </section>
 <section class="slide">
   <div class="content">
@@ -166,7 +144,7 @@
       </div>
     </div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 05</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 04</span></div>
 </section>
 <section class="slide">
   <div class="content">
@@ -176,6 +154,6 @@
     <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.
       The MRP lane ran on the live search chain against the product set loaded for that test; the other lanes ran against the full production catalogue.</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>05</b> / 05</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 04</span></div>
 </section>
 </body></html>
