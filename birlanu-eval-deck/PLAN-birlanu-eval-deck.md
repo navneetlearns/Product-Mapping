@@ -1,40 +1,55 @@
 # Plan / decision record — BirlaNu mapping-eval deck
 
-**Status: BUILT — numbers pending.** (2026-10-22)
+**Status: BUILT with numbers (22 Oct 2026).** One open factual question before it can
+be shared (see below).
 
-Deliverable: `outputs/BirlaNu-Mapping-Eval-Deck.pdf`, 4 slides, 16:9, placeholder
-build. Nothing in it is quantified yet; the user supplies the figures.
+Deliverable: `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 4 slides, 16:9.
 
-## Scope, as settled
+## What it says
 
-- 4 slides. Cover · what was tested · how it was run and scored · what we found.
-- Subject: the eval run for the four mapping logics — SKU-based, Brand-based, Normal
-  product title, MRP-based — each on its own dataset (100 product titles per logic).
-- Out: the local catalogue-coverage work and its tooling; recommendations; a
-  causes-of-misses slide; any figure not supplied by the user.
+Four mapping logics, each on its own 100-title set, hits shown as x / 100:
 
-## Numbers
+| Lane | Hits |
+|---|---|
+| SKU-based (code in the title) | 100 / 100 |
+| Brand-based (brand token, no code) | 90 / 100 |
+| Plain title (no code, no brand) | 94 / 100 |
+| MRP-based (title + price) | 95 / 100 |
 
-`code/numbers.json` holds six slots — `RUN_DATE`, `TITLES`, `ACC_SKU`,
-`ACC_BRAND`, `ACC_TITLE`, `ACC_MRP`. Null slots render as visible placeholder
-chips. Build refuses accuracies outside 0–100.
+Slides: cover · what was tested · how it was run and scored · what we found.
+Copy decisions applied: "plain title" naming; brand-097 label note left out;
+no recommendations; no causes-of-misses slide; no QA/Sentinel wording anywhere.
+
+## Source and what was taken
+
+Source: `birlanu-product-mapping-eval.html` (the eval report dropped in the folder).
+
+- Taken: the 300 prod lines, the three 100-title case sets and their scores
+  (1.00 / 0.94 / 0.90), the scoring rules, and the MRP result 95 / 100.
+- Left out: every QA-chain and Sentinel figure (95/100 status mix, 98 mapped, 3 wrong,
+  2 missed, top-5 100, #1 85, MRR, progression, by-case, MRP split, failure table,
+  catalogue MRP defects), the engineering status table, and the next-steps list.
+
+## Open question — resolve before sharing
+
+The deck's method slide says the runs searched the **live catalogue**. The source report
+says the opposite for the LangSmith stage: stage 01 is titled "Mapping on saved search
+results", and its summary describes the move to live search as happening at the Sentinel
+stage. If the 1.00 / 0.94 / 0.90 figures come from the saved-candidate run, the deck's
+method line is wrong and must be reworded; if they were re-run live, the report is the
+stale document and should be corrected instead.
+
+## Note carried on slide 4
+
+"The MRP lane ran on the live search chain against the product set loaded for that
+test; the other lanes ran against the full production catalogue." This keeps the 95/100
+from being read as directly comparable to 90–94; it names no environment.
 
 ## Build
 
 ```
-cd code && python3 build_deck.py     # placeholder or filled, same code path
+cd code && python3 build_deck.py
 cd .. && python3 code/qa_deck.py
 ```
 
-QA: page count/size, text round-trip of slots, forbidden-token grep (Excel, VLOOKUP,
-Power Query, workbook, LangSmith, csv, cost fields), edge-band and density pixel
-checks, DOM overflow/tight-text report. Placeholder build and a numbers-filled test
-build both pass.
-
-## Open questions for the user
-
-1. One-line description of the MRP-based logic — the slide currently reads
-   "Titles matched with price in the picture — the price-led path, tested on its own."
-2. Confirmation that each set is 100 titles (the `TITLES` slot is on slide 2 only).
-3. Whether the results slide should carry a count per lane (correct out of 100) in
-   addition to the percentage.
+Figures live in `code/numbers.json`; bars derive from hits / titles.

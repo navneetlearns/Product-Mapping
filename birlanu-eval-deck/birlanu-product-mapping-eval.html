@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BirlaNu Mapping Eval</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --surface: #ffffff; --ink: #1b1d21; --muted: #646a73; --line: #e2e0d9;
+    --accent: #1f5f8b; --accent-soft: #e3eef6; --good: #2f7d4f; --good-soft: #e5f3ea;
+    --bad: #b2452f; --bad-soft: #f8e7e2; --warn: #9a6a12; --warn-soft: #f6efdc; --bar-bg: #ecebe5;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141619; --surface: #1c1f23; --ink: #e8e9eb; --muted: #9aa1ab; --line: #2d3137;
+      --accent: #6fb0e0; --accent-soft: #1d2d3a; --good: #6cc391; --good-soft: #1b2e23;
+      --bad: #ec8c76; --bad-soft: #35211c; --warn: #e0b660; --warn-soft: #322a19; --bar-bg: #2a2e33;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141619; --surface: #1c1f23; --ink: #e8e9eb; --muted: #9aa1ab; --line: #2d3137;
+    --accent: #6fb0e0; --accent-soft: #1d2d3a; --good: #6cc391; --good-soft: #1b2e23;
+    --bad: #ec8c76; --bad-soft: #35211c; --warn: #e0b660; --warn-soft: #322a19; --bar-bg: #2a2e33;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 40px 16px 80px; }
+  .kicker { font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: 40px; line-height: 1.1; margin: 12px 0 8px; letter-spacing: -.02em; }
+  h2 { font-size: 24px; margin: 0 0 6px; letter-spacing: -.01em; }
+  h3 { font-size: 16px; margin: 20px 0 8px; }
+  .sub { color: var(--muted); font-size: 17px; max-width: 720px; margin: 0; }
+  section { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px; margin-top: 24px; }
+  .lead { color: var(--muted); margin: 0 0 18px; }
+  .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+  .fig { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .fig b { display: block; font-size: 30px; line-height: 1.1; letter-spacing: -.02em; }
+  .fig span { color: var(--muted); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.hl td { background: var(--accent-soft); font-weight: 600; }
+  .scroll { overflow-x: auto; }
+  code, .mono { font-family: var(--mono); font-size: 13px; }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 0; }
+  .steps li::before { counter-increment: s; content: counter(s, decimal-leading-zero); font: 600 14px/1.6 var(--mono); color: var(--accent); }
+  .steps b { display: block; }
+  .steps p { margin: 2px 0 0; color: var(--muted); }
+  .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .stage { border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .stage .tag { font: 600 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .stage h3 { margin: 8px 0 6px; }
+  .stage p { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+  .stage .score { font-size: 22px; font-weight: 700; }
+  .bars { display: grid; gap: 10px; }
+  .bar { display: grid; grid-template-columns: 210px 1fr 64px; gap: 12px; align-items: center; font-size: 14px; }
+  .bar .track { height: 14px; background: var(--bar-bg); border-radius: 7px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--accent); border-radius: 7px; }
+  .bar .fill.good { background: var(--good); } .bar .fill.bad { background: var(--bad); } .bar .fill.muted { background: var(--muted); }
+  .bar .v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 6px 0 22px; }
+  .chip { border-radius: 10px; padding: 12px 14px; background: var(--accent-soft); }
+  .chip.good { background: var(--good-soft); } .chip.bad { background: var(--bad-soft); } .chip.warn { background: var(--warn-soft); }
+  .chip b { display: block; font-size: 24px; line-height: 1.1; }
+  .chip span { font-size: 13px; color: var(--muted); }
+  .note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 14px 0 0; font-size: 14px; }
+  .pill { display: inline-block; font: 600 11px/1 var(--mono); padding: 4px 7px; border-radius: 5px; background: var(--bar-bg); color: var(--muted); }
+  .pill.good { background: var(--good-soft); color: var(--good); } .pill.bad { background: var(--bad-soft); color: var(--bad); } .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  ul.clean { margin: 0; padding-left: 18px; } ul.clean li { margin: 4px 0; }
+  .muted { color: var(--muted); font-weight: 400; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 28px; text-align: center; }
+  @media (max-width: 720px) {
+    h1 { font-size: 30px; } section { padding: 20px 16px; }
+    .bar { grid-template-columns: 1fr 56px; } .bar .label { grid-column: 1 / -1; }
+    .cols { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="kicker">BirlaNu · Product mapping eval · 22 Oct 2026</div>
+  <h1>Mapping, measured.</h1>
+  <p class="sub">The turnover-schemes product-mapping agent (catalog search, then LLM mapping), scored against labelled invoice lines: first on prod in LangSmith, then in Sentinel on prod, then end to end on QA with the new MRP-aware search.</p>
+
+  <div class="figures">
+    <div class="fig"><b>300</b><span>labelled prod invoice lines</span></div>
+    <div class="fig"><b>3</b><span>eval setups built</span></div>
+    <div class="fig"><b>95 / 100</b><span>SKU-accurate, final QA run</span></div>
+    <div class="fig"><b>100 / 100</b><span>expected product in the search's top 5</span></div>
+  </div>
+
+  <section>
+    <h2>Summary</h2>
+    <p class="lead">What changed and what it showed.</p>
+    <ul class="clean">
+      <li>The mapping agent was first measured on prod data in LangSmith: <b>1.00</b> when the title carries the SKU, <b>0.94</b> on plain titles, <b>0.90</b> on brand-named titles.</li>
+      <li>That eval moved into Sentinel, against a deployed eval endpoint, and then switched from saved search results to <b>searching the live catalog</b> at run time.</li>
+      <li>A separate QA eval tests the sprint-82 chain: <b>text search v3 with name + MRP</b>, then the LLM mapping. With MRP loaded into the QA catalog it reached <b>95 / 100</b>, up from <b>92</b> without MRP.</li>
+      <li>MRP mainly improves ranking: the expected product came first on <b>85</b> lines, up from <b>73</b>.</li>
+      <li>The remaining misses trace mostly to QA catalog data (missing or 100× MRPs) and near-identical sibling products.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How we got here</h2>
+    <p class="lead">Three eval setups, each closer to the real agent.</p>
+    <div class="timeline">
+      <div class="stage">
+        <div class="tag">01 · LangSmith · prod</div>
+        <h3>Mapping on saved search results</h3>
+        <p>3 datasets × 100 in-catalog lines from workspace 21623a89 (Birla HIL). Scored by SKU per line.</p>
+        <div class="score">1.00 · 0.94 · 0.90</div>
+        <p>SKU in title · plain title · brand named</p>
+      </div>
+      <div class="stage">
+        <div class="tag">02 · Sentinel · prod</div>
+        <h3>Live catalog search</h3>
+        <p>Same 300 lines, run through the deployed endpoint <code>/langGraph/evals/turnover/product-mapping</code>. The saved candidates were dropped: each line now searches the live catalog first.</p>
+        <div class="score">Spot checks: all correct</div>
+        <p>Small verification runs only; the full 300 was not run here.</p>
+      </div>
+      <div class="stage">
+        <div class="tag">03 · Sentinel · QA</div>
+        <h3>New search + mapping, end to end</h3>
+        <p>100 lines, one per product, against 100 BirlaNu products loaded into the QA workspace. Search with name + MRP (text search v3), then sprint-82's mapping.</p>
+        <div class="score">95 / 100</div>
+        <p>Final run, with MRP set in the catalog</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What was tested</h2>
+    <p class="lead">Every product line the agent was given, scored against its recorded result.</p>
+    <ul class="clean">
+      <li>Real BirlaNu invoice lines from prod, each a product title exactly as the agent receives it, in three cases: SKU in the title, plain title, brand named (Birla / BirlaNu / HIL).</li>
+      <li>Each line carries its expected SKU (and equivalents) and status, recorded before any run.</li>
+      <li>Each run used one code revision, with the same conditions for every line; nothing was adjusted after the fact.</li>
+    </ul>
+    <h3>Sources</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>What it is</th><th class="num">Rows</th><th>What was used</th></tr></thead>
+      <tbody>
+        <tr><td>LangSmith datasets (prod)</td><td class="num">3 × 100</td><td>Invoice lines with labelled SKU and status: <code>turnover-product-mapping-eval-*-in-catalog</code></td></tr>
+        <tr><td>Prod eval set (Sentinel)</td><td class="num">300</td><td>The same lines: <code>wsku-001…100</code>, <code>plain-001…100</code>, <code>brand-001…100</code></td></tr>
+        <tr><td>Prod catalog (Birla HIL)</td><td class="num">2,335</td><td>Exported read-only: product name, SKU, MRP (paise)</td></tr>
+        <tr><td>QA catalog</td><td class="num">100</td><td>The labelled products, loaded into the QA workspace (hd-agencies) alongside its existing products</td></tr>
+        <tr><td>QA eval set</td><td class="num">100</td><td>One line per product: 32 SKU in title, 32 plain, 36 brand named; 73 with the invoice rate equal to the catalog MRP</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>How the scoring works</h2>
+    <p class="lead">Two questions per line: was the status right, and was the SKU right. The search is graded on its own as well.</p>
+    <ol class="steps">
+      <li><div><b>Status</b><p>Mapped / mapped-with-brand-not-found / unmapped, compared with the recorded result.</p></div></li>
+      <li><div><b>SKU</b><p>The chosen product against the expected one, with equivalent catalog items counted as correct. A line counts only when it was not left unmapped.</p></div></li>
+      <li><div><b>Search</b><p>Is the expected product among the top 5 candidates, and at what rank (top-1, top-5, MRR)? Did it come in by SKU or by name, and did its MRP match the line's?</p></div></li>
+      <li><div><b>Totals</b><p>Every line scored the same way; totals come from each run's own report. The QA status figure is computed from that report against the labelled statuses.</p></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What we found</h2>
+    <p class="lead">95 of 100 lines mapped to the right SKU once MRP was in the catalog.</p>
+
+    <h3>Final QA run · search + mapping · MRP set</h3>
+    <div class="strip">
+      <div class="chip good"><b>95</b><span>SKU-accurate</span></div>
+      <div class="chip good"><b>96</b><span>status-accurate</span></div>
+      <div class="chip"><b>98</b><span>mapped (93 + 5 brand not found)</span></div>
+      <div class="chip bad"><b>3</b><span>wrongly mapped</span></div>
+      <div class="chip warn"><b>2</b><span>missed (left unmapped)</span></div>
+    </div>
+    <div class="bars">
+      <div class="bar"><span class="label">SKU-accurate</span><div class="track"><div class="fill good" style="width:95%"></div></div><span class="v">95%</span></div>
+      <div class="bar"><span class="label">Status-accurate</span><div class="track"><div class="fill good" style="width:96%"></div></div><span class="v">96%</span></div>
+      <div class="bar"><span class="label">Search: in top 5</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="v">100%</span></div>
+      <div class="bar"><span class="label">Search: ranked #1</span><div class="track"><div class="fill" style="width:85%"></div></div><span class="v">85%</span></div>
+      <div class="bar"><span class="label">Wrongly mapped</span><div class="track"><div class="fill bad" style="width:3%"></div></div><span class="v">3%</span></div>
+      <div class="bar"><span class="label">Missed</span><div class="track"><div class="fill bad" style="width:2%"></div></div><span class="v">2%</span></div>
+    </div>
+    <p class="note">Rates are arithmetic on the counts above (n = 100).</p>
+
+    <h3>Progression on QA (100 lines)</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Run</th><th class="num">SKU-accurate</th><th class="num">In top 5</th><th class="num">Ranked #1</th><th class="num">MRR</th></tr></thead>
+      <tbody>
+        <tr><td>Search only, no MRP <span class="pill">96 products present</span></td><td class="num">—</td><td class="num">96</td><td class="num">73</td><td class="num">0.825</td></tr>
+        <tr><td>Search + mapping, no MRP</td><td class="num">92</td><td class="num">96</td><td class="num">73</td><td class="num">0.825</td></tr>
+        <tr class="hl"><td>Search + mapping, MRP set <span class="pill good">all 100 present</span></td><td class="num">95</td><td class="num">100</td><td class="num">85</td><td class="num">0.912</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The first two runs had 4 products missing from QA; those 4 lines could not be found. The top-5 gain (96 → 100) is from loading them; the #1 gain (73 → 85) is from MRP.</p>
+
+    <div class="cols">
+      <div>
+        <h3>By case · final run</h3>
+        <div class="scroll"><table>
+          <thead><tr><th>Case</th><th class="num">Lines</th><th class="num">Mapped right</th><th class="num">Search #1</th></tr></thead>
+          <tbody>
+            <tr><td>SKU in title</td><td class="num">32</td><td class="num">32</td><td class="num">28</td></tr>
+            <tr><td>Plain title</td><td class="num">32</td><td class="num">28</td><td class="num">27</td></tr>
+            <tr><td>Brand named</td><td class="num">36</td><td class="num">35</td><td class="num">30</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <h3>Does MRP help? · final run</h3>
+        <div class="scroll"><table>
+          <thead><tr><th>Lines</th><th class="num">Count</th><th class="num">Mapped right</th><th class="num">Search #1</th></tr></thead>
+          <tbody>
+            <tr><td>Rate = catalog MRP</td><td class="num">73</td><td class="num">69</td><td class="num">65 <span class="muted">(was 54)</span></td></tr>
+            <tr><td>Rate ≠ catalog MRP</td><td class="num">27</td><td class="num">26</td><td class="num">20</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note">The MRP boost fired on 58 of the 73 lines it could apply to.</p>
+      </div>
+    </div>
+
+    <h3>LangSmith · prod (300 lines)</h3>
+    <div class="bars">
+      <div class="bar"><span class="label">SKU in title</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="v">1.00</span></div>
+      <div class="bar"><span class="label">Plain title</span><div class="track"><div class="fill" style="width:94%"></div></div><span class="v">0.94</span></div>
+      <div class="bar"><span class="label">Brand named</span><div class="track"><div class="fill" style="width:90%"></div></div><span class="v">0.90</span></div>
+    </div>
+    <p class="note">Brand-named score is after de-duplicating the dataset. One label is known to be wrong (<code>brand-097</code>: its expected SKU is not among its candidates).</p>
+  </section>
+
+  <section>
+    <h2>Where it still fails</h2>
+    <p class="lead">The 5 misses in the final QA run. Search found the right product in every case; the mapping got these wrong.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Line</th><th>Invoice title</th><th>Result</th><th class="num">Search</th><th>Likely cause</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">plain-006</td><td>Cpvc Coupler 3/4 Birla</td><td><span class="pill warn">missed</span></td><td class="num">#4</td><td>Catalog MRP is 100× in QA, so no boost</td></tr>
+        <tr><td class="mono">plain-020</td><td>Cpvc Coupler 1 1/2 Birla</td><td><span class="pill warn">missed</span></td><td class="num">#4</td><td>Catalog MRP is 100× in QA, so no boost</td></tr>
+        <tr><td class="mono">plain-048</td><td>CPVC BALL VALVE 1"</td><td><span class="pill bad">wrong SKU</span></td><td class="num">#3</td><td>Expected product has no MRP in QA; mapped to the workspace's own look-alike</td></tr>
+        <tr><td class="mono">plain-027</td><td>Cpvc Pipes Sdr-11 3mtr 20mm (3/4")</td><td><span class="pill bad">wrong SKU</span></td><td class="num">#1</td><td>Near-identical sibling product chosen</td></tr>
+        <tr><td class="mono">brand-062</td><td>SWR PIPE TYPE A 110MM PUSHFIT S/S BIRLA</td><td><span class="pill bad">wrong SKU</span></td><td class="num">#1</td><td>Near-identical sibling product chosen</td></tr>
+      </tbody>
+    </table></div>
+    <h3>QA catalog data to fix</h3>
+    <ul class="clean">
+      <li><b>11 products with no MRP:</b> <span class="mono">96000132 96000345 96000769 96000924 96000993 98001250 98001254 96000017 96000047 96000128 96000245</span></li>
+      <li><b>9 products with MRP 100× too high</b> (converted to paise twice, e.g. 4325 → 432500): <span class="mono">96000038 96000052 96000050 96000099 96000342 96001472 96001523 96000049 96000087</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What was built</h2>
+    <p class="lead">The code and data behind these numbers.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Piece</th><th>Where</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td>Mapping eval endpoint, prod (<code>POST /langGraph/evals/turnover/product-mapping</code>)</td><td>zo-ai-agents, PR #21837</td><td><span class="pill good">on main, deployed to prod</span></td></tr>
+        <tr><td>Sentinel prod eval <code>turnover-product-mapping</code>, switched to live catalog search</td><td>sentinel-suite, commit <code>36f780da4d</code></td><td><span class="pill">committed, branch <code>upd/t-schemes-sentinel-eval</code></span></td></tr>
+        <tr><td>Sentinel QA eval <code>turnover-product-search</code>: v3 search + mapping, search metrics, QA test account</td><td>sentinel-suite</td><td><span class="pill warn">uncommitted</span></td></tr>
+        <tr><td>QA catalog seed <code>qa-catalog.csv</code> (100 products) from the 2,335-product prod export</td><td>eval folder + Downloads</td><td><span class="pill good">loaded into QA</span></td></tr>
+        <tr><td>Mapping eval endpoint on sprint-82 (shared mapping function, v3 test)</td><td>branch <code>feat/turnover-mapping-eval-sprint-82</code>, <code>b3738023a2</code></td><td><span class="pill good">pushed</span> <span class="pill warn">not deployed to QA</span></td></tr>
+        <tr><td>sprint-82 turnover agent changes on top of main (MRP mapping, search fallback, extraction fixes, v3 search, MRP prompt)</td><td>branch <code>t-schemes/mrp-search</code></td><td><span class="pill warn">uncommitted</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>What's next</h2>
+    <ol class="steps">
+      <li><div><b>Fix the QA catalog's MRPs</b><p>Set the 11 missing values and correct the 9 that are 100× too high, then re-run; at least 3 of the 5 misses involve these products.</p></div></li>
+      <li><div><b>Deploy the eval endpoint to QA</b><p>Run the zo-ai-agents deploy on <code>feat/turnover-mapping-eval-sprint-82</code>, so the full chain runs from Sentinel with no local setup.</p></div></li>
+      <li><div><b>Ship text search v3 to prod first</b><p>The agent changes call <code>/products/text-search/v3</code>, which only exists in sprint-82's commerce_v2. It must reach prod before the agent changes do.</p></div></li>
+      <li><div><b>Widen the eval set</b><p>More sellers, several invoice phrasings per product, and fix the <code>brand-097</code> label.</p></div></li>
+    </ol>
+  </section>
+
+  <footer>Final run 22 Oct 2026 · QA workspace hd-agencies · 100 lines · report <span class="mono">eval-reports/turnover-product-search/qa-chain-mrp-1.html</span></footer>
+</main>
+</body>
+</html>

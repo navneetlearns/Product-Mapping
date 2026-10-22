@@ -1,8 +1,8 @@
 {
-  "RUN_DATE": null,
-  "TITLES": null,
-  "ACC_SKU": null,
-  "ACC_BRAND": null,
-  "ACC_TITLE": null,
-  "ACC_MRP": null
+  "RUN_DATE": "October 2026",
+  "TITLES": 100,
+  "HITS_SKU": 100,
+  "HITS_BRAND": 90,
+  "HITS_PLAIN": 94,
+  "HITS_MRP": 95
 }

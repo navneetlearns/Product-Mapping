@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Build the BirlaNu product-mapping eval deck (4 slides, 1920x1080 -> PDF).
 
-Scope: the mapping-logic eval — four logics (SKU-based, Brand-based, Normal
-product title, MRP-based), each run on its own set of product titles.
+Scope: the mapping-logic eval — SKU-based, Brand-based, Plain title, MRP-based —
+each run on its own set of 100 product titles.
 
-All figures come from code/numbers.json. A null slot renders as a visible
-placeholder chip, so the deck can be reviewed and approved before the numbers
-land. Fill numbers.json, re-run this script, and the same slides carry them.
+Figures live in code/numbers.json. A null slot renders as a visible placeholder
+chip, so the deck can be reviewed before the numbers land; a filled slot renders
+the value and drives the bars. Counts are hits / total per lane.
 
 Usage:
     python3 build_deck.py                        # build + render PDF and QA captures
@@ -31,8 +31,8 @@ OUT = _arg("--qa", os.path.join(BASE, "outputs", "qa"))
 with open(NUMBERS, encoding="utf-8") as f:
     NUM = json.load(f)
 
-LANES = [("SKU-based", "ACC_SKU"), ("Brand-based", "ACC_BRAND"),
-         ("Normal title", "ACC_TITLE"), ("MRP-based", "ACC_MRP")]
+LANES = [("SKU-based", "HITS_SKU"), ("Brand-based", "HITS_BRAND"),
+         ("Plain title", "HITS_PLAIN"), ("MRP-based", "HITS_MRP")]
 
 
 def is_num(v):
@@ -43,24 +43,40 @@ def fmt(v):
     return f"{v:,.1f}" if isinstance(v, float) else f"{v:,}"
 
 
-def V(slot, dark=False, cls=""):
-    """Render a slot: the value when supplied, otherwise a labelled chip."""
-    v = NUM.get(slot)
+def slot(s, dark=False, cls=""):
+    c = "slot" + (" on-dark" if dark else "") + (f" {cls}" if cls else "")
+    return f'<span class="{c}">{s}</span>'
+
+
+def V(key, dark=False, cls=""):
+    v = NUM.get(key)
     if v is None or v == "":
-        c = "slot" + (" on-dark" if dark else "") + (f" {cls}" if cls else "")
-        return f'<span class="{c}">{slot}</span>'
+        return slot(key, dark, cls)
     if is_num(v):
-        shown = f"{v:.1f}%" if slot.startswith("ACC_") else fmt(v)
-        return f"<span class=\"num{' ' + cls if cls else ''}\">{shown}</span>"
+        return f"<span class=\"num{' ' + cls if cls else ''}\">{fmt(v)}</span>"
     return html.escape(str(v))
+
+
+def score(key, dark=False):
+    """Hits / total, or placeholder chips when either side is missing."""
+    hits, total = NUM.get(key), NUM.get("TITLES")
+    if is_num(hits) and is_num(total):
+        return f'<span class="num">{fmt(hits)}</span><span class="of"> / {fmt(total)}</span>'
+    return f'{slot(key, dark)}<span class="sep">/</span>{slot("TITLES", dark)}'
+
+
+def lane_width(key):
+    hits, total = NUM.get(key), NUM.get("TITLES")
+    return 100.0 * hits / total if is_num(hits) and is_num(total) and total else None
 
 
 def validate():
     problems = []
-    for _, slot in LANES:
-        v = NUM.get(slot)
-        if is_num(v) and not 0 <= v <= 100:
-            problems.append(f"{slot} = {v}, expected a percentage 0-100")
+    total = NUM.get("TITLES")
+    for name, key in LANES:
+        v = NUM.get(key)
+        if is_num(v) and is_num(total) and v > total:
+            problems.append(f"{key} = {v} exceeds TITLES = {total}")
     filled = [k for k, v in NUM.items() if v not in (None, "")]
     print(f"  slots filled {len(filled)}/{len(NUM)}: {', '.join(filled) or 'none'}")
     if problems:
@@ -69,17 +85,6 @@ def validate():
             print("  - " + p)
         sys.exit(1)
     print("  slot check OK")
-
-
-def lane_bar(slot):
-    v = NUM.get(slot)
-    if is_num(v):
-        fill = f'<span style="width:{v:.1f}%"></span>'
-        val = f"{v:.1f}%"
-        cls = "track"
-    else:
-        fill, val, cls = '<span style="width:0%"></span>', V(slot), "track pending"
-    return f'<div class="{cls}">{fill}</div><div class="lv">{val}</div>'
 
 
 CSS = r"""
@@ -125,6 +130,9 @@ CSS = r"""
   .lead .slot{ font-size:.8em; }
   .cover .kicker .slot{ font-size:.8em; }
   .cover .slot{ border-color:#d8b06a; color:#e7c88d; }
+  .of{ color:var(--muted); font-size:.5em; }
+  .cover .of{ color:#9db8aa; }
+  .sep{ font-size:.5em; color:var(--muted); margin:0 .3em; }
 
   /* cover */
   .cover{ background:var(--pine); color:#fff; }
@@ -136,7 +144,7 @@ CSS = r"""
   .cover .kicker .chip{ border:1px solid rgba(201,227,212,.45); border-radius:999px; padding:7px 18px; }
   .cover h1{ font-weight:400; font-size:118px; line-height:1.03; letter-spacing:-.02em; margin-top:70px; }
   .cover h1 .serif{ font-family:'Serif'; font-style:italic; color:#a9d3bd; }
-  .cover .sub{ font-size:30px; line-height:1.5; color:#d6e6dd; margin-top:32px; max-width:1240px; }
+  .cover .sub{ font-size:30px; line-height:1.5; color:#d6e6dd; margin-top:32px; max-width:1260px; }
   .cover .ruler{ margin-top:auto; height:58px; border-bottom:1px solid rgba(255,255,255,.28);
     background-image:
       repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, transparent 1px 200px),
@@ -148,45 +156,46 @@ CSS = r"""
   .cover .band .cell{ padding-right:38px; border-right:1px solid rgba(255,255,255,.12); }
   .cover .band .cell:last-child{ border-right:none; }
   .cover .band .cell:not(:first-child){ padding-left:38px; }
-  .cover .band .v{ font-size:58px; line-height:1.15; font-variant-numeric:tabular-nums; }
+  .cover .band .v{ font-size:56px; line-height:1.2; font-variant-numeric:tabular-nums; }
   .cover .band .k{ font-family:'Mono'; font-size:15px; letter-spacing:.16em; text-transform:uppercase;
     color:#9db8aa; margin-top:14px; }
 
   /* steps */
-  .steps{ margin-top:60px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
-    justify-content:space-between; padding-bottom:24px; }
+  .steps{ margin-top:58px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:10px; }
   .step{ display:grid; grid-template-columns:90px 300px 1fr; gap:40px; align-items:baseline;
-    padding:40px 0; border-bottom:1px solid var(--hair); }
+    padding:36px 0; border-bottom:1px solid var(--hair); }
   .step .idx{ font-family:'Mono'; font-size:22px; font-weight:700; color:var(--green); letter-spacing:.12em; }
   .step .t{ font-size:34px; }
   .step .b{ font-size:23px; line-height:1.5; color:var(--muted); }
 
   /* logic table */
-  .lanes{ margin-top:54px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
-    justify-content:space-between; padding-bottom:24px; }
+  .lanes{ margin-top:52px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:18px; }
   .lane{ display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:baseline;
-    padding:36px 0; border-bottom:1px solid var(--hair); }
+    padding:34px 0; border-bottom:1px solid var(--hair); }
   .lane .t{ font-size:40px; line-height:1.15; }
   .lane .b{ font-size:23px; line-height:1.5; color:var(--muted); }
 
   /* results */
-  .results{ margin-top:58px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
-    justify-content:space-between; padding-bottom:26px; }
-  .res{ display:grid; grid-template-columns:420px 1fr 260px; gap:56px; align-items:center;
-    padding:34px 0; border-bottom:1px solid var(--hair); }
+  .results{ margin-top:56px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:12px; }
+  .res{ display:grid; grid-template-columns:420px 1fr 300px; gap:56px; align-items:center;
+    padding:32px 0; border-bottom:1px solid var(--hair); }
   .res .t{ font-size:40px; line-height:1.15; }
   .res .track{ height:18px; background:#e7ece9; position:relative; }
   .res .track span{ position:absolute; left:0; top:0; bottom:0; background:var(--green); }
   .res .track.pending{ background:repeating-linear-gradient(90deg,#e7ece9 0 14px,#eef2f0 14px 28px); }
-  .res .lv{ text-align:right; font-size:44px; font-variant-numeric:tabular-nums; }
-  .closing{ font-family:'Mono'; font-size:16px; color:var(--muted); letter-spacing:.06em; padding-top:26px; }
+  .res .lv{ text-align:right; font-size:40px; font-variant-numeric:tabular-nums; }
+  .closing{ font-family:'Mono'; font-size:15px; color:var(--muted); letter-spacing:.05em; line-height:1.7;
+    padding-top:22px; max-width:1560px; }
 """
 
 
 def slide_cover():
     cells = "".join(
-        f'<div class="cell"><div class="v">{V(slot, dark=True)}</div><div class="k">{name}</div></div>'
-        for name, slot in LANES
+        f'<div class="cell"><div class="v">{score(key, dark=True)}</div><div class="k">{name}</div></div>'
+        for name, key in LANES
     )
     return f"""
 <section class="slide cover">
@@ -194,7 +203,7 @@ def slide_cover():
   <div class="inner">
     <div class="kicker"><span class="chip">BirlaNu · Product Mapping Eval</span><span>{V('RUN_DATE', dark=True)}</span></div>
     <h1>Mapping, <span class="serif">measured.</span></h1>
-    <div class="sub">SKU-based, brand-based, normal product title, MRP-based — each mapping logic run on its own set of product titles.</div>
+    <div class="sub">SKU-based, brand-based, plain title, MRP-based — each mapping logic run on its own set of {V('TITLES', dark=True)} product titles.</div>
     <div class="ruler"></div>
     <div class="band">{cells}</div>
   </div>
@@ -207,16 +216,16 @@ def slide_tested():
   <div class="content">
     <div class="secnum"><span class="num2">01</span><span class="lbl">What was tested</span><span class="rule"></span></div>
     <h2>One dataset per mapping logic, each built to <span class="serif">exercise that logic</span>.</h2>
-    <div class="lead">Each logic was run on its own set of {V('TITLES')} product titles, so the four results are comparable lane by lane.</div>
+    <div class="lead">Each logic was run on its own set of {V('TITLES')} product titles, so the four results read lane by lane.</div>
     <div class="lanes">
       <div class="lane"><div class="t">SKU-based</div>
-        <div class="b">Titles that carry an embedded product code — the code path, tested on its own.</div></div>
+        <div class="b">Titles that carry an embedded product code — the code path on its own.</div></div>
       <div class="lane"><div class="t">Brand-based</div>
-        <div class="b">Titles carrying the brand token and no code — the brand path, tested on its own.</div></div>
-      <div class="lane"><div class="t">Normal product title</div>
-        <div class="b">Plain titles: no code and no brand token — matching on the words alone.</div></div>
+        <div class="b">Titles carrying the brand token and no code — the brand path on its own.</div></div>
+      <div class="lane"><div class="t">Plain title</div>
+        <div class="b">No code and no brand token — matching on the words alone.</div></div>
       <div class="lane"><div class="t">MRP-based</div>
-        <div class="b">Titles matched with price in the picture — the price-led path, tested on its own.</div></div>
+        <div class="b">Title plus price — the price-led path, with MRP in the picture.</div></div>
     </div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
@@ -228,19 +237,19 @@ def slide_method():
 <section class="slide">
   <div class="content">
     <div class="secnum"><span class="num2">02</span><span class="lbl">How it was run and scored</span><span class="rule"></span></div>
-    <h2>One run per logic, every title scored against its <span class="serif">recorded result</span>.</h2>
+    <h2>One run per logic, searching live, every title scored against its <span class="serif">recorded result</span>.</h2>
     <div class="steps">
       <div class="step">
         <div class="idx">01</div><div class="t">The sets</div>
-        <div class="b">Four datasets, one per mapping logic, each holding its own product titles as the agent receives them — no codes or hints added.</div>
+        <div class="b">Four datasets, one per mapping logic, each holding {V('TITLES')} product titles exactly as the agent receives them — no codes or hints added.</div>
       </div>
       <div class="step">
         <div class="idx">02</div><div class="t">The runs</div>
-        <div class="b">One run per logic, same revision and the same conditions throughout; nothing adjusted afterwards.</div>
+        <div class="b">One run per logic against the live catalogue, same revision and the same conditions throughout; nothing adjusted afterwards.</div>
       </div>
       <div class="step">
         <div class="idx">03</div><div class="t">The scoring</div>
-        <div class="b">Each title carries its expected result, fixed in the set before the run; every title is scored against it the same way.</div>
+        <div class="b">Each title carries its expected SKU and status, fixed before the run; a title counts only when the SKU chosen matches, equivalents included.</div>
       </div>
     </div>
   </div>
@@ -249,17 +258,24 @@ def slide_method():
 
 
 def slide_found():
-    rows = "".join(
-        f'<div class="res"><div class="t">{name}</div>{lane_bar(slot)}</div>'
-        for name, slot in LANES
-    )
+    rows = []
+    for name, key in LANES:
+        w = lane_width(key)
+        if w is None:
+            fill, cls = '<span style="width:0%"></span>', "track pending"
+        else:
+            fill, cls = f'<span style="width:{w:.1f}%"></span>', "track"
+        rows.append(f'<div class="res"><div class="t">{name}</div>'
+                    f'<div class="{cls}">{fill}</div>'
+                    f'<div class="lv">{score(key)}</div></div>')
     return f"""
 <section class="slide">
   <div class="content">
     <div class="secnum"><span class="num2">03</span><span class="lbl">What we found</span><span class="rule"></span></div>
     <h2>How each mapping logic <span class="serif">performed</span>.</h2>
-    <div class="results">{rows}</div>
-    <div class="closing">Each logic scored against the expected result recorded in its own set; results as reported by the run.</div>
+    <div class="results">{''.join(rows)}</div>
+    <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.
+      The MRP lane ran on the live search chain against the product set loaded for that test; the other lanes ran against the full production catalogue.</div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 04</span></div>
 </section>"""
