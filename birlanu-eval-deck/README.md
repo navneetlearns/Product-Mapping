@@ -28,7 +28,9 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
    three-way label match, which diverges from (N − wrong maps − misses)/N when a mapped
    line takes the wrong mapped sub-label (one line in 1,842 — see Open items).
 5. What we found — one row per logic with a bar and hits / total. All four runs searched
-   the live production catalogue; there is no per-lane setup caveat.
+   the live production catalogue. A footnote explains why the brand lane's 90 is a floor:
+   this eval exercises the name path only, while a brand-named line in the full pipeline
+   also runs the code-based mapping, so both paths together are expected around 95.
 
 No recommendations, no causes-of-misses slide, no QA/Sentinel content, no brand-097
 label note, no local tooling.
@@ -89,7 +91,11 @@ Last verified: 5 pages, no overflow, no clipped text, no edge-band ink.
 3. **MRP lane has no price shown.** No export available here has an MRP column, so the
    lane states the signal in words. If real rates are wanted on the slide, supply the
    QA catalogue CSV or two rate values.
-4. **Status is a three-way label match, not a two-way one.** Replaying the scoring rules
+4. **The "around 95" for brand-named lines is a projection, not a measurement.** It is the
+   user's stated expectation for name path + code-based path combined; nothing in the
+   exports measures the combined path. The deck says "expected to land around 95", never
+   that it was observed. Do not turn it into a bar without a run behind it.
+5. **Status is a three-way label match, not a two-way one.** Replaying the scoring rules
    against both prod exports (150 invoices, 1,842 lines) reproduces every published
    evaluator column except one line: status `MAPPED` recorded, `MAPPED_BRAND_NOT_FOUND`
    produced, so that invoice scores 12/13 on status while `false_map` and `missed` both

@@ -212,6 +212,10 @@ CSS = r"""
   .res .track span{ position:absolute; left:0; top:0; bottom:0; background:var(--green); }
   .res .track.pending{ background:repeating-linear-gradient(90deg,#e7ece9 0 14px,#eef2f0 14px 28px); }
   .res .lv{ text-align:right; font-size:40px; font-variant-numeric:tabular-nums; }
+  .note{ margin-top:26px; padding-top:20px; border-top:1px solid var(--hair);
+    display:grid; grid-template-columns:110px 1fr; gap:26px; align-items:baseline; max-width:1500px; }
+  .note .tag{ font-family:'Mono'; font-size:15px; letter-spacing:.2em; text-transform:uppercase; color:var(--clay); }
+  .note p{ font-size:20px; line-height:1.5; color:var(--muted); margin:0; }
   .closing{ font-family:'Mono'; font-size:15px; color:var(--muted); letter-spacing:.05em; line-height:1.7;
     padding-top:22px; max-width:1560px; }
 """
@@ -341,6 +345,9 @@ def slide_found():
     <h2>How each mapping logic <span class="serif">performed</span>.</h2>
     <div class="results">{''.join(rows)}</div>
     <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.</div>
+    <div class="note"><span class="tag">Note</span>
+      <p>The brand lane measures the name path on its own. This eval covers only part of the full invoice pipeline —
+      a brand-named line also runs the code-based mapping, so 90 is the floor for this lane; with both paths combined the brand-named logic is expected to land around 95.</p></div>
   </div>
   <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>05</b> / 05</span></div>
 </section>"""
