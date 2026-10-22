@@ -178,3 +178,11 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
   mm↔inch canon + GT-lead cross-check; deterministic)
 - `outputs/catalogue_check/open_42_resolution.{xlsx,csv}`, `open_42_candidates_long.csv`,
   `open_cases_42.csv` — resolver outputs (workbook copy in the F: folder; verdicts pending)
+
+## Consumed by
+
+- `../birlanu-eval-deck/` — the 4-slide BirlaNu client deck. Its three LangSmith lanes use
+  these sets (SKU in title / brand in title / plain title, 100 each, hits of 100 shown on
+  the slide); the MRP lane's figure comes from the eval report, not from these files.
+  Sample titles quoted on the deck's "What was tested" slide are taken verbatim from
+  `outputs/*.jsonl`.
