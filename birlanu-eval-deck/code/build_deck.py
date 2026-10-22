@@ -194,7 +194,7 @@ def slide_cover():
   <div class="inner">
     <div class="kicker"><span class="chip">BirlaNu · Product Mapping Eval</span><span>{V('RUN_DATE', dark=True)}</span></div>
     <h1>Mapping, <span class="serif">measured.</span></h1>
-    <div class="sub">Four mapping logics — SKU-based, brand-based, normal product title, MRP-based — each run on its own set of product titles.</div>
+    <div class="sub">SKU-based, brand-based, normal product title, MRP-based — each mapping logic run on its own set of product titles.</div>
     <div class="ruler"></div>
     <div class="band">{cells}</div>
   </div>
