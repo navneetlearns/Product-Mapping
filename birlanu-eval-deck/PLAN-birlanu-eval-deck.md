@@ -1,7 +1,7 @@
 # Plan / decision record — BirlaNu mapping-eval deck
 
-**Status: BUILT with numbers (22 Oct 2026).** One open factual question before it can
-be shared (see below).
+**Status: BUILT with numbers (22 Oct 2026).** Run setup settled; ready to share once the
+stale source report is kept out of the client pack.
 
 Deliverable: `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 5 slides, 16:9.
 
@@ -19,6 +19,8 @@ Four mapping logics, each on its own 100-title set, hits shown as x / 100:
 Slides: cover · what was tested · how the sets were built · how it was scored · what we found.
 The two method slides were added on request (2026-10-22): pool counts per bucket come from
 `eval-datasets/README.md`, the scoring definitions from `PLAN-title-level-eval-runs.md`.
+Slide 5 carries one footnote: the brand lane scores the name path only, so 90 is its floor;
+with the code-based path, brand-named lines are expected around 95 (a projection, not a run).
 Copy decisions applied: "plain title" naming; brand-097 label note left out;
 no recommendations; no causes-of-misses slide; no QA/Sentinel wording anywhere.
 
@@ -39,11 +41,23 @@ and the CSV/Excel exports are shareable. The source report's "mapping on saved s
 results" wording for stage 01 is stale and must not be circulated as-is. The earlier
 per-lane caveat (MRP lane on a separate product set) was removed from the deck.
 
-## Note carried on slide 4
+## Note carried on slide 5
 
-"The MRP lane ran on the live search chain against the product set loaded for that
-test; the other lanes ran against the full production catalogue." This keeps the 95/100
-from being read as directly comparable to 90–94; it names no environment.
+"The brand lane measures the name path on its own. This eval covers only part of the full
+invoice pipeline — a brand-named line also runs the code-based mapping, so 90 is the floor
+for this lane; with both paths combined the brand-named logic is expected to land around 95."
+
+This is the client's own framing of the brand figure; it is an expectation, not a measured
+result, so the copy says "expected to land" and the number never becomes a bar.
+
+## Scoring wording — corrected after replay
+
+Slide 4 states the counting rules in words, not as algebra. Reason: replaying the planned
+formulas over both prod exports (150 invoices, 1,842 lines) reproduces every published
+evaluator column except one line, where GT `MAPPED` came back `MAPPED_BRAND_NOT_FOUND` —
+status scores 12/13 while `false_map` and `missed` both read 0, so
+`(N − false_map − missed)/N` overstates status accuracy in that case. Status is an exact
+three-way label match. Detail is in `eval-datasets/PLAN-title-level-eval-runs.md`.
 
 ## Build
 

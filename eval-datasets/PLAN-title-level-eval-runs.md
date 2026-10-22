@@ -56,6 +56,16 @@ Build in `eval-datasets/code/`:
   `status_accuracy = (N − false_map − missed)/N`; `sku_accuracy = (N − false_map − missed − wrong_sku)/N`;
   `false_map` = mapped where GT says UNMAPPED; `missed` = unmapped where GT wants mapped;
   `wrong_sku` = both mapped, SKU not equal/equivalent.
+  **Re-verified 2026-10-22** against both exports (150 invoices, 1,842 lines): the three
+  count columns and both ratios reproduce exactly for 149 of 150 invoices, `sku_accuracy`
+  and `wrong_sku` everywhere (equivalents honoured, e.g. 96001839 ≡ 96001845). The single
+  exception shows status is scored as an **exact three-way label match**
+  (`MAPPED` / `MAPPED_BRAND_NOT_FOUND` / `UNMAPPED`), not the two-way mapped/unmapped split:
+  one line with GT `MAPPED` returned `MAPPED_BRAND_NOT_FOUND`, scoring status 12/13 while
+  `false_map` and `missed` both stay 0. Quote the three-way definition when reporting
+  status accuracy; treat `(N − false_map − missed)/N` as an approximation.
+  No `evaluators_mapping.py` exists in this repo — the replay was run ad hoc from the CSVs;
+  the Phase 0 files below are still to be built if the runner is ever wired up.
   **Acceptance = replay gate:** recompute all five columns from the two existing exports
   (`/mnt/f/Langsmith/BRAND NAME/*.csv`, 71 + 79 rows) and require EXACT equality with the
   published evaluator columns. This pins evaluator semantics with zero API.
