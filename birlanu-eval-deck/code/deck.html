@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>BirlaNu · Product Mapping Eval</title>
+<style>
+  @font-face { font-family:'Inst'; src:url('assets/fonts/InstrumentSans-Regular.ttf'); font-weight:400; }
+  @font-face { font-family:'Inst'; src:url('assets/fonts/InstrumentSans-Bold.ttf'); font-weight:700; }
+  @font-face { font-family:'Serif'; src:url('assets/fonts/InstrumentSerif-Italic.ttf'); font-weight:400; font-style:italic; }
+  @font-face { font-family:'Mono'; src:url('assets/fonts/JetBrainsMono-Regular.ttf'); font-weight:400; }
+  @font-face { font-family:'Mono'; src:url('assets/fonts/JetBrainsMono-Bold.ttf'); font-weight:700; }
+
+  @page { size: 1920px 1080px; margin: 0; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --paper:#f4f6f5; --ink:#111c16; --muted:#5c6f66; --hair:#dfe6e2;
+    --green:#1f5c3d; --teal:#5e9575; --pine:#14402a; --clay:#b0812c; --line:#cbd6d0;
+  }
+  html,body{ background:var(--paper); }
+  body{ font-family:'Inst',sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  .num{ font-variant-numeric:tabular-nums; }
+
+  .slide{ width:1920px; height:1080px; position:relative; overflow:hidden; background:var(--paper);
+    page-break-after:always; display:flex; flex-direction:column; }
+  .slide:last-child{ page-break-after:auto; }
+
+  .content{ flex:1; position:relative; padding:84px 96px 132px; display:flex; flex-direction:column; }
+  .secnum{ display:flex; align-items:center; gap:18px; font-family:'Mono'; font-size:19px; color:var(--muted); }
+  .secnum .num2{ font-family:'Mono'; font-size:23px; font-weight:700; color:var(--green); letter-spacing:.14em; }
+  .secnum .num2::after{ content:' /'; font-weight:400; color:var(--muted); }
+  .secnum .lbl{ letter-spacing:.18em; text-transform:uppercase; }
+  .secnum .rule{ flex:1; height:1px; background:var(--hair); }
+  h2{ font-weight:400; font-size:74px; line-height:1.07; letter-spacing:-.015em; margin-top:22px; max-width:1640px; }
+  h2 .serif{ font-family:'Serif'; font-style:italic; font-weight:400; color:var(--green); }
+  .lead{ font-size:25px; color:var(--muted); margin-top:22px; line-height:1.5; max-width:1440px; }
+
+  .footbar{ position:absolute; left:96px; right:96px; bottom:44px; display:flex; align-items:center; gap:18px;
+    font-family:'Mono'; font-size:16px; color:var(--muted); letter-spacing:.08em; }
+  .footbar .rule{ flex:1; height:1px; background:var(--hair); }
+  .footbar .pg b{ color:var(--green); font-weight:700; }
+
+  /* placeholder chips */
+  .slot{ display:inline-block; font-family:'Mono'; font-size:.52em; letter-spacing:.08em; line-height:1.4;
+    border:1px solid var(--clay); color:var(--clay); border-radius:.45em; padding:.04em .34em;
+    vertical-align:.14em; white-space:nowrap; text-transform:uppercase; }
+  .lead .slot{ font-size:.8em; }
+  .cover .kicker .slot{ font-size:.8em; }
+  .cover .slot{ border-color:#d8b06a; color:#e7c88d; }
+
+  /* cover */
+  .cover{ background:var(--pine); color:#fff; }
+  .cover .grid-bg{ position:absolute; inset:0; opacity:.07;
+    background-image:radial-gradient(#fff 1px, transparent 1px); background-size:36px 36px; }
+  .cover .inner{ position:relative; z-index:2; flex:1; display:flex; flex-direction:column; padding:96px 120px 64px; }
+  .cover .kicker{ display:flex; align-items:center; gap:20px; font-family:'Mono'; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase; color:#c9e3d4; }
+  .cover .kicker .chip{ border:1px solid rgba(201,227,212,.45); border-radius:999px; padding:7px 18px; }
+  .cover h1{ font-weight:400; font-size:118px; line-height:1.03; letter-spacing:-.02em; margin-top:70px; }
+  .cover h1 .serif{ font-family:'Serif'; font-style:italic; color:#a9d3bd; }
+  .cover .sub{ font-size:30px; line-height:1.5; color:#d6e6dd; margin-top:32px; max-width:1240px; }
+  .cover .ruler{ margin-top:auto; height:58px; border-bottom:1px solid rgba(255,255,255,.28);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.55) 0 1px, transparent 1px 200px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.3) 0 1px, transparent 1px 40px);
+    background-size:100% 58px, 100% 24px;
+    background-position:left bottom, left bottom;
+    background-repeat:no-repeat, no-repeat; }
+  .cover .band{ margin-top:50px; display:grid; grid-template-columns:repeat(4,1fr); }
+  .cover .band .cell{ padding-right:38px; border-right:1px solid rgba(255,255,255,.12); }
+  .cover .band .cell:last-child{ border-right:none; }
+  .cover .band .cell:not(:first-child){ padding-left:38px; }
+  .cover .band .v{ font-size:58px; line-height:1.15; font-variant-numeric:tabular-nums; }
+  .cover .band .k{ font-family:'Mono'; font-size:15px; letter-spacing:.16em; text-transform:uppercase;
+    color:#9db8aa; margin-top:14px; }
+
+  /* steps */
+  .steps{ margin-top:60px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:24px; }
+  .step{ display:grid; grid-template-columns:90px 300px 1fr; gap:40px; align-items:baseline;
+    padding:40px 0; border-bottom:1px solid var(--hair); }
+  .step .idx{ font-family:'Mono'; font-size:22px; font-weight:700; color:var(--green); letter-spacing:.12em; }
+  .step .t{ font-size:34px; }
+  .step .b{ font-size:23px; line-height:1.5; color:var(--muted); }
+
+  /* logic table */
+  .lanes{ margin-top:54px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:24px; }
+  .lane{ display:grid; grid-template-columns:420px 1fr; gap:56px; align-items:baseline;
+    padding:36px 0; border-bottom:1px solid var(--hair); }
+  .lane .t{ font-size:40px; line-height:1.15; }
+  .lane .b{ font-size:23px; line-height:1.5; color:var(--muted); }
+
+  /* results */
+  .results{ margin-top:58px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
+    justify-content:space-between; padding-bottom:26px; }
+  .res{ display:grid; grid-template-columns:420px 1fr 260px; gap:56px; align-items:center;
+    padding:34px 0; border-bottom:1px solid var(--hair); }
+  .res .t{ font-size:40px; line-height:1.15; }
+  .res .track{ height:18px; background:#e7ece9; position:relative; }
+  .res .track span{ position:absolute; left:0; top:0; bottom:0; background:var(--green); }
+  .res .track.pending{ background:repeating-linear-gradient(90deg,#e7ece9 0 14px,#eef2f0 14px 28px); }
+  .res .lv{ text-align:right; font-size:44px; font-variant-numeric:tabular-nums; }
+  .closing{ font-family:'Mono'; font-size:16px; color:var(--muted); letter-spacing:.06em; padding-top:26px; }
+</style></head>
+<body>
+<section class="slide cover">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="kicker"><span class="chip">BirlaNu · Product Mapping Eval</span><span><span class="slot on-dark">RUN_DATE</span></span></div>
+    <h1>Mapping, <span class="serif">measured.</span></h1>
+    <div class="sub">Four mapping logics — SKU-based, brand-based, normal product title, MRP-based — each run on its own set of product titles.</div>
+    <div class="ruler"></div>
+    <div class="band"><div class="cell"><div class="v"><span class="slot on-dark">ACC_SKU</span></div><div class="k">SKU-based</div></div><div class="cell"><div class="v"><span class="slot on-dark">ACC_BRAND</span></div><div class="k">Brand-based</div></div><div class="cell"><div class="v"><span class="slot on-dark">ACC_TITLE</span></div><div class="k">Normal title</div></div><div class="cell"><div class="v"><span class="slot on-dark">ACC_MRP</span></div><div class="k">MRP-based</div></div></div>
+  </div>
+</section>
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num2">01</span><span class="lbl">What was tested</span><span class="rule"></span></div>
+    <h2>One dataset per mapping logic, each built to <span class="serif">exercise that logic</span>.</h2>
+    <div class="lead">Each logic was run on its own set of <span class="slot">TITLES</span> product titles, so the four results are comparable lane by lane.</div>
+    <div class="lanes">
+      <div class="lane"><div class="t">SKU-based</div>
+        <div class="b">Titles that carry an embedded product code — the code path, tested on its own.</div></div>
+      <div class="lane"><div class="t">Brand-based</div>
+        <div class="b">Titles carrying the brand token and no code — the brand path, tested on its own.</div></div>
+      <div class="lane"><div class="t">Normal product title</div>
+        <div class="b">Plain titles: no code and no brand token — matching on the words alone.</div></div>
+      <div class="lane"><div class="t">MRP-based</div>
+        <div class="b">Titles matched with price in the picture — the price-led path, tested on its own.</div></div>
+    </div>
+  </div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
+</section>
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num2">02</span><span class="lbl">How it was run and scored</span><span class="rule"></span></div>
+    <h2>One run per logic, every title scored against its <span class="serif">recorded result</span>.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="idx">01</div><div class="t">The sets</div>
+        <div class="b">Four datasets, one per mapping logic, each holding its own product titles as the agent receives them — no codes or hints added.</div>
+      </div>
+      <div class="step">
+        <div class="idx">02</div><div class="t">The runs</div>
+        <div class="b">One run per logic, same revision and the same conditions throughout; nothing adjusted afterwards.</div>
+      </div>
+      <div class="step">
+        <div class="idx">03</div><div class="t">The scoring</div>
+        <div class="b">Each title carries its expected result, fixed in the set before the run; every title is scored against it the same way.</div>
+      </div>
+    </div>
+  </div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 04</span></div>
+</section>
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num2">03</span><span class="lbl">What we found</span><span class="rule"></span></div>
+    <h2>How each mapping logic <span class="serif">performed</span>.</h2>
+    <div class="results"><div class="res"><div class="t">SKU-based</div><div class="track pending"><span style="width:0%"></span></div><div class="lv"><span class="slot">ACC_SKU</span></div></div><div class="res"><div class="t">Brand-based</div><div class="track pending"><span style="width:0%"></span></div><div class="lv"><span class="slot">ACC_BRAND</span></div></div><div class="res"><div class="t">Normal title</div><div class="track pending"><span style="width:0%"></span></div><div class="lv"><span class="slot">ACC_TITLE</span></div></div><div class="res"><div class="t">MRP-based</div><div class="track pending"><span style="width:0%"></span></div><div class="lv"><span class="slot">ACC_MRP</span></div></div></div>
+    <div class="closing">Each logic scored against the expected result recorded in its own set; results as reported by the run.</div>
+  </div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 04</span></div>
+</section>
+</body></html>
