@@ -1,14 +1,12 @@
-# Plan — BirlaNu product-mapping eval deck (4 slides)
+# Plan — BirlaNu product-mapping eval deck (LangSmith eval, 4 slides)
 
-**Status: Proposed — NOT approved.** (2026-10-22, third cut)
+**Status: Proposed — NOT approved.** (2026-10-22, fourth cut)
 
-Scope: 4 slides — cover, data provenance, test method, findings. No recommendations.
-No "why the misses happen" section. No mention of the Excel workbook, VLOOKUP, Power
-Query or any manual-verification file: the deck describes how the check was run, not
-the tooling it was run in.
+Scope: the product-mapping eval run on LangSmith. NOT the local catalogue-check work
+(cleaning, matching passes, verification files) — that stays out of the deck entirely.
+No recommendations, no "why the misses happen" section, no workbook/tooling mentions.
 
-All figures supplied by the user. The deck is authored number-agnostic with named
-slots; nothing is quantified until the numbers arrive.
+All figures supplied by the user. Authored number-agnostic with named slots.
 
 Audience: BirlaNu team. Deliverable: 4-slide 16:9 PDF, HTML→Playwright, house
 "Quiet Ledger" style inherited from `birlanu-cadence-deck/`.
@@ -21,53 +19,50 @@ Working folder: `~/AgentWork/product-mapping/birlanu-eval-deck/`.
 
 | Slot | Meaning | Used on |
 |---|---|---|
-| `INPUTS` | unique input products from the eval run | 1, 2, 4 |
-| `CATALOGUE` | products in the catalogue export | 2, 4 |
-| `CATALOGUE_DATE` | date of the catalogue export | 2, 4 |
-| `FUZZY` | located on name similarity alone | 4 |
-| `CODE` | located by embedded SKU code | 4 |
-| `LOCATED` | total located = FUZZY + CODE | 1, 4 |
-| `OPEN` | not located = INPUTS − LOCATED | 4 |
+| `RUN_DATE` | date the eval ran | 1, 4 |
+| `SET_DESC` | what the eval set is (e.g. "71 invoices, 899 product lines" or "100 product titles") | 2, 4 |
+| `LINES` | product lines (or cases) evaluated | 1, 2, 4 |
+| `MAPPED` | lines the model mapped | 4 |
+| `STATUS_OK` | lines whose status matched the recorded expected result | 1, 4 |
+| `SKU_OK` | lines whose chosen SKU was correct | 4 |
+| `FALSE_MAPS` | wrong mappings | 4 |
+| `MISSED` | lines that should have mapped but did not | 4 |
 
-Derived percentages are computed from these and labelled as arithmetic.
-`LOCATED = FUZZY + CODE` and `OPEN = INPUTS − LOCATED` are asserted before the build;
-a mismatch stops it.
+Derived rates (status accuracy, SKU accuracy) computed from the counts and labelled as
+arithmetic. Optional 5th slide if the breakdown numbers exist: counts per status.
 
 ---
 
 ## Slide map
 
 **1 — Cover**
-Kicker: BIRLANU · PRODUCT MAPPING · OCTOBER 2026
-Title: "Does the catalogue hold what the invoices describe?" (serif italic on *hold*)
-Sub: Input-product coverage against the catalogue export.
-Figures: `INPUTS` input products · `CATALOGUE` catalogue products · `LOCATED` located
+Kicker: BIRLANU · PRODUCT MAPPING EVAL · `RUN_DATE`
+Title: "Mapping, measured." (serif italic accent)
+Sub: The product-mapping agent scored against recorded results in the eval set.
+Figures: `LINES` product lines evaluated · `STATUS_OK` status-accurate · `SKU_OK` SKU-accurate
 
-**2 — Where the data came from**
-Headline: "Two exports, one question."
-- Input side: the eval run's product titles — `INPUTS` unique products, exactly as the mapping agent receives them (name text only; no codes added).
-- Catalogue side: the product master export dated `CATALOGUE_DATE` — `CATALOGUE` products, SKU and product name.
-- Both are exports, not live look-ups: the count reflects the catalogue as it stood on that date.
-Layout: two-column source table — source | rows | what was used.
+**2 — What was tested**
+Headline: "Every product line the agent was given, scored against its recorded result."
+- The eval set: `SET_DESC`, each line a product title exactly as the agent receives it.
+- Each line carries its expected result, recorded in the set before the run.
+- One run, one revision, same conditions for every line; nothing adjusted after the fact.
+Layout: source table — what it is | rows | what was used.
 
-**3 — How we tested**
-Headline: "One title at a time, against the whole catalogue."
-- Both sides cleaned identically — whitespace, encoding, duplicates — so names compare like-for-like.
-- Pass 1: every input title matched on name against all `CATALOGUE` catalogue names.
-- Pass 2: any title carrying an embedded SKU code re-checked against that SKU.
-- Each candidate match then checked individually; no row counted automatically.
-- A row counts as located only when it is the same item, not merely a similar name.
+**3 — How the scoring works**
+Headline: "Two questions per line: was the status right, and was the SKU right."
+- Status: mapped / mapped-with-brand-not-found / unmapped — compared to the recorded result.
+- SKU: the chosen product compared to the expected one, with equivalent catalogue items counted as correct.
+- Every line scored the same way; totals come from the run's own evaluator output.
 Layout: numbered method rows, mono index.
 
 **4 — What we found**
-Headline: "`LOCATED` of `INPUTS` input products exist in the catalogue."
-- `FUZZY` located on name alone.
-- `CODE` located by embedded SKU code.
-- `OPEN` not located.
-- Coverage rate computed from the two figures above and labelled as arithmetic.
-Layout: count strip + mark matrix of `INPUTS` with `LOCATED` filled; export date in the footer.
+Headline: "`STATUS_OK` of `LINES` lines status-accurate."
+- `MAPPED` mapped · `FALSE_MAPS` wrongly mapped · `MISSED` should-have-mapped lines missed.
+- SKU-accurate: `SKU_OK` of `LINES`.
+- Rates computed from these counts, labelled as arithmetic.
+Layout: count strip + horizontal bars; run date in the footer.
 
-Deck ends on the finding. No recommendations, no next steps, no causes.
+Deck ends on the finding. No recommendations, no next steps, no causes, no local tooling.
 
 ---
 
@@ -75,16 +70,16 @@ Deck ends on the finding. No recommendations, no next steps, no causes.
 
 1. `code/copy.md` — this map with numbers substituted; user approves wording.
 2. `code/deck_template.html` + `code/build_deck.py` — inject values, render 1920×1080 PDF.
-3. QA — `pdfinfo` (4 pages, 1440×810 pts); slot arithmetic assertions; `pdftotext`
-   round-trip (every supplied number present, none invented); zero hits for
-   `Excel`, `VLOOKUP`, `Power Query`, `workbook`, `LangSmith`, run ids, revision, cost;
+3. QA — `pdfinfo` (4 pages, 1440×810 pts); slot arithmetic assertions (STATUS_OK +
+   FALSE_MAPS + MISSED = LINES where that identity holds for the supplied numbers);
+   `pdftotext` round-trip (every supplied number present, none invented); zero hits for
+   `Excel`, `VLOOKUP`, `Power Query`, `workbook`, `catalogue check`, cost figures;
    per-slide pixel overflow check.
-4. Delivery — PDF in `outputs/`, copy beside the source CSVs, README + PROJECTS.md
-   pointer, commit locally (push only on request).
+4. Delivery — PDF in `outputs/`, README + PROJECTS.md pointer, commit locally (push only
+   on request).
 
 ## Out of scope
 
-- Recommendations, next steps, or causes of misses.
-- The 899-line accuracy study, confidence bands, failure families.
-- The manual-verification workbook and its verdict column.
-- Any live-API catalogue check.
+- The local catalogue-coverage work (cleaning, matching passes, verification files).
+- Recommendations, next steps, causes of misses.
+- Any live-API checks.
