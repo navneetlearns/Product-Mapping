@@ -3,7 +3,7 @@
 **Status: BUILT with numbers (22 Oct 2026).** One open factual question before it can
 be shared (see below).
 
-Deliverable: `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 4 slides, 16:9.
+Deliverable: `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 5 slides, 16:9.
 
 ## What it says
 
@@ -16,7 +16,9 @@ Four mapping logics, each on its own 100-title set, hits shown as x / 100:
 | Plain title (no code, no brand) | 94 / 100 |
 | MRP-based (title + price) | 95 / 100 |
 
-Slides: cover · what was tested · how it was run and scored · what we found.
+Slides: cover · what was tested · how the sets were built · how it was scored · what we found.
+The two method slides were added on request (2026-10-22): pool counts per bucket come from
+`eval-datasets/README.md`, the scoring definitions from `PLAN-title-level-eval-runs.md`.
 Copy decisions applied: "plain title" naming; brand-097 label note left out;
 no recommendations; no causes-of-misses slide; no QA/Sentinel wording anywhere.
 

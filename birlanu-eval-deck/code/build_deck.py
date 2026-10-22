@@ -179,6 +179,20 @@ CSS = r"""
   .step .t{ font-size:34px; }
   .step .b{ font-size:23px; line-height:1.5; color:var(--muted); }
 
+  /* source table */
+  .src{ margin-top:52px; border-top:1px solid var(--line); }
+  .src.tall{ flex:1; display:flex; flex-direction:column; justify-content:space-between; padding-bottom:6px; }
+  .src .row{ display:grid; grid-template-columns:300px 480px 1fr; gap:36px; align-items:baseline;
+    padding:26px 0; border-bottom:1px solid var(--hair); }
+  .src .row.head{ padding:18px 0; }
+  .src .row.head .k, .src .row.head .v, .src .row.head .n{
+    font-family:'Mono'; font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .src .k{ font-family:'Mono'; font-size:17px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  .src .v{ font-size:32px; line-height:1.25; }
+  .src .n{ font-size:21px; line-height:1.45; color:var(--muted); }
+  .src .row.total{ border-bottom:none; border-top:1px solid var(--line); }
+  .src .row.total .k, .src .row.total .v{ color:var(--ink); }
+
   /* logic table */
   .lanes{ margin-top:38px; border-top:1px solid var(--line); flex:1; display:flex; flex-direction:column;
     justify-content:space-between; padding-bottom:18px; }
@@ -251,32 +265,61 @@ def slide_tested():
     <div class="lead">Each logic was run on its own set of {V('TITLES')} product titles, so the four results read lane by lane.</div>
     <div class="lanes">{lane_rows()}</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>02</b> / 05</span></div>
 </section>"""
 
 
-def slide_method():
+def pool_total():
+    vals = [NUM.get("POOL_SKU"), NUM.get("POOL_BRAND"), NUM.get("POOL_PLAIN")]
+    if all(is_num(v) for v in vals):
+        return f'<span class="num">{fmt(sum(vals))}</span>'
+    return slot("POOL_TOTAL")
+
+
+def slide_built():
     return f"""
 <section class="slide">
   <div class="content">
-    <div class="secnum"><span class="num2">02</span><span class="lbl">How it was run and scored</span><span class="rule"></span></div>
-    <h2>One run per logic, searching live, every title scored against its <span class="serif">recorded result</span>.</h2>
+    <div class="secnum"><span class="num2">02</span><span class="lbl">How the sets were built</span><span class="rule"></span></div>
+    <h2>Every title came from a real invoice line — then the pool was cut to <span class="serif">100 per logic</span>.</h2>
+    <div class="src tall">
+      <div class="row head"><div class="k">Bucket</div><div class="v">Titles in the pool</div><div class="n">What the title carries</div></div>
+      <div class="row"><div class="k">SKU-based</div><div class="v">{V('POOL_SKU')}</div><div class="n">An embedded product code in the title text.</div></div>
+      <div class="row"><div class="k">Brand-based</div><div class="v">{V('POOL_BRAND')}</div><div class="n">A Birla / BirlaNu / HIL token, no code.</div></div>
+      <div class="row"><div class="k">Plain title</div><div class="v">{V('POOL_PLAIN')}</div><div class="n">Neither a code nor a brand token.</div></div>
+      <div class="row total"><div class="k">All three</div><div class="v">{pool_total()}</div><div class="n">Distinct titles across the pool, cut to {V('TITLES')} cases per logic.</div></div>
+    </div>
+    <div class="closing">One case per distinct title, then a stratified cut to exactly {V('TITLES')} per logic by its recorded result.
+      Rebuilds are byte-identical, and every case traces back to the invoice line it came from.</div>
+  </div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 05</span></div>
+</section>"""
+
+
+def slide_scored():
+    return f"""
+<section class="slide">
+  <div class="content">
+    <div class="secnum"><span class="num2">03</span><span class="lbl">How it was scored</span><span class="rule"></span></div>
+    <h2>Two questions per title: was the <span class="serif">status</span> right, and was the SKU right.</h2>
     <div class="steps">
       <div class="step">
-        <div class="idx">01</div><div class="t">The sets</div>
-        <div class="b">Four datasets, one per mapping logic, each holding {V('TITLES')} product titles exactly as the agent receives them — no codes or hints added.</div>
+        <div class="idx">01</div><div class="t">Status</div>
+        <div class="b">Mapped, mapped-but-brand-not-found, or unmapped — compared with the result recorded for that title before the run.</div>
       </div>
       <div class="step">
-        <div class="idx">02</div><div class="t">The runs</div>
-        <div class="b">One run per logic against the live catalogue, same revision and the same conditions throughout; nothing adjusted afterwards.</div>
+        <div class="idx">02</div><div class="t">SKU</div>
+        <div class="b">The product chosen against the expected product; equivalent catalogue items count as correct. Confidence is recorded but never counted.</div>
       </div>
       <div class="step">
-        <div class="idx">03</div><div class="t">The scoring</div>
-        <div class="b">Each title carries its expected SKU and status, fixed before the run; a title counts only when the SKU chosen matches, equivalents included.</div>
+        <div class="idx">03</div><div class="t">Errors</div>
+        <div class="b">A wrong map is a title mapped where the record says unmapped; a miss is a title left unmapped where the record wants a mapping.</div>
       </div>
     </div>
+    <div class="closing">Status accuracy = (titles − wrong maps − misses) ÷ titles · SKU accuracy = (titles − wrong maps − misses − wrong SKU) ÷ titles.
+      Every title is scored the same way; each set was run once against the live catalogue under the same conditions.</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>03</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 05</span></div>
 </section>"""
 
 
@@ -300,12 +343,12 @@ def slide_found():
     <div class="closing">Every logic scored against the expected SKU recorded in its own set; equivalents counted as correct.
       The MRP lane ran on the live search chain against the product set loaded for that test; the other lanes ran against the full production catalogue.</div>
   </div>
-  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>04</b> / 04</span></div>
+  <div class="footbar"><span>BirlaNu · Product Mapping Eval</span><span class="rule"></span><span class="pg"><b>05</b> / 05</span></div>
 </section>"""
 
 
 def build_html():
-    body = slide_cover() + slide_tested() + slide_method() + slide_found()
+    body = slide_cover() + slide_tested() + slide_built() + slide_scored() + slide_found()
     doc = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <title>BirlaNu · Product Mapping Eval</title>

@@ -4,5 +4,8 @@
   "HITS_SKU": 100,
   "HITS_BRAND": 90,
   "HITS_PLAIN": 94,
-  "HITS_MRP": 95
+  "HITS_MRP": 95,
+  "POOL_SKU": 176,
+  "POOL_BRAND": 495,
+  "POOL_PLAIN": 405
 }

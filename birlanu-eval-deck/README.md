@@ -1,4 +1,4 @@
-# BirlaNu mapping-eval deck (4 slides)
+# BirlaNu mapping-eval deck (5 slides)
 
 Client-facing update for the BirlaNu team on the product-mapping eval: four mapping
 logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its own set of
@@ -6,7 +6,7 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
 
 ## Deliverable
 
-- `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 4 slides, 16:9 (1440×810 pt = 1920×1080 px),
+- `outputs/BirlaNu-Mapping-Eval-Deck.pdf` — 5 slides, 16:9 (1440×810 pt = 1920×1080 px),
   Chromium-rendered, numbers filled.
 - `code/deck.html` — the generated source for that build.
 - `birlanu-product-mapping-eval.html` (folder root) — the source report the figures were
@@ -20,9 +20,12 @@ logics — SKU-based, Brand-based, Plain title, MRP-based — each run on its ow
    carry no price figure: none of the available exports has an MRP column, so the row
    states the signal in words ("matched on the invoice rate against the catalogue
    MRP") instead of inventing a value.
-3. How it was run and scored — the sets, one live run per logic, scoring against the
-   expected SKU recorded before the run.
-4. What we found — one row per logic with a bar and hits / total, plus a two-line note
+3. How the sets were built — pool sizes per bucket (176 / 495 / 405 = 1,076 distinct
+   titles), one case per title, stratified cut to exactly 100 per logic, rebuilds
+   byte-identical, every case traced to its invoice line.
+4. How it was scored — status rule, SKU + equivalence, and the error definitions, with
+   the two accuracy formulas printed on the slide.
+5. What we found — one row per logic with a bar and hits / total, plus a two-line note
    on how the MRP lane was run (live search chain, product set loaded for that test)
    versus the other lanes (full production catalogue).
 
@@ -41,6 +44,9 @@ label note, no local tooling.
 | `HITS_BRAND` | 90 | Brand-based, correct of 100 |
 | `HITS_PLAIN` | 94 | Plain title, correct of 100 |
 | `HITS_MRP` | 95 | MRP-based, correct of 100 |
+| `POOL_SKU` | 176 | distinct titles in the code-in-title pool |
+| `POOL_BRAND` | 495 | distinct titles in the brand-token pool |
+| `POOL_PLAIN` | 405 | distinct titles in the plain pool (the slide sums them: 1,076) |
 
 Bars are computed from hits / titles; a null slot falls back to a visible placeholder
 chip, so partial numbers still render. Hits above `TITLES` stop the build.
@@ -67,7 +73,7 @@ The build itself now FAILS (non-zero exit) on DOM overflow, off-canvas text or t
 overflowing its own box, so a clipped slide cannot be rendered silently — that gate
 caught a 120 px overflow on slide 2 when the sample lines were added.
 
-Last verified: 4 pages, no overflow, no clipped text, no edge-band ink.
+Last verified: 5 pages, no overflow, no clipped text, no edge-band ink.
 
 ## Open items
 
