@@ -145,28 +145,29 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
   titles (75mm door tee: 7 candidates; "4\" TYPE-A" pipe: 24 variants); rebuilds are
   byte-identical (md5-verified); F: copy md5-identical to the repo build.
 
-## Sentinel run results file (2026-10-23) — NOT YET RECONCILED
+## Sentinel lane datasets (2026-10-23) — see `SENTINEL-lanes.md`
 
-`F:\Product\zotok\Product Mapping\Eval Related Product Mapping\sentiel run eval dataset for
-product mapping.csv` (filename spelling as delivered). 300 rows, all with the same shape:
+Two 100-row sentinel lane exports (brand `brand-001…100`, title-only `plain-001…100`) were cleaned,
+compared and corrected. Full record, numbers, artifacts and repro commands live in
+[`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 
-- `item` = `wsku-001…100`, `plain-001…100`, `brand-001…100` — 100 per lane, no MRP lane.
-- `item_result` = pass on 280, fail on 20: wsku **100/100**, plain **90/100**, brand **90/100**.
-- The seven detail columns `kind, typed, sku, expected_qty, got_qty, ok, reason` are empty in
-  all 300 rows, so no per-item reason is recoverable from this file.
-- Failing items: plain 014, 035, 036, 037, 043, 051, 052, 077, 084, 098; brand 027, 043, 053,
-  056, 062, 063, 064, 076, 097, 100.
-
-Why it is not reconciled:
-
-- It disagrees with the recorded run — `../birlanu-eval-deck/code/numbers.json` carries the
-  plain lane at 94/100 and an MRP lane at 95/100 that this file does not contain. Either a
-  re-run, a different cut, or a different scoring rule.
-- The `wsku-001`-style ids exist nowhere else on disk: the three `outputs/*.jsonl` sets carry
-  no case ids (inputs/outputs/metadata only), so an id cannot be joined to a product title
-  from this file alone.
-  To use it, either the populated detail export or a confirmed id→row mapping for the three
-  JSONL sets is required.
+- Same 11-column schema, **not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared
+  mapped SKUs (~23%) and 32 shared invoices — two disjoint lanes cut from one invoice pool.
+- `status`/`sku` in these files are the **expected** side, not results (brand 100/100 MAPPED
+  against 10 recorded fails; title-only 78 MAPPED / 22 MAPPED_BRAND_NOT_FOUND against 10 fails).
+  The `…Eval Related Product Mapping\sentiel run eval dataset for product mapping.csv` tally
+  (300 items, 280 pass, seven empty detail columns) stays **NOT YET RECONCILED** with
+  `../birlanu-eval-deck/code/numbers.json` (plain 94, MRP 95); its 20 failing ids now resolve to
+  titles + expected SKUs, but no mapper output exists on disk to score.
+- Brand lane: 20 of 100 titles carried an embedded SKU code — stripped and flagged; all 20 codes
+  equalled the row's mapped SKU.
+- Title-only lane: **0 titles carry a SKU code** (so nothing to strip) but **54 of 100 carried a
+  Birla/BIRLANU/HIL token**, which the lane must not have. Those 54 were replaced from the same
+  invoice universe with catalogue-backed titles (all 54 expected SKUs exist in the 2,335-SKU
+  catalogue export), preserving the 78/22 status mix → `title only sentinel tarun - corrected.csv`
+  (54 rewritten, 46 byte-identical, 0 brand tokens, 0 codes).
+- Open: `plain-036` / `plain-066` brand abbreviations left as-is pending a decision; the 8
+  duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
 
 ## Files
 
@@ -201,6 +202,18 @@ Why it is not reconciled:
   mm↔inch canon + GT-lead cross-check; deterministic)
 - `outputs/catalogue_check/open_42_resolution.{xlsx,csv}`, `open_42_candidates_long.csv`,
   `open_cases_42.csv` — resolver outputs (workbook copy in the F: folder; verdicts pending)
+- `SENTINEL-lanes.md` — the sentinel lane record (cleaning, comparison, title-only correction,
+  artifacts, repro commands, open items)
+- `code/clean_sentinel_titles.py` — sentinel lane cleaner: expands `line_item` JSON into columns,
+  strips an embedded SKU code from the title, flags the row → `<stem> - cleaned.{xlsx,csv}`
+- `code/compare_sentinel_lanes.py` — brand vs title-only lane comparison + bucket check +
+  fail-lead join → `Sentinel lanes - comparison.xlsx`
+- `code/titles_only_sheets.py` — one-column-per-lane title sheets → `Sentinel input titles.xlsx`
+- `code/build_titleonly_fix.py` — replacement plan for brand-named titles inside the title-only
+  lane (catalogue-backed candidates only, status mix preserved, verdict column empty)
+- `code/apply_titleonly_fix.py` — applies the approved plan from the workbook: rewrites the 54
+  rows (product fields from the replacement's own source record, ids/order kept) →
+  `title only sentinel tarun - corrected.{csv,xlsx}` + `Applied (final set)` sheet
 
 ## Consumed by
 
