@@ -17,8 +17,9 @@ This doc records what was checked, what was found, what was corrected, and where
 lives. The scripts referenced here are in `code/`; the data artifacts are in the F: folder above.
 
 **The SKU lane is input-only here.** It arrived 2026-10-23 already verified by the user ("all
-correct"), so it was not cleaned, corrected or scored — its titles are only extracted for the
-one-column title sheet. Facts recorded from it: 100 rows / `wsku-001…100` / 100 distinct titles /
+correct"), so it was not cleaned or scored — its titles are only extracted for the one-column
+title sheet. The single exception is the brand-token correction applied on request later the same
+day (below). Facts recorded from it: 100 rows / `wsku-001…100` / 100 distinct titles /
 **all 100 carry an 8-9 digit SKU code** (that IS the lane) / 81 distinct SKUs, 12 SKUs on more than
 one title (31 rows) / all `MAPPED` / 62 invoices / 48 `distributor_exclusive=true` / 1 row with
 `equivalent_skus` (`wsku-071`) / HSN 75 `39174000`, 20 `39172390`, 3 `35061000`, 2 `3917` / no
@@ -27,7 +28,7 @@ mojibake. Two observations worth knowing when this lane is used: `wsku-047`
 the only one of the 100 where the title code and the mapped SKU differ — and `wsku-048`'s title
 repeats itself (`96000045 - CPVC TEE 32MM & 96000045 - CPVC TEE 32MM`). Both left as delivered.
 
-**Brand audit on the SKU lane (2026-10-23, plan only).** The lane's cue is the code, so a brand
+**Brand audit on the SKU lane (2026-10-23, applied).** The lane's cue is the code, so a brand
 token gives the mapper a second route it should not have. A full scan found **19 titles carrying a
 token — BIRLANU 10, BN 6, BIRLA 3** (not the 4-5 eyeballed; `wsku-008/018/033/063/077/083` are the
 `BN` prefix form, easy to miss). Fix plan: drop the token only, keep the code and therefore the
@@ -35,8 +36,20 @@ row's product and SKU — e.g. `96000052 CPVC SOCKET 40MM 1 1/2 BIRLA` → `9600
 1 1/2`, `UPVC BALL VALVE 1/2" Birlanu (98000607)` → `UPVC BALL VALVE 1/2" (98000607)`. All 19 pass
 four checks: one code left and it equals the mapped SKU, the token is gone, the title is still
 unique in the lane, the SKU is in the 2,335-SKU catalogue. No other manufacturer's name appears in
-the lane. **Not applied** — the plan is `03_review/SKU lane - brand-name fixes.xlsx` (Summary /
-Proposed fixes / Lane check (all 100)); `code/plan_sku_brand_fix.py` regenerates it.
+the lane.
+
+Applied on approval (`code/apply_sku_brand_fix.py`, which reads the approved `Proposed fixes`
+sheet, so what was written is what was reviewed) → `02_cleaned/sku only tarun sentinel -
+corrected.csv` / `.xlsx`: **19 rows rewritten, 81 byte-identical**, ids/order/columns unchanged,
+`line_item` key order and every non-name value preserved (raw-string swap, not a re-dump), status
+mix still 100 MAPPED, 0 brand tokens left, 100 distinct titles, 100/100 SKUs in the catalogue. The
+xlsx adds a `Changes` sheet, and the review workbook gained an `Applied (final set)` sheet. The
+`sku_only` sheet of `Sentinel input titles.xlsx` was rebuilt from the corrected file.
+
+Three source quirks survive untouched (all pre-existing, none in the fixed rows): `wsku-047`'s
+title code 96002445 ≠ its mapped 98000441; `wsku-048` and `wsku-062` carry the same code and
+phrase twice (`96000045 - CPVC TEE 32MM & 96000045 - CPVC TEE 32MM`). So exactly one code == the
+mapped SKU in 97 of 100 rows — the other three are those quirks.
 
 ---
 
@@ -193,9 +206,10 @@ review aids and the plan.
 | `02_cleaned/Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
 | `02_cleaned/title only sentinel tarun - cleaned.xlsx` / `.csv` | title-only lane, expanded |
 | `02_cleaned/title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** (54 titles replaced) + `Changes` |
-| `02_cleaned/Sentinel input titles.xlsx` | one-column title sheets for both lanes (title_only = corrected) |
+| `02_cleaned/sku only tarun sentinel - corrected.csv` / `.xlsx` | **the fixed SKU lane** (19 brand tokens removed, code + mapped SKU kept; 81 rows untouched) + `Changes` |
+| `02_cleaned/Sentinel input titles.xlsx` | one-column title sheets for all three lanes (title_only + sku_only = corrected) |
 | `03_review/Sentinel lanes - comparison.xlsx` | lane comparison + bucket check + 20 fail leads |
-| `03_review/SKU lane - brand-name fixes.xlsx` | brand audit of the SKU lane + the 19 token-only proposals, 19/19 checks (plan only — not applied) |
+| `03_review/SKU lane - brand-name fixes.xlsx` | brand audit of the SKU lane + the 19 token-only proposals + `Applied (final set)` |
 | `03_review/Title only - brand-name replacements.xlsx` | replacement plan, lane check, candidate pool, applied set |
 
 Repo `eval-datasets/code/`: `clean_sentinel_titles.py`, `compare_sentinel_lanes.py`,
@@ -228,6 +242,18 @@ python3 code/apply_titleonly_fix.py --title-only "<F:>/01_source/title only sent
     --export "/mnt/f/Langsmith/BRAND NAME/producttitle only.csv"
 ```
 
+SKU lane brand fix (plan, then apply — the apply reads the reviewed `Proposed fixes` sheet):
+
+```bash
+python3 code/plan_sku_brand_fix.py --sku "<F:>/01_source/sku only tarun sentinel.csv" \
+    --catalogue "<F:>/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
+    --out "<F:>/03_review/SKU lane - brand-name fixes.xlsx"
+python3 code/apply_sku_brand_fix.py --sku "<F:>/01_source/sku only tarun sentinel.csv" \
+    --plan "<F:>/03_review/SKU lane - brand-name fixes.xlsx" \
+    --catalogue "<F:>/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
+    --out-dir "<F:>/02_cleaned"
+```
+
 Selection is deterministic (sha1 tie-break), so a rebuild reproduces the same 54 picks. The join
 trap worth remembering: exports can hold several line items per row, so `reference_outputs.expected`
 must be matched **by product_name**, never by position — a positional join handed one SKU to
@@ -241,3 +267,5 @@ unrelated titles (caught by the catalogue-family check).
   acceptable but listed for a tighter pass.
 - The 20 recorded fails can now be named (title + expected SKU) but not scored: no mapper output
   exists on disk for these lanes.
+- SKU lane source quirks left as delivered: `wsku-047` (title code ≠ mapped SKU) and `wsku-048` /
+  `wsku-062` (code + phrase repeated in the title). They are the only rows outside `code == sku`.

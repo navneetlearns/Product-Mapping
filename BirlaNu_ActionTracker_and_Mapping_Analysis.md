@@ -244,7 +244,7 @@ is available for a true master pass. The status rule above is inferred from labe
 
 ## 7. Sentinel lane datasets — cleaned, compared, corrected (2026-10-23)
 
-Two 100-row sentinel lane exports were delivered in
+Three 100-row sentinel lane exports were delivered in
 `F:\Product\zotok\Product Mapping\Mapping Inconsistency\` (now organised `01_source/` ·
 `02_cleaned/` · `03_review/`, with a folder README), alongside the invoice behind the production
 trace (`invoice-GST-492-Vaibhav-Enterprises-2026-09-22.pdf`) and its LangSmith run/trace JSONs.
@@ -262,8 +262,19 @@ Full record, artifacts and repro commands: `eval-datasets/SENTINEL-lanes.md`.
   52 same-product-family picks + 2 same-HSN fallbacks. All 54 replacement expected SKUs exist in
   the 2,335-SKU catalogue export. Result: `02_cleaned/title only sentinel tarun - corrected.csv`
   (54 rows rewritten, 46 byte-identical).
-- **The two files are not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared mapped
-  SKUs (~23%) and 32 shared invoices — disjoint lanes cut from one invoice pool.
+- **SKU lane** (`sku only tarun sentinel.csv`, `wsku-001…100`, `case=with_sku`): arrived
+  user-verified, so it is not cleaned or scored; its 100 titles feed the third sheet of the title
+  workbook. A brand-token pass was applied on request: 19 titles carried BIRLA / BIRLANU / the
+  `BN` prefix, fixed by deleting the token only (the code and the row's mapped SKU stay) → 19 rows
+  rewritten, 81 byte-identical, 0 brand tokens, `02_cleaned/sku only tarun sentinel -
+  corrected.csv`; `sku_only` sheet rebuilt from it. 100 distinct titles, **all 100 carry an 8-9 digit
+  SKU code by design**, 81 distinct SKUs (12 SKUs on >1 title, 31 rows), all `MAPPED`, 62 invoices,
+  48 `distributor_exclusive=true`, 1 row with `equivalent_skus`, HSN 75 `39174000` / 20 `39172390` /
+  3 `35061000` / 2 `3917`. Three source quirks left as delivered: `wsku-047` carries 96002445 in the title
+  but is mapped to 98000441 (the only code-vs-SKU mismatch in the lane), and `wsku-048` /
+  `wsku-062` repeat their code and phrase twice in the title.
+- **The brand and title-only files are not the same dataset**: 0 shared ids, 0 shared titles, but 20
+  shared mapped SKUs (~23%) and 32 shared invoices — disjoint lanes cut from one invoice pool.
 - **`status`/`sku` in these files are the expected side, not results** (brand 100/100 MAPPED against
   10 recorded fails; title-only 78 MAPPED + 22 MBNF against 10 fails). The 300-item results file
   stays unreconciled with `birlanu-eval-deck/code/numbers.json`; its 20 failing ids now resolve to a

@@ -149,8 +149,10 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
 
 Three 100-row sentinel lane exports — brand (`brand-001…100`), title-only (`plain-001…100`), SKU
 (`wsku-001…100`) — were received; the first two were cleaned, compared and corrected, the SKU lane
-arrived user-verified and is used input-only (its 100 titles just feed the title sheet; every one
-carries an 8-9 digit SKU code by design). Full record, numbers, artifacts and repro commands live
+arrived user-verified and is used input-only for scoring (its 100 titles just feed the title
+sheet; every one carries an 8-9 digit SKU code by design). A later brand audit of that lane found
+19 token titles (BIRLANU 10 / BN 6 / BIRLA 3) and the token-only fix was applied too — 19 rows
+rewritten, 81 untouched, code and mapped SKU kept. Full record, numbers, artifacts and repro commands live
 in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 
 - Same 11-column schema, **not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared
@@ -219,7 +221,11 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 - `code/plan_sku_brand_fix.py` — audits the SKU lane for brand tokens (19 titles: BIRLANU 10, BN 6,
   BIRLA 3) and writes `03_review/SKU lane - brand-name fixes.xlsx` with a token-only fix per row
   (the code and the row's SKU stay put), each checked for: one code left == mapped SKU, token gone,
-  unique in lane, SKU in the catalogue. Plan only — nothing is rewritten.
+  unique in lane, SKU in the catalogue.
+- `code/apply_sku_brand_fix.py` — applies that plan: rewrites only `line_item.product_name` (raw
+  string swap, so key order and every other value stay byte-identical) → `02_cleaned/sku only
+  tarun sentinel - corrected.{csv,xlsx}` (19 rewritten, 81 untouched) + `Changes` sheet + an
+  `Applied (final set)` sheet in the review workbook.
 - `code/apply_titleonly_fix.py` — applies the approved plan from the workbook: rewrites the 54
   rows (product fields from the replacement's own source record, ids/order kept) →
   `title only sentinel tarun - corrected.{csv,xlsx}` + `Applied (final set)` sheet
