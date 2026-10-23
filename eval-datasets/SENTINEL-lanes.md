@@ -202,7 +202,7 @@ review aids and the plan.
 |---|---|
 | `01_source/Tarun Sentinel Dataset.csv` | brand lane, as delivered |
 | `01_source/title only sentinel tarun.csv` | title-only lane, as delivered |
-| `01_source/sku only tarun sentinel.csv` | SKU lane (`wsku-001…100`, `case=with_sku`), as delivered and user-verified — input-only, not cleaned/corrected |
+| `01_source/sku only tarun sentinel.csv` | SKU lane (`wsku-001…100`, `case=with_sku`), user-verified as delivered — this copy stays untouched; the brand-fixed version is `02_cleaned/sku only tarun sentinel - corrected.csv` |
 | `01_source/invoice-GST-492-Vaibhav-Enterprises-2026-09-22.pdf` | the production-run invoice (was `5afbe36b-…pdf`; Vaibhav Enterprises → Shraddha Agro, GST-492, 2026-09-22) |
 | `01_source/run-01a15db1-….json` / `trace-01a15db1-….json` | LangSmith run + trace of the production mapping call |
 | `02_cleaned/Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
