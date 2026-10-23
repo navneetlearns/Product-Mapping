@@ -282,8 +282,11 @@ Full record, artifacts and repro commands: `eval-datasets/SENTINEL-lanes.md`.
 - **Lane labels do not match the recorded bucket rule** (`build_datasets.py`: code → sku, brand
   token → brand, else title-only): the brand lane splits 20 code / 80 brand, the title-only lane
   0 code / 54 brand / 46 title-only. Settled with the user as "the lane must carry no brand".
-- Open: `plain-036` (`… Pushfit S/S - B`) and `plain-066` (`BN UPVC PIPES …`) are suspected brand
-  abbreviations, left as-is pending a decision; 8 duplicate replacement SKUs; 2 same-HSN fallbacks.
+- `plain-036` (`… Pushfit S/S - B`) and `plain-066` (`BN UPVC PIPES …`) were the two brand
+  abbreviations left after the 54 replacements; both were resolved 2026-10-23 by removing the token
+  only (`apply_titleonly_token_fix.py`) — SKU, status and invoice untouched — so the lane is now
+  100/100 brand-free and 100/100 code-free.
+- Still open: 8 duplicate replacement SKUs; 2 same-HSN fallbacks (`plain-080`, `plain-092`).
 
 ---
 

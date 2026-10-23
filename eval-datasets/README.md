@@ -170,12 +170,15 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
   Birla/BIRLANU/HIL token**, which the lane must not have. Those 54 were replaced from the same
   invoice universe with catalogue-backed titles (all 54 expected SKUs exist in the 2,335-SKU
   catalogue export), preserving the 78/22 status mix → `02_cleaned/title only sentinel tarun -
-  corrected.csv` (54 rewritten, 46 byte-identical, 0 brand tokens, 0 codes). The F: folder is
+  corrected.csv` (54 rewritten, 46 byte-identical), then the two abbreviation leftovers
+  (`plain-036 … - B`, `plain-066 BN …`) were removed token-only with
+  `code/apply_titleonly_token_fix.py` — 2 more rows, SKU/status untouched. The lane is now **100/100
+  brand-free and 100/100 code-free** (56 change rows in the workbook). The F: folder is
   organised `01_source/` (as delivered, incl. the GST-492 invoice and the run/trace JSONs) ·
   `02_cleaned/` (expanded/corrected CSVs + one-column title sheets, now three lanes incl.
   `sku_only`) · `03_review/` (comparison and replacement workbooks), with a `README.md` folder guide.
-- Open: `plain-036` / `plain-066` brand abbreviations left as-is pending a decision; the 8
-  duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
+- Open: the 8 duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
+  (`plain-036` / `plain-066` were resolved 2026-10-23 — abbreviation tokens removed.)
 
 ## Files
 
@@ -227,6 +230,10 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
   string swap, so key order and every other value stay byte-identical) → `02_cleaned/sku only
   tarun sentinel - corrected.{csv,xlsx}` (19 rewritten, 81 untouched) + `Changes` sheet + an
   `Applied (final set)` sheet in the review workbook.
+- `code/apply_titleonly_token_fix.py` — removes the two brand abbreviations the token rule missed
+  in the corrected title-only lane (`plain-036` trailing ` - B`, `plain-066` leading `BN `); guarded
+  to exactly those ids, swaps only `product_name`, keeps SKU/status/invoice → lane 100/100 brand-free
+  and code-free, 56 change rows in the corrected workbook.
 - `code/apply_titleonly_fix.py` — applies the approved plan from the workbook: rewrites the 54
   rows (product fields from the replacement's own source record, ids/order kept) →
   `title only sentinel tarun - corrected.{csv,xlsx}` + `Applied (final set)` sheet

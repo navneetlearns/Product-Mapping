@@ -135,8 +135,9 @@ distinction the mapping parser depends on).
 ## 5. Correcting the title-only lane (`code/build_titleonly_fix.py`)
 
 **54 of 100 title-only titles carry a Birla/BIRLANU/HIL token** (BIRLA 40, BIRLANU 13, HIL 1; 20
-lead with it). Two more are suspected abbreviations, flagged `confirm` and left alone:
-`plain-036 … Pushfit S/S - B`, `plain-066 BN UPVC PIPES SCH 40 3MTR 1"`.
+lead with it). Two more are abbreviations the token rule does not catch — `plain-036 …
+Pushfit S/S - B` (`B` = Birla) and `plain-066 BN UPVC PIPES SCH 40 3MTR 1"` (`BN` = BirlaNu);
+they were flagged `confirm`, then fixed token-only once the user ruled — see the end of §6.
 
 Second lane rule checked on the same sheet: **no SKU/code in a title-only title — 0 of 100** (no
 8-9 digit run, in fact no 4+ digit run, and no catalogue-style code; the only alphanumeric hit is
@@ -175,7 +176,15 @@ schema); every product field comes from the replacement's own source record.
 
 Outputs:
 
-- `title only sentinel tarun - corrected.csv` — 54 rows rewritten, 46 byte-identical. Fields that
+- `title only sentinel tarun - corrected.csv` — 54 rows rewritten, 46 byte-identical.
+
+Then the two abbreviation leftovers were removed the same token-only way the SKU lane was fixed
+(`code/apply_titleonly_token_fix.py`, guarded to those two ids): `… Pushfit S/S - B` → `… Pushfit
+S/S` and `BN UPVC PIPES SCH 40 3MTR 1"` → `UPVC PIPES SCH 40 3MTR 1"`. SKU (96000676, 96000014),
+`status` (`MAPPED_BRAND_NOT_FOUND` — the label already meant "no brand in the title"), invoice and
+every other field unchanged; only `product_name` was swapped. **The lane is now 100/100 brand-free
+and 100/100 code-free**, and the corrected workbook's `Changes` sheet carries 56 rows (54 product
+replacements + these 2 token removals). Fields that
   changed: `line_item` 54, `sku` 54, `source_invoice` 54, `distributor_exclusive` 43,
   `equivalent_skus` 10. `status` unchanged on all 100 (all 54 old and new rows were MAPPED).
 - `title only sentinel tarun - corrected.xlsx` — `Corrected set` (all 100, replaced rows shaded) +
@@ -207,7 +216,7 @@ review aids and the plan.
 | `01_source/run-01a15db1-….json` / `trace-01a15db1-….json` | LangSmith run + trace of the production mapping call |
 | `02_cleaned/Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
 | `02_cleaned/title only sentinel tarun - cleaned.xlsx` / `.csv` | title-only lane, expanded |
-| `02_cleaned/title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** (54 titles replaced) + `Changes` |
+| `02_cleaned/title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** — 54 titles replaced + 2 abbreviation tokens removed; 100/100 brand-free, 100/100 code-free; `Changes` (56 rows) |
 | `02_cleaned/sku only tarun sentinel - corrected.csv` / `.xlsx` | **the fixed SKU lane** (19 brand tokens removed, code + mapped SKU kept; 81 rows untouched) + `Changes` |
 | `02_cleaned/Sentinel input titles.xlsx` | one-column title sheets for all three lanes (title_only + sku_only = corrected) |
 | `03_review/Sentinel lanes - comparison.xlsx` | lane comparison + bucket check + 20 fail leads |
@@ -231,7 +240,7 @@ python3 code/titles_only_sheets.py --out "<F:>/02_cleaned/Sentinel input titles.
     --keep-code sku_only \
     "brand_named=<F:>/01_source/Tarun Sentinel Dataset.csv" \
     "title_only=<F:>/02_cleaned/title only sentinel tarun - corrected.csv" \
-    "sku_only=<F:>/01_source/sku only tarun sentinel.csv"
+    "sku_only=<F:>/02_cleaned/sku only tarun sentinel - corrected.csv"
 python3 code/build_titleonly_fix.py --title-only "<F:>/01_source/title only sentinel tarun.csv" \
     --brand "<F:>/01_source/Tarun Sentinel Dataset.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv" \
@@ -242,6 +251,10 @@ python3 code/apply_titleonly_fix.py --title-only "<F:>/01_source/title only sent
     --plan "<F:>/03_review/Title only - brand-name replacements.xlsx" \
     --export "/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/producttitle only.csv"
+# then the two abbreviation leftovers (run after the 54-row apply - it edits that output)
+python3 code/apply_titleonly_token_fix.py --title-only "<F:>/02_cleaned/title only sentinel tarun - corrected.csv" \
+    --xlsx "<F:>/02_cleaned/title only sentinel tarun - corrected.xlsx" \
+    --plan "<F:>/03_review/Title only - brand-name replacements.xlsx"
 ```
 
 SKU lane brand fix (plan, then apply — the apply reads the reviewed `Proposed fixes` sheet):
@@ -263,8 +276,8 @@ unrelated titles (caught by the catalogue-family check).
 
 ## 9. Open items
 
-- `plain-036` (`… Pushfit S/S - B`) and `plain-066` (`BN UPVC PIPES …`) — brand abbreviations the
-  token rule does not catch; both `MAPPED_BRAND_NOT_FOUND`, left as-is pending the user's call.
+- ~~`plain-036` / `plain-066` brand abbreviations~~ — resolved 2026-10-23 on the user's call: both
+  removed token-only, lane now 100/100 brand-free and code-free (see §6).
 - The 8 duplicate replacement SKUs and the 2 same-HSN fallbacks (`plain-080`, `plain-092`) are
   acceptable but listed for a tighter pass.
 - The 20 recorded fails can now be named (title + expected SKU) but not scored: no mapper output
