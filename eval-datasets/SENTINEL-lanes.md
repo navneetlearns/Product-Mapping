@@ -1,19 +1,31 @@
 # Sentinel lane datasets — cleaning, comparison, title-only fix (2026-10-23)
 
-Two 100-row sentinel lane exports arrived as CSVs in
+Three 100-row sentinel lane exports arrived as CSVs in
 `F:\Product\zotok\Product Mapping\Mapping Inconsistency\`:
 
 | file | lane (`case`) | ids | source_dataset |
 |---|---|---|---|
 | `Tarun Sentinel Dataset.csv` | `brand_named` | `brand-001…100` | `turnover-product-mapping-eval-brand-named-in-catalog` |
 | `title only sentinel tarun.csv` | `title_only` | `plain-001…100` | `turnover-product-mapping-eval-title-only-in-catalog` |
+| `sku only tarun sentinel.csv` | `with_sku` | `wsku-001…100` | `turnover-product-mapping-eval-with-sku-in-catalog` |
 
-Both use the same 11-column schema:
+All three use the same 11-column schema:
 `distributor_exclusive, line_item, equivalent_skus, sku, status, case, dataset_split, sentinel_eval,
 sentinel_item_id, source_dataset, source_invoice`, where `line_item` is a JSON string
 `{serial_no, hsn_sac_code, product_name, unit_rate_excl_gst}`.
 This doc records what was checked, what was found, what was corrected, and where every artifact
 lives. The scripts referenced here are in `code/`; the data artifacts are in the F: folder above.
+
+**The SKU lane is input-only here.** It arrived 2026-10-23 already verified by the user ("all
+correct"), so it was not cleaned, corrected or scored — its titles are only extracted for the
+one-column title sheet. Facts recorded from it: 100 rows / `wsku-001…100` / 100 distinct titles /
+**all 100 carry an 8-9 digit SKU code** (that IS the lane) / 81 distinct SKUs, 12 SKUs on more than
+one title (31 rows) / all `MAPPED` / 62 invoices / 48 `distributor_exclusive=true` / 1 row with
+`equivalent_skus` (`wsku-071`) / HSN 75 `39174000`, 20 `39172390`, 3 `35061000`, 2 `3917` / no
+mojibake. Two observations worth knowing when this lane is used: `wsku-047`
+(`96002445 SWR ELBOW PUSHFIT 90mm_BL`) carries 96002445 in the title but is mapped to 98000441 —
+the only one of the 100 where the title code and the mapped SKU differ — and `wsku-048`'s title
+repeats itself (`96000045 - CPVC TEE 32MM & 96000045 - CPVC TEE 32MM`). Both left as delivered.
 
 ---
 
@@ -88,9 +100,11 @@ Never read pass/fail off these files.
 ## 4. Titles-only workbook (`code/titles_only_sheets.py`)
 
 `Sentinel input titles.xlsx` — one sheet per lane, one column (`product_title`, 100 rows each),
-nothing else: no ids, SKUs, HSN, rates, invoices or flags. Source apostrophes are preserved on
-purpose (`’` vs `’’` = feet vs inches; folding them to ASCII would lose a distinction the mapping
-parser depends on). Rebuilt after the correction so `title_only` carries the corrected titles.
+nothing else: no ids, SKUs, HSN, rates, invoices or flags. Sheets `brand_named`, `title_only`,
+`sku_only`; `title_only` carries the corrected titles, and `sku_only` keeps its embedded SKU codes
+because the code in the title is what that lane tests (`--keep-code sku_only`). Source apostrophes
+are preserved on purpose (`’` vs `’’` = feet vs inches; folding them to ASCII would lose a
+distinction the mapping parser depends on).
 
 ## 5. Correcting the title-only lane (`code/build_titleonly_fix.py`)
 
@@ -162,6 +176,7 @@ review aids and the plan.
 |---|---|
 | `01_source/Tarun Sentinel Dataset.csv` | brand lane, as delivered |
 | `01_source/title only sentinel tarun.csv` | title-only lane, as delivered |
+| `01_source/sku only tarun sentinel.csv` | SKU lane (`wsku-001…100`, `case=with_sku`), as delivered and user-verified — input-only, not cleaned/corrected |
 | `01_source/invoice-GST-492-Vaibhav-Enterprises-2026-09-22.pdf` | the production-run invoice (was `5afbe36b-…pdf`; Vaibhav Enterprises → Shraddha Agro, GST-492, 2026-09-22) |
 | `01_source/run-01a15db1-….json` / `trace-01a15db1-….json` | LangSmith run + trace of the production mapping call |
 | `02_cleaned/Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
@@ -184,8 +199,10 @@ python3 code/compare_sentinel_lanes.py --brand "<F:>/01_source/Tarun Sentinel Da
     --results "<F:>/Eval Related Product Mapping/sentiel run eval dataset for product mapping.csv" \
     --out "<F:>/03_review/Sentinel lanes - comparison.xlsx"
 python3 code/titles_only_sheets.py --out "<F:>/02_cleaned/Sentinel input titles.xlsx" \
+    --keep-code sku_only \
     "brand_named=<F:>/01_source/Tarun Sentinel Dataset.csv" \
-    "title_only=<F:>/02_cleaned/title only sentinel tarun - corrected.csv"
+    "title_only=<F:>/02_cleaned/title only sentinel tarun - corrected.csv" \
+    "sku_only=<F:>/01_source/sku only tarun sentinel.csv"
 python3 code/build_titleonly_fix.py --title-only "<F:>/01_source/title only sentinel tarun.csv" \
     --brand "<F:>/01_source/Tarun Sentinel Dataset.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv" \

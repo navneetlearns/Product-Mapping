@@ -147,9 +147,11 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
 
 ## Sentinel lane datasets (2026-10-23) — see `SENTINEL-lanes.md`
 
-Two 100-row sentinel lane exports (brand `brand-001…100`, title-only `plain-001…100`) were cleaned,
-compared and corrected. Full record, numbers, artifacts and repro commands live in
-[`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
+Three 100-row sentinel lane exports — brand (`brand-001…100`), title-only (`plain-001…100`), SKU
+(`wsku-001…100`) — were received; the first two were cleaned, compared and corrected, the SKU lane
+arrived user-verified and is used input-only (its 100 titles just feed the title sheet; every one
+carries an 8-9 digit SKU code by design). Full record, numbers, artifacts and repro commands live
+in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 
 - Same 11-column schema, **not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared
   mapped SKUs (~23%) and 32 shared invoices — two disjoint lanes cut from one invoice pool.
@@ -167,8 +169,8 @@ compared and corrected. Full record, numbers, artifacts and repro commands live 
   catalogue export), preserving the 78/22 status mix → `02_cleaned/title only sentinel tarun -
   corrected.csv` (54 rewritten, 46 byte-identical, 0 brand tokens, 0 codes). The F: folder is
   organised `01_source/` (as delivered, incl. the GST-492 invoice and the run/trace JSONs) ·
-  `02_cleaned/` (expanded/corrected CSVs + one-column title sheets) · `03_review/` (comparison and
-  replacement workbooks), with a `README.md` folder guide.
+  `02_cleaned/` (expanded/corrected CSVs + one-column title sheets, now three lanes incl.
+  `sku_only`) · `03_review/` (comparison and replacement workbooks), with a `README.md` folder guide.
 - Open: `plain-036` / `plain-066` brand abbreviations left as-is pending a decision; the 8
   duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
 
