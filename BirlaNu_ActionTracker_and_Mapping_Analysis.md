@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-10-17
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6).
+Last updated: 2026-10-23
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -239,6 +239,40 @@ universe — "exists in master" is testable only against them; the full catalog 
 (`/mnt/f/Product/zotok/Product Mapping/Map Product Zotok Catalogue(Sheet1).csv`, ~2.3k rows)
 is available for a true master pass. The status rule above is inferred from labels + outputs
 (893/899 fit), not read from pipeline source.
+
+---
+
+## 7. Sentinel lane datasets — cleaned, compared, corrected (2026-10-23)
+
+Two 100-row sentinel lane exports were delivered in
+`F:\Product\zotok\Product Mapping\Mapping Inconsistency\` (now organised `01_source/` ·
+`02_cleaned/` · `03_review/`, with a folder README), alongside the invoice behind the production
+trace (`invoice-GST-492-Vaibhav-Enterprises-2026-09-22.pdf`) and its LangSmith run/trace JSONs.
+Full record, artifacts and repro commands: `eval-datasets/SENTINEL-lanes.md`.
+
+- **Brand lane** (`Tarun Sentinel Dataset.csv`, `brand-001…100`): 100 rows / 56 invoices / 88 SKUs.
+  20 titles carried an embedded SKU code — stripped and flagged; all 20 codes equalled the row's
+  mapped SKU. 10 SKUs sit on more than one title (22 rows); HSN 77 eight-digit / 22 family `3917` /
+  1 missing.
+- **Title-only lane** (`title only sentinel tarun.csv`, `plain-001…100`): 100 rows / 62 invoices /
+  86 SKUs, **0 titles with a SKU code**, but **54 titles carried a Birla/BIRLANU/HIL token** — the
+  defect. The lane's own rule is "no brand name and no SKU", so those 54 were replaced with
+  catalogue-backed titles from the same invoice universe (1,076 titles → 405 no-code/no-brand →
+  315 usable → 117 MAPPED), preserving the status mix (78 MAPPED / 22 MAPPED_BRAND_NOT_FOUND),
+  52 same-product-family picks + 2 same-HSN fallbacks. All 54 replacement expected SKUs exist in
+  the 2,335-SKU catalogue export. Result: `02_cleaned/title only sentinel tarun - corrected.csv`
+  (54 rows rewritten, 46 byte-identical).
+- **The two files are not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared mapped
+  SKUs (~23%) and 32 shared invoices — disjoint lanes cut from one invoice pool.
+- **`status`/`sku` in these files are the expected side, not results** (brand 100/100 MAPPED against
+  10 recorded fails; title-only 78 MAPPED + 22 MBNF against 10 fails). The 300-item results file
+  stays unreconciled with `birlanu-eval-deck/code/numbers.json`; its 20 failing ids now resolve to a
+  title + expected SKU, but no mapper output exists on disk to score them.
+- **Lane labels do not match the recorded bucket rule** (`build_datasets.py`: code → sku, brand
+  token → brand, else title-only): the brand lane splits 20 code / 80 brand, the title-only lane
+  0 code / 54 brand / 46 title-only. Settled with the user as "the lane must carry no brand".
+- Open: `plain-036` (`… Pushfit S/S - B`) and `plain-066` (`BN UPVC PIPES …`) are suspected brand
+  abbreviations, left as-is pending a decision; 8 duplicate replacement SKUs; 2 same-HSN fallbacks.
 
 ---
 
