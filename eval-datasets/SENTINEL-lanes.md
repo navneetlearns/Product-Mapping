@@ -154,18 +154,22 @@ tool opens the invoice from that field, the 54 new rows point at the export reco
 
 ## 7. Artifacts
 
-F: `…\Mapping Inconsistency\`
+F: `…\Mapping Inconsistency\` — organised into three subfolders plus a `README.md` folder guide
+(2026-10-23): `01_source/` = as delivered (never edited), `02_cleaned/` = derived, `03_review/` =
+review aids and the plan.
 
-| file | what it is |
+| file (subfolder) | what it is |
 |---|---|
-| `Tarun Sentinel Dataset.csv` | brand lane, as delivered |
-| `Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
-| `title only sentinel tarun.csv` | title-only lane, as delivered |
-| `title only sentinel tarun - cleaned.xlsx` / `.csv` | title-only lane, expanded |
-| `title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** (54 titles replaced) + `Changes` |
-| `Sentinel lanes - comparison.xlsx` | lane comparison + bucket check + 20 fail leads |
-| `Title only - brand-name replacements.xlsx` | replacement plan, lane check, candidate pool, applied set |
-| `Sentinel input titles.xlsx` | one-column title sheets for both lanes (title_only = corrected) |
+| `01_source/Tarun Sentinel Dataset.csv` | brand lane, as delivered |
+| `01_source/title only sentinel tarun.csv` | title-only lane, as delivered |
+| `01_source/invoice-GST-492-Vaibhav-Enterprises-2026-09-22.pdf` | the production-run invoice (was `5afbe36b-…pdf`; Vaibhav Enterprises → Shraddha Agro, GST-492, 2026-09-22) |
+| `01_source/run-01a15db1-….json` / `trace-01a15db1-….json` | LangSmith run + trace of the production mapping call |
+| `02_cleaned/Tarun Sentinel Dataset - cleaned.xlsx` / `.csv` | brand lane, line_item expanded + 20 codes stripped/flagged |
+| `02_cleaned/title only sentinel tarun - cleaned.xlsx` / `.csv` | title-only lane, expanded |
+| `02_cleaned/title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** (54 titles replaced) + `Changes` |
+| `02_cleaned/Sentinel input titles.xlsx` | one-column title sheets for both lanes (title_only = corrected) |
+| `03_review/Sentinel lanes - comparison.xlsx` | lane comparison + bucket check + 20 fail leads |
+| `03_review/Title only - brand-name replacements.xlsx` | replacement plan, lane check, candidate pool, applied set |
 
 Repo `eval-datasets/code/`: `clean_sentinel_titles.py`, `compare_sentinel_lanes.py`,
 `titles_only_sheets.py`, `build_titleonly_fix.py`, `apply_titleonly_fix.py`.
@@ -173,23 +177,23 @@ Repo `eval-datasets/code/`: `clean_sentinel_titles.py`, `compare_sentinel_lanes.
 ## 8. Reproduction
 
 ```
-python3 code/clean_sentinel_titles.py  "<F:>/Tarun Sentinel Dataset.csv"
-python3 code/clean_sentinel_titles.py  "<F:>/title only sentinel tarun.csv"
-python3 code/compare_sentinel_lanes.py --brand "<F:>/Tarun Sentinel Dataset.csv" \
-    --title-only "<F:>/title only sentinel tarun.csv" \
+python3 code/clean_sentinel_titles.py  "<F:>/01_source/Tarun Sentinel Dataset.csv"
+python3 code/clean_sentinel_titles.py  "<F:>/01_source/title only sentinel tarun.csv"
+python3 code/compare_sentinel_lanes.py --brand "<F:>/01_source/Tarun Sentinel Dataset.csv" \
+    --title-only "<F:>/01_source/title only sentinel tarun.csv" \
     --results "<F:>/Eval Related Product Mapping/sentiel run eval dataset for product mapping.csv" \
-    --out "<F:>/Sentinel lanes - comparison.xlsx"
-python3 code/titles_only_sheets.py --out "<F:>/Sentinel input titles.xlsx" \
-    "brand_named=<F:>/Tarun Sentinel Dataset.csv" \
-    "title_only=<F:>/title only sentinel tarun - corrected.csv"
-python3 code/build_titleonly_fix.py --title-only "<F:>/title only sentinel tarun.csv" \
-    --brand "<F:>/Tarun Sentinel Dataset.csv" \
+    --out "<F:>/03_review/Sentinel lanes - comparison.xlsx"
+python3 code/titles_only_sheets.py --out "<F:>/02_cleaned/Sentinel input titles.xlsx" \
+    "brand_named=<F:>/01_source/Tarun Sentinel Dataset.csv" \
+    "title_only=<F:>/02_cleaned/title only sentinel tarun - corrected.csv"
+python3 code/build_titleonly_fix.py --title-only "<F:>/01_source/title only sentinel tarun.csv" \
+    --brand "<F:>/01_source/Tarun Sentinel Dataset.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/producttitle only.csv" \
     --catalogue "<F:>/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
-    --out "<F:>/Title only - brand-name replacements.xlsx"
-python3 code/apply_titleonly_fix.py --title-only "<F:>/title only sentinel tarun.csv" \
-    --plan "<F:>/Title only - brand-name replacements.xlsx" \
+    --out "<F:>/03_review/Title only - brand-name replacements.xlsx"
+python3 code/apply_titleonly_fix.py --title-only "<F:>/01_source/title only sentinel tarun.csv" \
+    --plan "<F:>/03_review/Title only - brand-name replacements.xlsx" \
     --export "/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv" \
     --export "/mnt/f/Langsmith/BRAND NAME/producttitle only.csv"
 ```

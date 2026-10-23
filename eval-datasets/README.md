@@ -164,8 +164,11 @@ compared and corrected. Full record, numbers, artifacts and repro commands live 
 - Title-only lane: **0 titles carry a SKU code** (so nothing to strip) but **54 of 100 carried a
   Birla/BIRLANU/HIL token**, which the lane must not have. Those 54 were replaced from the same
   invoice universe with catalogue-backed titles (all 54 expected SKUs exist in the 2,335-SKU
-  catalogue export), preserving the 78/22 status mix → `title only sentinel tarun - corrected.csv`
-  (54 rewritten, 46 byte-identical, 0 brand tokens, 0 codes).
+  catalogue export), preserving the 78/22 status mix → `02_cleaned/title only sentinel tarun -
+  corrected.csv` (54 rewritten, 46 byte-identical, 0 brand tokens, 0 codes). The F: folder is
+  organised `01_source/` (as delivered, incl. the GST-492 invoice and the run/trace JSONs) ·
+  `02_cleaned/` (expanded/corrected CSVs + one-column title sheets) · `03_review/` (comparison and
+  replacement workbooks), with a `README.md` folder guide.
 - Open: `plain-036` / `plain-066` brand abbreviations left as-is pending a decision; the 8
   duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
 
