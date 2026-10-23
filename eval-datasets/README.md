@@ -216,6 +216,10 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 - `code/titles_only_sheets.py` — one-column-per-lane title sheets → `Sentinel input titles.xlsx`
 - `code/build_titleonly_fix.py` — replacement plan for brand-named titles inside the title-only
   lane (catalogue-backed candidates only, status mix preserved, verdict column empty)
+- `code/plan_sku_brand_fix.py` — audits the SKU lane for brand tokens (19 titles: BIRLANU 10, BN 6,
+  BIRLA 3) and writes `03_review/SKU lane - brand-name fixes.xlsx` with a token-only fix per row
+  (the code and the row's SKU stay put), each checked for: one code left == mapped SKU, token gone,
+  unique in lane, SKU in the catalogue. Plan only — nothing is rewritten.
 - `code/apply_titleonly_fix.py` — applies the approved plan from the workbook: rewrites the 54
   rows (product fields from the replacement's own source record, ids/order kept) →
   `title only sentinel tarun - corrected.{csv,xlsx}` + `Applied (final set)` sheet

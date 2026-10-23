@@ -27,6 +27,17 @@ mojibake. Two observations worth knowing when this lane is used: `wsku-047`
 the only one of the 100 where the title code and the mapped SKU differ — and `wsku-048`'s title
 repeats itself (`96000045 - CPVC TEE 32MM & 96000045 - CPVC TEE 32MM`). Both left as delivered.
 
+**Brand audit on the SKU lane (2026-10-23, plan only).** The lane's cue is the code, so a brand
+token gives the mapper a second route it should not have. A full scan found **19 titles carrying a
+token — BIRLANU 10, BN 6, BIRLA 3** (not the 4-5 eyeballed; `wsku-008/018/033/063/077/083` are the
+`BN` prefix form, easy to miss). Fix plan: drop the token only, keep the code and therefore the
+row's product and SKU — e.g. `96000052 CPVC SOCKET 40MM 1 1/2 BIRLA` → `96000052 CPVC SOCKET 40MM
+1 1/2`, `UPVC BALL VALVE 1/2" Birlanu (98000607)` → `UPVC BALL VALVE 1/2" (98000607)`. All 19 pass
+four checks: one code left and it equals the mapped SKU, the token is gone, the title is still
+unique in the lane, the SKU is in the 2,335-SKU catalogue. No other manufacturer's name appears in
+the lane. **Not applied** — the plan is `03_review/SKU lane - brand-name fixes.xlsx` (Summary /
+Proposed fixes / Lane check (all 100)); `code/plan_sku_brand_fix.py` regenerates it.
+
 ---
 
 ## 1. The run results file these lanes belong to — NOT YET RECONCILED
@@ -184,10 +195,12 @@ review aids and the plan.
 | `02_cleaned/title only sentinel tarun - corrected.csv` / `.xlsx` | **the fixed lane** (54 titles replaced) + `Changes` |
 | `02_cleaned/Sentinel input titles.xlsx` | one-column title sheets for both lanes (title_only = corrected) |
 | `03_review/Sentinel lanes - comparison.xlsx` | lane comparison + bucket check + 20 fail leads |
+| `03_review/SKU lane - brand-name fixes.xlsx` | brand audit of the SKU lane + the 19 token-only proposals, 19/19 checks (plan only — not applied) |
 | `03_review/Title only - brand-name replacements.xlsx` | replacement plan, lane check, candidate pool, applied set |
 
 Repo `eval-datasets/code/`: `clean_sentinel_titles.py`, `compare_sentinel_lanes.py`,
-`titles_only_sheets.py`, `build_titleonly_fix.py`, `apply_titleonly_fix.py`.
+`titles_only_sheets.py`, `build_titleonly_fix.py`, `apply_titleonly_fix.py`,
+`plan_sku_brand_fix.py`.
 
 ## 8. Reproduction
 
