@@ -48,7 +48,8 @@ Brand lane (`Tarun Sentinel Dataset.csv`) — 100 rows, 56 invoices, 88 distinct
 
 - **20 titles carry a SKU code** (16 parenthesised, 4 bare-leading) and all 20 codes equal the
   row's mapped SKU — 0 conflicts. Nothing else needed cleaning (no mojibake, no NBSP, no doubled
-  spaces; only two U+2019 folded).
+  spaces; the five U+2019 characters in three titles are left as delivered — `’` vs `’’` is the
+  feet/inch distinction).
 - 10 SKUs are reached from more than one title (22 rows), e.g. `96000014` ×3, `98000874` ×3.
 - HSN: 77 eight-digit, 22 family-only `3917`, 1 missing (`brand-074`). 18 rows
   `distributor_exclusive=true`, 13 rows carry `equivalent_skus`.
