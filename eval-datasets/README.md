@@ -155,8 +155,9 @@ sheet; every one carries an 8-9 digit SKU code by design). A later brand audit o
 rewritten, 81 untouched, code and mapped SKU kept. Full record, numbers, artifacts and repro commands live
 in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 
-- Same 11-column schema, **not the same dataset**: 0 shared ids, 0 shared titles, but 20 shared
-  mapped SKUs (~23%) and 32 shared invoices — two disjoint lanes cut from one invoice pool.
+- Same 11-column schema, **not the same dataset** (brand vs title-only): 0 shared ids, 0 shared
+  titles, but 20 shared mapped SKUs (~23%) and 32 shared invoices — two disjoint lanes cut from one
+  invoice pool.
 - `status`/`sku` in these files are the **expected** side, not results (brand 100/100 MAPPED
   against 10 recorded fails; title-only 78 MAPPED / 22 MAPPED_BRAND_NOT_FOUND against 10 fails).
   The `…Eval Related Product Mapping\sentiel run eval dataset for product mapping.csv` tally

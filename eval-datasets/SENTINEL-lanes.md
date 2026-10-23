@@ -1,4 +1,4 @@
-# Sentinel lane datasets — cleaning, comparison, title-only fix (2026-10-23)
+# Sentinel lane datasets — cleaning, comparison, title-only and SKU-lane fixes (2026-10-23)
 
 Three 100-row sentinel lane exports arrived as CSVs in
 `F:\Product\zotok\Product Mapping\Mapping Inconsistency\`:
@@ -15,6 +15,8 @@ sentinel_item_id, source_dataset, source_invoice`, where `line_item` is a JSON s
 `{serial_no, hsn_sac_code, product_name, unit_rate_excl_gst}`.
 This doc records what was checked, what was found, what was corrected, and where every artifact
 lives. The scripts referenced here are in `code/`; the data artifacts are in the F: folder above.
+
+### The SKU lane (third file) — facts and its brand fix
 
 **The SKU lane is input-only here.** It arrived 2026-10-23 already verified by the user ("all
 correct"), so it was not cleaned or scored — its titles are only extracted for the one-column
