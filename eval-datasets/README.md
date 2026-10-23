@@ -145,6 +145,29 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
   titles (75mm door tee: 7 candidates; "4\" TYPE-A" pipe: 24 variants); rebuilds are
   byte-identical (md5-verified); F: copy md5-identical to the repo build.
 
+## Sentinel run results file (2026-10-23) — NOT YET RECONCILED
+
+`F:\Product\zotok\Product Mapping\Eval Related Product Mapping\sentiel run eval dataset for
+product mapping.csv` (filename spelling as delivered). 300 rows, all with the same shape:
+
+- `item` = `wsku-001…100`, `plain-001…100`, `brand-001…100` — 100 per lane, no MRP lane.
+- `item_result` = pass on 280, fail on 20: wsku **100/100**, plain **90/100**, brand **90/100**.
+- The seven detail columns `kind, typed, sku, expected_qty, got_qty, ok, reason` are empty in
+  all 300 rows, so no per-item reason is recoverable from this file.
+- Failing items: plain 014, 035, 036, 037, 043, 051, 052, 077, 084, 098; brand 027, 043, 053,
+  056, 062, 063, 064, 076, 097, 100.
+
+Why it is not reconciled:
+
+- It disagrees with the recorded run — `../birlanu-eval-deck/code/numbers.json` carries the
+  plain lane at 94/100 and an MRP lane at 95/100 that this file does not contain. Either a
+  re-run, a different cut, or a different scoring rule.
+- The `wsku-001`-style ids exist nowhere else on disk: the three `outputs/*.jsonl` sets carry
+  no case ids (inputs/outputs/metadata only), so an id cannot be joined to a product title
+  from this file alone.
+  To use it, either the populated detail export or a confirmed id→row mapping for the three
+  JSONL sets is required.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -186,3 +209,12 @@ decision, 2026-10-19) — GT-lead column included, export-evidence close-out.
   the slide); the MRP lane's figure comes from the eval report, not from these files.
   Sample titles quoted on the deck's "What was tested" slide are taken verbatim from
   `outputs/*.jsonl`.
+
+## Related workstreams
+
+- `../product-context/PLAN-practical-product-context.md` (2026-10-23) — proposal for a
+  practical product-context doc derived from the catalogue. Its audit explains why a
+  correct record can sit in `catalog_results` and still be rejected: Step 2a.3 of the
+  production prompt requires the fitting token on both sides (so COUPLER cannot match
+  SOCKET), Step 1b has no SOC/SHOE entries, and Step 3 resolves variant ties by list
+  order. Same 300 cases used for validation.
