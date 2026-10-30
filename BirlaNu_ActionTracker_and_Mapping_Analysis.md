@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-10-23
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7).
+Last updated: 2026-10-30
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -15,6 +15,8 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
 - LangSmith eval export — turnover product-mapping (dataset example version 2026-10-16,
   mapping revision v8.4.19-2):
   `/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv` — see §6.
+- Turnover OCR-setup benchmark (2026-10-30): `/mnt/f/Product/zotok/Product Mapping/CU READ EVAL OUTPUT/` —
+  `cu-read-text-only-856a0156.csv` (40 runs) + `turnover_ocr_setups.html` (5 setups × 20 invoices); see §8.
 
 ---
 
@@ -287,6 +289,37 @@ Full record, artifacts and repro commands: `eval-datasets/SENTINEL-lanes.md`.
   only (`apply_titleonly_token_fix.py`) — SKU, status and invoice untouched — so the lane is now
   100/100 brand-free and 100/100 code-free.
 - Still open: 8 duplicate replacement SKUs; 2 same-HSN fallbacks (`plain-080`, `plain-092`).
+
+---
+
+## 8. Turnover OCR setups — cu-read text-only arm verified (2026-10-30)
+
+Benchmark folder: `F:\Product\zotok\Product Mapping\CU READ EVAL OUTPUT\` — the LangSmith export
+`cu-read-text-only-856a0156.csv` plus the generated report `turnover_ocr_setups.html` (the folder
+README is the file guide, with findings and rules). The report compares 5 setups on the same 20
+invoices (10 photos from prod `turnover_schemes` traces, 10 PDFs from `turnover-extraction-eval`,
+299 lines), 2 runs each, gpt-5.4 on the prod prompt `v8.3.5-1081-gd7fbdc1b8af`, `InvoiceData`
+through `extract_data_node`.
+
+Verified: the CSV is the export behind the report's `read_only` column (cu-read `prebuilt-read`,
+text only, no file) and reproduces it exactly — eval .694, header .939, GSTIN 74/80, line-item
+fields 466/3,588 wrong (.870), photos .652 / PDFs .735, $0.0562 per run.
+
+- **The photo loss is row binding, not characters.** `prod-image-08` returns 11 rows for 10, first
+  row name-only, every number one row down (.469; the cu-layout-only arm scores 1.000 on the same
+  photo); `prod-image-02` the same (9 for 8, .500 vs 1.000); `prod-image-07` binds amounts to the
+  wrong rows (row 0's own amount 1,067,850 lands on row 2; row 0 carries 534,925, absent from the
+  reference).
+- **GSTIN 74/80: all six misses are two photos** — `prod-image-05` (buyer null; distributor
+  `03BQYPT5080J1Z3` read as `03BQYPTS080J1Z3`) and `prod-image-08` (buyer null). PDFs are 40/40.
+- **Four invoices are pinned by label convention, not extraction**: `pdf-03` / `pdf-05` / `pdf-07`
+  at ≤.5 in every setup, `prod-image-01` at .5 in every setup. `pdf-05`'s 32 amounts, quantities
+  and rates all match; only the incl/excl line-total column disagrees with the labels.
+- **8 of the 22 header-field errors are formatting only** (phone spacing, `& electricals`, dropped
+  "M/s"), so .939 understates alignment (~96.1% modulo format).
+- **Setup ranking (eval, all 20):** cur .640 · cu-read text .694 · cu-layout text .754 ·
+  cu-read + file .753 · cu-layout + file .783. On photos the layout text arm is .803 vs .652; on
+  PDFs cu-read text .735 ≈ cu-layout .705 — the photo lane needs cu-layout, PDFs do not.
 
 ---
 
