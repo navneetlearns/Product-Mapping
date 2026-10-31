@@ -284,3 +284,45 @@ unrelated titles (caught by the catalogue-family check).
   exists on disk for these lanes.
 - SKU lane source quirks left as delivered: `wsku-047` (title code ≠ mapped SKU) and `wsku-048` /
   `wsku-062` (code + phrase repeated in the title). They are the only rows outside `code == sku`.
+
+---
+
+## 10. Mapping issue list shared by Amit — catalogue verification (2026-10-31)
+
+A fourth source file arrived in `01_source/`: `Mapping issue list shared by amit.xlsx` (created
+29-Oct-2026 by Amit Kumar; three sheets — Distributor not mapped / retailer not mapped / SKU not
+mapped). It is not a sentinel lane; it is the BirlaNu team's issue list. Classified against the
+18-Oct catalogue by `code/classify_mapping_issues.py` (component bucketing: family → type → size →
+qualifier, never raw fuzzy). Full analysis: `../Mapping_Inconsistency_Analysis.md`; per-row review
+workbook: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\03_review\Mapping issue analysis.xlsx`.
+
+Profile: 69 distributor rows / 41 names / 73 Inv / ₹29.6 L; 517 retailer rows / 363 names / 519 Inv
+/ ₹2.58 Cr; 3,216 SKU rows / 2,913 descriptions / 4,775 Inv / ₹2.48 Cr.
+
+SKU result: exact catalogue title 1,020 rows (31.7%) / ₹1.22 Cr (49.5%); of that 100 rows
+(3.1%) / ₹42.2 L (17.0%) are exact titles blocked only by **19 catalogue names carrying two SKUs**
+(old 9600 vs new 9800/9800-10xx). Uniquely resolvable today (exact one-SKU + one-SKU-after-
+normalisation) = 1,239 rows (38.5%) / ₹94.9 L (38.4%). A further 1,122 rows (34.9%) / ₹72.2 L
+(29.2%) are catalogue products with 2+ fitting SKUs because the invoice omits SDR/SCH/CLASS/length/
+Type A-B. Gaps/unparsed 592 rows (18.4%) / ₹29.6 L; other brands 163 (5.1%) / ₹8.7 L. 554 rows
+(21.7% of value) appear verbatim in the human mapping corpus, all with current SKUs.
+
+Root cause lead: the source invoice line stores `status` but **no `sku_code`/`product_variant_id`**
+— the SKU lives on the turnover-invoice line. In trace `01a15db1` (Vaibhav GST-492, 18 lines;
+`fetch_distributor_catalog` returned `[]`, fallback mapped 17/18) only the two
+`MAPPED_BRAND_NOT_FOUND` lines appear in the issue list; the 15 `MAPPED` lines do not. Hypothesis:
+the "SKU not mapped" tab is a status/report artifact (MBNF or a source-table join). Confirm with one
+source-vs-turnover SQL sample before changing the pipeline — do not start with a LangSmith reprocess.
+
+Reproduce:
+
+```
+python3 code/classify_mapping_issues.py \
+  --workbook "F:/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issue list shared by amit.xlsx" \
+  --catalogue "F:/Product/zotok/Product Mapping/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
+  --out "F:/Product/zotok/Product Mapping/Mapping Inconsistency/03_review/Mapping issue analysis.xlsx"
+```
+
+Tracker record: `../BirlaNu_ActionTracker_and_Mapping_Analysis.md` §9. The review workbook carries
+buckets A–I, per-row catalogue candidates/reasons, the 19 duplicate pairs, and distributor/retailer
+root-cause/action columns — a review aid, not a verdict.

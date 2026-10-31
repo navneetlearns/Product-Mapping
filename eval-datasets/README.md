@@ -180,6 +180,39 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 - Open: the 8 duplicate replacement SKUs and 2 same-HSN fallbacks are listed for a tighter pass.
   (`plain-036` / `plain-066` were resolved 2026-10-23 — abbreviation tokens removed.)
 
+## Mapping issue list — classifier (2026-10-31)
+
+A second, different input arrived from the BirlaNu team: `Mapping issue list shared by amit.xlsx`
+(29-Oct-2026; three sheets — Distributor not mapped / retailer not mapped / SKU not mapped), not
+an eval set. `code/classify_mapping_issues.py` buckets it against the 18-Oct catalogue
+(2,335 rows) by component — family → type → size → qualifier — and writes a review workbook.
+The written analysis is `../Mapping_Inconsistency_Analysis.md`; the tracker record is
+`../BirlaNu_ActionTracker_and_Mapping_Analysis.md` §9.
+
+Profile: 69 distributor rows / 41 names / 73 Inv / ₹29.6 L; 517 retailer rows / 363 names / 519 Inv
+/ ₹2.58 Cr; 3,216 SKU rows / 2,913 descriptions / 4,775 Inv / ₹2.48 Cr.
+
+SKU result: exact catalogue title 1,020 rows (31.7%) / ₹1.22 Cr (49.5%); 100 of those rows (3.1% /
+17.0%) are exact titles blocked only by **19 catalogue names carrying two SKUs** (old 9600 vs new
+9800/9800-10xx). Uniquely resolvable today (exact one-SKU + one-SKU-after-normalisation) = 1,239
+rows (38.5%) / ₹94.9 L (38.4%). A further 1,122 rows (34.9%) / ₹72.2 L (29.2%) are catalogue
+products with 2+ fitting SKUs because the invoice omits SDR/SCH/CLASS/length/Type A-B. Gaps/
+unparsed 592 rows (18.4%) / ₹29.6 L; other brands 163 (5.1%) / ₹8.7 L. 554 rows (21.7% of value)
+appear verbatim in the human mapping corpus, all with current SKUs.
+
+Root-cause lead: the source invoice line has `status` but **no `sku_code` / `product_variant_id`**;
+the SKU is on the turnover-invoice line. In trace `01a15db1` (Vaibhav GST-492, 18 lines) only the
+two `MAPPED_BRAND_NOT_FOUND` lines appear in the issue list, the 15 `MAPPED` lines do not — the tab
+is likely a status/report artifact, not a mapping gap. Confirm with one source-vs-turnover SQL
+sample before any pipeline change.
+
+```
+python3 code/classify_mapping_issues.py \
+  --workbook "F:/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issue list shared by amit.xlsx" \
+  --catalogue "F:/Product/zotok/Product Mapping/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
+  --out "F:/Product/zotok/Product Mapping/Mapping Inconsistency/03_review/Mapping issue analysis.xlsx"
+```
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -237,6 +270,11 @@ in [`SENTINEL-lanes.md`](SENTINEL-lanes.md); the short version:
 - `code/apply_titleonly_fix.py` — applies the approved plan from the workbook: rewrites the 54
   rows (product fields from the replacement's own source record, ids/order kept) →
   `title only sentinel tarun - corrected.{csv,xlsx}` + `Applied (final set)` sheet
+- `code/classify_mapping_issues.py` — buckets Amit's 3-sheet issue list (29-Oct-2026) against the
+  18-Oct catalogue: SKU buckets A–I, duplicate-SKU pairs, distributor/retailer root-cause/action
+  columns, trace evidence → `03_review/Mapping issue analysis.xlsx` in the F: folder
+- `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
+  full solution/verification proposal (tracker §9 is the short version)
 
 ## Consumed by
 

@@ -17,6 +17,11 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
   `/mnt/f/Langsmith/BRAND NAME/turnover-product-mapping-136d0d1e.csv` — see §6.
 - Turnover OCR-setup benchmark (2026-10-30): `/mnt/f/Product/zotok/Product Mapping/CU READ EVAL OUTPUT/` —
   `cu-read-text-only-856a0156.csv` (40 runs) + `turnover_ocr_setups.html` (5 setups × 20 invoices); see §8.
+- BirlaNu issue list (2026-10-29): `/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issue list shared by amit.xlsx`
+  (69 distributor / 517 retailer / 3,216 SKU rows); full analysis in
+  `Mapping_Inconsistency_Analysis.md`, per-row review workbook
+  `Mapping Inconsistency/03_review/Mapping issue analysis.xlsx`, classifier
+  `eval-datasets/code/classify_mapping_issues.py` — see §9.
 
 ---
 
