@@ -338,8 +338,9 @@ also appear in the retailer sheet — three join stages of the same secondary-in
 **SKU sheet — the list is not a catalogue-absence problem.** Component-based bucketing
 (family → type → size → qualifier) gives: exact catalogue title 920 rows / ₹80.3 L (A) +
 exact title but catalogue carries two SKUs 100 / ₹42.2 L (A2) + one SKU after normalisation
-319 / ₹14.7 L (B) = **41.6% of rows / 55.4% of value in catalogue and resolvable**; exact title
-alone = 31.7% / 49.5%. Then 1,122 rows / ₹72.2 L (34.9% / 29.2%) are catalogue products with
+319 / ₹14.7 L (B). Exact title = 31.7% of rows / 49.5% of value; uniquely resolvable today
+(A+B) = 38.5% / 38.4%; if the 19 duplicate pairs are retired the in-catalogue answer rises to
+41.6% / 55.4%. Then 1,122 rows / ₹72.2 L (34.9% / 29.2%) are catalogue products with
 2+ fitting SKUs because the invoice omits SDR/SCH/CLASS/length/Type A-B (C); qualifier/size/
 unparsed gaps 592 rows / ₹29.6 L (18.4% / 11.9%); other brands 163 / ₹8.7 L (5.1% / 3.5%).
 Family split: SWR ₹83.3 L (78% exact — a duplicate-SKU story), CPVC ₹72.8 L (51% ambiguous —

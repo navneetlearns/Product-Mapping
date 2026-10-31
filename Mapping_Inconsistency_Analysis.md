@@ -15,12 +15,14 @@ Reproduce: `python3 eval-datasets/code/classify_mapping_issues.py --workbook …
 ## 0. The one-line answer
 
 **The list is not a catalogue-absence problem.** Of the 3,216 SKU rows (₹2.47 crore),
-**41.6% of rows / 55.4% of value are the exact catalogue title or resolve to one SKU**
-after case/space/quote/plural/brand-suffix normalisation. A further **34.9% / 29.2% are
-catalogue products whose invoice title omits the variant** (SDR/SCH/CLASS, length, Type
-A/B, Pushfit/Solfit), so 2–5 legitimate SKUs fit. Only **5.1% / 3.5% are other brands**
-(Astral, Supreme, JSW, Nerolac, Prince, Paras, Ashirvad, …) and 18.4% / 11.9% are real
-catalogue/qualifier gaps or unparsed items.
+**31.7% of rows / 49.5% of value are the exact catalogue title** after case/space/quote/
+plural/brand-suffix normalisation. **3.1% of rows / 17.0% of value are exact titles that
+return two SKUs because the catalogue carries the same name twice.** A further **9.9% /
+5.9% resolve to one SKU after normalisation**, so **38.5% / 38.4% are uniquely resolvable
+today**. Another **34.9% / 29.2% are catalogue products whose invoice title omits the
+variant** (SDR/SCH/CLASS, length, Type A/B, Pushfit/Solfit), so 2–5 legitimate SKUs fit.
+Only **5.1% / 3.5% are other brands** (Astral, Supreme, JSW, Nerolac, Prince, Paras,
+Ashirvad, …) and 18.4% / 11.9% are real catalogue/qualifier gaps or unparsed items.
 
 The first fix is not better matching. It is (a) the report/status definition behind the
 "SKU not mapped" tab and (b) 19 catalogue names that carry two SKUs. Those two account
@@ -71,8 +73,10 @@ fuzzy-string matching.
 
 Headline aggregates:
 
-- **In catalogue and resolvable (A + A2 + B): 1,339 rows (41.6%), ₹1.37 Cr (55.4%).**
-- **Exact title alone (A + A2): 1,020 rows (31.7%), ₹1.22 Cr (49.5%).**
+- **Exact title (A + A2): 1,020 rows (31.7%), ₹1.22 Cr (49.5%).**
+- Of that: exact title with one SKU (A) 920 rows (28.6%), ₹80.3 L (32.4%); exact title
+  with two SKUs (A2) 100 rows (3.1%), ₹42.2 L (17.0%).
+- **Uniquely resolvable today (A + B): 1,239 rows (38.5%), ₹94.9 L (38.4%).**
 - In catalogue but ambiguous (C): 1,122 rows (34.9%), ₹72.2 L (29.2%).
 - Catalogue gap / qualifier / unparsed (D+E+F+G+I): 592 rows (18.4%), ₹29.6 L (11.9%).
 - Other brand (H): 163 rows (5.1%), ₹8.7 L (3.5%).

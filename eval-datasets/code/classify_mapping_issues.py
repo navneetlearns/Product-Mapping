@@ -459,7 +459,9 @@ def build(args):
         return n, v
 
     exact_n, exact_v = bucket_sum(["A_exact_title", "A_exact_dup"])
-    resolv_n, resolv_v = bucket_sum(["A_exact_title", "A_exact_dup", "B_unique_sku"])
+    unique_n, unique_v = bucket_sum(["A_exact_title"])
+    dup_n, dup_v = bucket_sum(["A_exact_dup"])
+    resolv_n, resolv_v = bucket_sum(["A_exact_title", "B_unique_sku"])
     amb_n, amb_v = bucket_sum(["C_ambiguous"])
     gap_n, gap_v = bucket_sum(["D_variant_conflict", "E_size_gap", "F_no_size",
                                "G_type_gap", "I_unparsed"])
@@ -666,10 +668,17 @@ def build(args):
     start = ws.max_row + 3
     ws.cell(start, 1, "Headline").font = Font(bold=True, size=12)
     headline = [
-        ["In catalogue — exact title or one resolvable SKU", resolv_n, resolv_n / total_rows,
-         resolv_v, resolv_v / total_value],
-        ["  of which exact title (incl. duplicate-SKU titles)", exact_n, exact_n / total_rows,
+        ["In catalogue — exact title (incl. duplicate-SKU titles)", exact_n, exact_n / total_rows,
          exact_v, exact_v / total_value],
+        ["  exact title, one SKU", unique_n, unique_n / total_rows,
+         unique_v, unique_v / total_value],
+        ["  exact title, catalogue carries two SKUs", dup_n, dup_n / total_rows,
+         dup_v, dup_v / total_value],
+        ["In catalogue — one SKU after normalisation (B)", bucket_sum(["B_unique_sku"])[0],
+         bucket_sum(["B_unique_sku"])[0] / total_rows, bucket_sum(["B_unique_sku"])[1],
+         bucket_sum(["B_unique_sku"])[1] / total_value],
+        ["Uniquely resolvable today (exact one SKU + B)", resolv_n, resolv_n / total_rows,
+         resolv_v, resolv_v / total_value],
         ["In catalogue — 2+ SKUs fit, variant/length not stated", amb_n, amb_n / total_rows,
          amb_v, amb_v / total_value],
         ["Catalogue gap / qualifier conflict / unparsed", gap_n, gap_n / total_rows,
