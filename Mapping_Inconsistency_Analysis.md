@@ -101,7 +101,7 @@ Headline aggregates:
 
 ### 2.2 Nineteen catalogue names carry two SKUs — ₹42.2 L blocked
 
-The catalogue export has 48 normalised names with two SKUs (96 rows). Nineteen of those
+The catalogue export has 49 normalised names with two SKUs (98 rows). Nineteen of those
 pairs carry rows in this issue list: 100 rows, ₹42.2 L (17.0% of the list). The pattern is
 an old and a new code for the same article (9600xxxx vs 9800xxxx / 9800-10xx), for example:
 
