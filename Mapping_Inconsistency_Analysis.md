@@ -47,6 +47,11 @@ The SKU sheet is the main event: 3,216 rows, 2,913 distinct descriptions, 4,775 
 occurrences. A long tail: the median description is 5 words, 2,913 distinct titles for
 4,775 occurrences.
 
+One scope check: the SKU sheet's largest "distributor" is **BirlaNu Limited (formerly HIL
+Limited)** — 229 rows, ₹28.1 L (11.3% of the sheet). That is the manufacturer as seller, i.e.
+a primary/direct-channel record, not a distributor→retailer secondary sale. Confirm whether
+the report intentionally includes it; if not, the secondary-only denominator is ₹2.19 Cr.
+
 ---
 
 ## 2. SKU sheet — catalogue verification
