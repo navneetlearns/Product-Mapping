@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-10-30
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8).
+Last updated: 2026-10-31
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -320,6 +320,66 @@ fields 466/3,588 wrong (.870), photos .652 / PDFs .735, $0.0562 per run.
 - **Setup ranking (eval, all 20):** cur .640 · cu-read text .694 · cu-layout text .754 ·
   cu-read + file .753 · cu-layout + file .783. On photos the layout text arm is .803 vs .652; on
   PDFs cu-read text .735 ≈ cu-layout .705 — the photo lane needs cu-layout, PDFs do not.
+
+---
+
+## 9. "Mapping issue list shared by Amit" — catalogue verification (2026-10-31)
+
+Input: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Mapping issue list shared by amit.xlsx`
+(created 29-Oct by Amit Kumar; three sheets: Distributor not mapped / retailer not mapped /
+SKU not mapped). Catalogue = 18-Oct export (2,335 rows). Full analysis + per-row review workbook:
+`Mapping_Inconsistency_Analysis.md` and `03_review/Mapping issue analysis.xlsx` in the same F: folder;
+classifier `eval-datasets/code/classify_mapping_issues.py`.
+
+Sheet profile: Distributor 69 rows / 41 names / 73 Inv / ₹29.6 L; Retailer 517 / 363 / 519 /
+₹2.58 Cr; SKU 3,216 / 2,913 descriptions / 4,775 Inv / ₹2.48 Cr. 30 of 62 distributor invoices
+also appear in the retailer sheet — three join stages of the same secondary-invoice population.
+
+**SKU sheet — the list is not a catalogue-absence problem.** Component-based bucketing
+(family → type → size → qualifier) gives: exact catalogue title 920 rows / ₹80.3 L (A) +
+exact title but catalogue carries two SKUs 100 / ₹42.2 L (A2) + one SKU after normalisation
+319 / ₹14.7 L (B) = **41.6% of rows / 55.4% of value in catalogue and resolvable**; exact title
+alone = 31.7% / 49.5%. Then 1,122 rows / ₹72.2 L (34.9% / 29.2%) are catalogue products with
+2+ fitting SKUs because the invoice omits SDR/SCH/CLASS/length/Type A-B (C); qualifier/size/
+unparsed gaps 592 rows / ₹29.6 L (18.4% / 11.9%); other brands 163 / ₹8.7 L (5.1% / 3.5%).
+Family split: SWR ₹83.3 L (78% exact — a duplicate-SKU story), CPVC ₹72.8 L (51% ambiguous —
+SDR/length), UPVC ₹36.3 L (55.5% exact), Pressure ₹16.2 L.
+
+- **19 catalogue names carry two SKUs** (old 9600 vs new 9800/9800-10xx), 100 issue rows,
+  ₹42.2 L (17.0%). Top pair: `SWR Pipe Type A Pushfit S/S 3m 110 mm` = 96000676 | 98000874,
+  22 rows / ₹24.4 L. Even an exact title returns two answers.
+- **554 issue rows (21.7% of value) appear verbatim in the human mapping corpus** and every one
+  carries a SKU still in the current catalogue — these are not new products.
+- **Trace 01a15db1 (Vaibhav GST-492, 18 lines):** `fetch_distributor_catalog` returned `[]` for
+  all 18; fallback `fetch_catalog_text` mapped 17/18; turnover invoice persisted 16 MAPPED /
+  1 MBNF / 1 UNMAPPED. The source invoice line schema has `status` but **no `sku_code` /
+  `product_variant_id`** — the SKU lives only on the turnover line. Of the 18 descriptions, only
+  the two **MAPPED_BRAND_NOT_FOUND** lines appear in Amit's workbook; the 15 MAPPED lines do not.
+  Leading hypothesis: the "SKU not mapped" tab is a status/report artifact (MBNF or a source-table
+  join), not a mapping gap. Confirm with one source-vs-turnover SQL sample (§7 of the analysis doc)
+  before changing the pipeline.
+
+**Distributor sheet:** 49 of 69 rows belong to distributors that also sell in the retailer sheet —
+link/identity problem, not missing party. Root causes: invoice-to-master link 14 rows / ₹10.9 L
+(36.8%); entity resolution (7 name-variant clusters, same GST under 2 names, same name under 2-5
+GSTs) 37 / ₹10.7 L (36.2%); not in master 14 / ₹6.1 L (20.6%); GST missing/invalid 4 / ₹1.9 L.
+Trace shows the duplicate-CFA pattern: `fetch_cfa` returned two Vaibhav seller records
+(`366a06fa…` code 0001121653 and `ff09993d…` code 1121653); the catalog lookup used the first and
+returned empty.
+
+**Retailer sheet:** 90.7% of rows carry a GST (241 GST-only, 178 GST+phone) and 43.7% a phone;
+only 50 rows (₹49.7 L, 19.3% of value) have neither. Root causes: not in customer master / phone-
+only match 215 / ₹1.09 Cr (42.0%); both identifiers but not in master 159 / ₹54.2 L (21.0%); no
+key 50 / ₹49.7 L (19.3%); phone only 40 / ₹25.4 L (9.8%); name variants 53 / ₹20.5 L (7.9%).
+106 retailers = 80% of value → bulk onboarding list, not a long tail.
+
+**Actions (P0):** (1) report from the turnover line, show `sku_code`, split MAPPED / MBNF /
+UNMAPPED — do not label MBNF "not mapped"; (2) retire/hide one of each of the 19 duplicate SKUs;
+(3) tag other-brand lines `NOT_BIRLANU`. **P1:** normalisation/alias layer (mm↔inch, `Pipe 40`→
+SCH 40, kg↔CLASS, coupler↔socket, typos/price/pack), price/history variant resolution with
+`AMBIGUOUS` status, master-data canonicalisation + duplicate-CFA merge + top-11 distributor /
+106 retailer onboarding. **P2:** one name = one SKU, missing variants, full `412xxx` export,
+regression set (554 corpus + 100 exact + 19 pairs).
 
 ---
 
