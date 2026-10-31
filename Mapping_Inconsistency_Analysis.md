@@ -99,7 +99,7 @@ Headline aggregates:
 | ₹2.75 L | A2 | 96000676 / 98000874 | SWR Pipe 110mm 3m Type A Pushfit S/S - B |
 | ₹2.61 L | A | 96000014 | UPVC Pipe 40 (3 Mtr) 1'' |
 
-### 2.2 Nineteen catalogue names carry two SKUs — ₹42.2 L blocked
+### 2.2 Nineteen catalogue pairs block issue rows — ₹42.2 L
 
 The catalogue export has 49 normalised names with two SKUs (98 rows). Nineteen of those
 pairs carry rows in this issue list: 100 rows, ₹42.2 L (17.0% of the list). The pattern is

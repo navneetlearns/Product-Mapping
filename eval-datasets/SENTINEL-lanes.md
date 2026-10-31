@@ -300,7 +300,7 @@ Profile: 69 distributor rows / 41 names / 73 Inv / ₹29.6 L; 517 retailer rows 
 / ₹2.58 Cr; 3,216 SKU rows / 2,913 descriptions / 4,775 Inv / ₹2.48 Cr.
 
 SKU result: exact catalogue title 1,020 rows (31.7%) / ₹1.22 Cr (49.5%); of that 100 rows
-(3.1%) / ₹42.2 L (17.0%) are exact titles blocked only by **19 catalogue names carrying two SKUs**
+(3.1%) / ₹42.2 L (17.0%) are exact titles blocked only by **19 of the catalogue's 49 duplicate-SKU pairs**
 (old 9600 vs new 9800/9800-10xx). Uniquely resolvable today (exact one-SKU + one-SKU-after-
 normalisation) = 1,239 rows (38.5%) / ₹94.9 L (38.4%). A further 1,122 rows (34.9%) / ₹72.2 L
 (29.2%) are catalogue products with 2+ fitting SKUs because the invoice omits SDR/SCH/CLASS/length/

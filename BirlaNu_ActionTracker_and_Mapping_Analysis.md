@@ -351,8 +351,8 @@ unparsed gaps 592 rows / ₹29.6 L (18.4% / 11.9%); other brands 163 / ₹8.7 L 
 Family split: SWR ₹83.3 L (78% exact — a duplicate-SKU story), CPVC ₹72.8 L (51% ambiguous —
 SDR/length), UPVC ₹36.3 L (55.5% exact), Pressure ₹16.2 L.
 
-- **19 catalogue names carry two SKUs** (old 9600 vs new 9800/9800-10xx), 100 issue rows,
-  ₹42.2 L (17.0%). Top pair: `SWR Pipe Type A Pushfit S/S 3m 110 mm` = 96000676 | 98000874,
+- **19 of the catalogue's 49 duplicate-SKU pairs block issue rows** (old 9600 vs new 9800/9800-10xx), 100 issue
+  rows, ₹42.2 L (17.0%). Top pair: `SWR Pipe Type A Pushfit S/S 3m 110 mm` = 96000676 | 98000874,
   22 rows / ₹24.4 L. Even an exact title returns two answers.
 - **554 issue rows (21.7% of value) appear verbatim in the human mapping corpus** and every one
   carries a SKU still in the current catalogue — these are not new products.
