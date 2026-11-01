@@ -245,6 +245,12 @@ Headline (deduplicated population: 9,749 `Duplicate Invoice` lines dropped from 
   every unmatched retailer and distributor with its identifiers, ordered by value, `In 80% cut` flagged.
   QA the rendered result with `code/qa_render.py` (Playwright; 0 clipped cells on the presentation
   sheets). LibreOffice is not installed, so the PDF render gate cannot run here.
+- **Rank the onboarding cut on `gap_value`, never on the account's total.** Sorting by total value puts a
+  big account with one bad line above a genuinely broken one and overstates the gap (it read ₹2.97 Cr
+  against a true ₹1.11 Cr for distributors). `with_cum` now sorts and cumulates on the value sitting on
+  unidentified lines only.
+- **BirlaNu's own six GSTINs hold 61.6% of the distributor gap** (₹68.59 L of ₹1.11 Cr) — primary-channel
+  records, flagged in the `Note` column, not onboarding targets. Real distributors: ₹42.85 L.
 
 ```
 python3 code/build_turnover_truth.py \

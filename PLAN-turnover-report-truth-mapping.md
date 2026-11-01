@@ -252,14 +252,30 @@ Deviations from the plan as written:
 - Amit's list does **not** reconcile: closest is MBNF / desc+distributor / created ≥ 2026-08-01
   (2,948 rows / 4,580 Inv / ₹1.98 Cr vs his 3,216 / 4,775 / ₹2.48 Cr), and his `Value` is not any line
   amount in this report. This is now an open question for him, not a build defect.
+- **The onboarding cut was ranked on the wrong value and is fixed.** `with_cum` originally sorted
+  accounts by their TOTAL value, so a large account with one bad line outranked a genuinely broken one
+  and the pack claimed ₹1.99 Cr (retailer) / ₹2.97 Cr (distributor) against a true gap of ₹1.74 Cr /
+  ₹1.11 Cr. Ranking and cumulative share now use `gap_value` (value on unidentified lines only);
+  counts moved 75 → 78 retailers and 10 → 9 distributors in the cut.
+- **BirlaNu's own GSTINs top the distributor list.** ₹68.59 L (61.6%) of the ₹1.11 Cr distributor gap
+  sits on six BirlaNu/HIL GSTINs — primary-channel records, not distributors to onboard. Flagged in a
+  `Note` column in both workbooks and stated in the readout; real distributors account for ₹42.85 L.
+- **A render QA gate was added** (`code/qa_render.py`): 0 clipped cells across the presentation sheets
+  and the handout pack, measured per cell in Chromium at Excel column widths.
 
 ---
 
 ## 9. What is still open
 
-1. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions).
-2. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
+1. **File swap on F: (blocked at 16:25).** Excel held `03_review/Truth - mapping coverage.xlsx` open
+   (`~$` lock), so the corrected 16:21 build is staged in
+   `eval-datasets/outputs/turnover-truth/Truth - mapping coverage.xlsx` and the F: copy is still the
+   16:11 build. Close the workbook and copy it over; the onboarding pack was unlocked and is current.
+2. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions).
+3. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
    lines "Identified" with a blank matched name, 4,592 lines whose invoice number is used by more than one
    distributor, 636 lines dated outside 2026.
-3. The 207 GST-bearing retailers that are not fully matched = the master-coverage onboarding list.
+4. The 207 GST-bearing retailers that are not fully matched = the master-coverage onboarding list.
+5. The six BirlaNu/HIL GSTINs need a rule (primary channel), not onboarding — owner to decide whether
+   they are excluded from the distributor KPI or mapped to a synthetic master record.
 

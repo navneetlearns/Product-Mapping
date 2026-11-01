@@ -335,6 +335,16 @@ value — a bulk-onboarding list, not a long tail.
 
 ## 7. Verification plan (the second path)
 
+> **Superseded 2026-11-01 — do not run step 1 as written.** The Turn Over Report
+> (`01_source/Turn Over Report.xlsx`, 2026-01-01 → 2026-11-01) carries `Parsing Status` and the
+> mapped `Material No` on every secondary-invoice line, so the MBNF-with-SKU question is answered
+> without a SQL sample: 6,024 MBNF lines (13.9% of the deduplicated population) all carry a SKU,
+> and counting `status <> 'MAPPED'` would report 15,202 lines as failures. Amit's 3,216-row tab
+> still does not reconcile — closest is MBNF / description+distributor / created ≥ 2026-08-01 at
+> 2,948 rows / ₹1.98 Cr. Current state and the definition search:
+> `TRUTH-MAPPING-BASELINE.md` and tracker §10. Steps 2–3 below remain the fallback for
+> line-level confidence values, which the report does not expose.
+
 Cheapest to most expensive:
 
 1. **SQL/panel query (minutes).** For 10 invoice numbers from the SKU sheet, pull source

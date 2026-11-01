@@ -370,6 +370,12 @@ SDR/length), UPVC ₹36.3 L (55.5% exact), Pressure ₹16.2 L.
   join), not a mapping gap. Confirm with one source-vs-turnover SQL sample (§7 of the analysis doc)
   before changing the pipeline.
 
+  **Update 2026-11-01 — see §10.** The Turn Over Report answers the artifact half of this at line
+  level: `Mapped - Branding Not Found` lines carry a `Material No`, so any tab filtered on
+  `status <> 'MAPPED'` reports 15,202 lines as "not mapped" of which 6,024 actually have a SKU. Amit's
+  exact filter still does not reconcile with the report (his 3,216 rows / ₹2.48 Cr vs the closest
+  definition's 2,948 / ₹1.98 Cr), so the remaining question is his export filter, not the pipeline.
+
 **Distributor sheet:** 49 of 69 rows belong to distributors that also sell in the retailer sheet —
 link/identity problem, not missing party. Root causes: invoice-to-master link 14 rows / ₹10.9 L
 (36.8%); entity resolution (7 name-variant clusters, same GST under 2 names, same name under 2-5
@@ -418,7 +424,9 @@ across pages and sellers) · ₹19.80 Cr excluding tax · 57 columns carrying `D
 - **Distributors:** 61 accounts carry every unidentified line and **9** make 80% of the ₹1.11 Cr gap —
   but **₹68.59 L of it (61.6%) sits on BirlaNu's own six GSTINs** (formerly HIL Limited), i.e.
   primary-channel records that should be resolved by rule, not onboarded as distributors. Real
-  distributors account for ₹42.85 L.
+  distributors account for ₹42.85 L. The cut is computed on the value sitting on unidentified lines,
+  not the account's total: ranking on total value put big accounts first and read ₹2.97 Cr; ranking on
+  the gap gives ₹1.11 Cr and moves the cut from 10 accounts to 9.
 - **Products:** Mapped 28,166 · Mapped-Branding-Not-Found 6,024 · Unmapped 9,178 · blank 70. Of the 5,165
   unmapped description+distributor rows, 42.1% are catalogue products (A/A2/B/C — 1,607 ambiguous),
   57.9% are size gaps, qualifier conflicts, competitor brands or unparsed text; 45.7% of unmapped lines
