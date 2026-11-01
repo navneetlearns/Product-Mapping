@@ -276,7 +276,9 @@ Deviations from the plan as written:
    the report, 47 do not).
 3. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
    lines "Identified" with a blank matched name, 4,592 lines whose invoice number is used by more than one
-   distributor, 636 lines dated outside 2026.
+   distributor, 636 lines dated outside 2026, and the 12 invoices that appear twice with the party status
+   split exactly in half (5/5, 4/4, 12/12… — duplicate ingest, one copy mapped) — not yet in the
+   `Anomalies` sheet.
 4. The 207 GST-bearing retailers that are not fully matched = the master-coverage onboarding list.
 5. The six BirlaNu/HIL GSTINs need a rule (primary channel), not onboarding — owner to decide whether
    they are excluded from the distributor KPI or mapped to a synthetic master record.

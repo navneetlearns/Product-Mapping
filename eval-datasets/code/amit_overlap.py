@@ -141,14 +141,25 @@ def main() -> int:
             his_by_name.setdefault(n, set()).add(p)
 
         named, parties_hit = [], set()
-        for k in gap:
-            ps = set()
-            if gmap.get(k, "") in his_by_gst:
-                ps.add(his_by_gst[gmap[k]])
-            ps |= his_by_name.get(nmap.get(k, ""), set())
-            if ps:
-                named.append(k)
-                parties_hit |= ps
+
+        def match(gapset):
+            """gap entities that his sheet names, by GST or normalised name."""
+            hits, party = [], set()
+            for k in gapset:
+                ps = set()
+                if gmap.get(k, "") in his_by_gst:
+                    ps.add(his_by_gst[gmap[k]])
+                ps |= his_by_name.get(nmap.get(k, ""), set())
+                if ps:
+                    hits.append(k)
+                    party |= ps
+            return hits, party
+
+        named, parties_hit = match(gap)
+        # convention variant: any identified invoice = mapped, so only zero-identified accounts are unmapped
+        gap_strict = set(per[per["sum"] == 0].index)
+        named_strict, _ = match(gap_strict)
+        partial_n = int(((per["sum"] > 0) & (per["sum"] < per["count"])).sum())
 
         pv = tab.groupby("_party")["_v"].apply(list).map(party_verdict)
         buckets = pv.value_counts().to_dict()
@@ -160,6 +171,10 @@ def main() -> int:
             "report_unmapped": len(gap),
             "named_in_amit": len(named),
             "absent_from_amit": len(gap) - len(named),
+            "report_unmapped_strict": len(gap_strict),
+            "named_in_amit_strict": len(named_strict),
+            "absent_from_amit_strict": len(gap_strict) - len(named_strict),
+            "partial_counted_as_mapped": partial_n,
             "amit_parties": int(tab["_party"].nunique()),
             "amit_parties_named_by_gap": len(parties_hit),
             "amit_party_verdict": {k: int(v) for k, v in buckets.items()},
@@ -169,6 +184,9 @@ def main() -> int:
         }
         print(f"\n{name.upper()}: report unmapped {len(gap)} | named in his list {len(named)} | "
               f"absent {len(gap)-len(named)}")
+        print(f"  strict (any identified invoice = mapped): unmapped {len(gap_strict)} | "
+              f"named {len(named_strict)} | absent {len(gap_strict)-len(named_strict)} | "
+              f"partial folded in {partial_n}")
         print(f"  his parties {int(tab['_party'].nunique())}: " +
               ", ".join(f"{k} {v}" for k, v in sorted(buckets.items(), key=lambda kv: -kv[1])))
         print(f"  his rows {len(tab)}: " + ", ".join(f"{k} {v}" for k, v in rows.items()))

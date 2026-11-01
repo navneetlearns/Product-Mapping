@@ -460,11 +460,22 @@ His tabs are invoice-level rows, so they are not comparable to the entity counts
 collapsed to parties (GST where he gives one, else normalised name): **385 retailers, 46 distributors**.
 Everything below is counts, not value.
 
+`Distributor Status` / `Retailer Status` is decided **per invoice** and stamped on every line of that
+invoice — not per line item. Of 3,299 invoice+distributor groups, 3,287 carry a single status; the 12
+exceptions are the same invoice present twice with the status split exactly in half (5/5, 4/4, 12/12),
+i.e. a duplicate ingest where one copy was mapped and the other was not. "Partly mapped" below therefore
+means *some invoices of that party are identified and others are not*, and the two blocks of the table are
+the two reporting conventions: any-unidentified-invoice (used by the workbook) and strict (partial folded
+into mapped).
+
 | | retailers | distributors |
 |---|---:|---:|
-| unmapped in the report (01-Nov) | 269 | 61 |
+| not fully mapped in the report (any unidentified invoice) | 269 | 61 |
 | … named somewhere in his list | 227 | 38 |
 | … missing from his list | 42 | 23 |
+| strictly unmapped (partial counted as mapped) | 252 | 45 |
+| … named somewhere in his list | 217 | 26 |
+| … missing from his list | 35 | 19 |
 | parties in his list | 385 | 46 |
 | … wholly unmapped | 214 | 22 |
 | … partly mapped | 8 | 10 |

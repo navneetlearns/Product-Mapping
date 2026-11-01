@@ -7,6 +7,10 @@
     "report_unmapped": 269,
     "named_in_amit": 227,
     "absent_from_amit": 42,
+    "report_unmapped_strict": 252,
+    "named_in_amit_strict": 217,
+    "absent_from_amit_strict": 35,
+    "partial_counted_as_mapped": 17,
     "amit_parties": 385,
     "amit_parties_named_by_gap": 230,
     "amit_party_verdict": {
@@ -28,6 +32,10 @@
     "report_unmapped": 61,
     "named_in_amit": 38,
     "absent_from_amit": 23,
+    "report_unmapped_strict": 45,
+    "named_in_amit_strict": 26,
+    "absent_from_amit_strict": 19,
+    "partial_counted_as_mapped": 16,
     "amit_parties": 46,
     "amit_parties_named_by_gap": 40,
     "amit_party_verdict": {

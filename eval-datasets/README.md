@@ -234,6 +234,13 @@ Headline (deduplicated population: 9,749 `Duplicate Invoice` lines dropped from 
 
 - MBNF is **mapped** (it carries a `Material No`): Mapped 28,166 + MBNF 6,024 = 34,190; Unmapped 9,178;
   blank 70. Counting `status <> 'MAPPED'` as "not mapped" would report 15,202 lines as failures.
+- **`Distributor Status` / `Retailer Status` are invoice-level**, stamped on every line of that invoice —
+  they are not per-line-item decisions. 3,287 of 3,299 invoice+distributor groups carry one status; the 12
+  exceptions are the same invoice present twice with the split exactly in half (5/5, 4/4, 12/12), a
+  duplicate ingest where one copy got mapped. So a party's coverage is a ratio of *invoices*, and "partly
+  mapped" = some invoices identified, some not. Two conventions in use: any-unidentified-invoice (the
+  workbook headline, 269 retailers / 61 distributors "not fully mapped") and **strict, partial folded into
+  mapped** (252 retailers / 45 distributors unmapped).
 - Retailer failures are master coverage: 207 of 1,010 GST-bearing retailers are not fully matched,
   44 have neither GST nor phone. Distributor failures concentrate: 61 accounts, 10 making 80% of value.
 - Unmapped product rows (5,165 desc+distributor): 42.1% are catalogue products (A/A2/B/C, 1,607
@@ -330,9 +337,11 @@ python3 code/build_turnover_truth.py \
 - `code/amit_overlap.py` — Amit's 29-Oct list vs the report at **account** level: collapses his invoice
   rows to parties (GST, else name) and answers how many report-unmapped accounts his sheet already names,
   and how many of his parties still hold up. Current: 269 unmapped retailers / 61 distributors in the
-  report, of which he names 227 / 38; his 385 retailers split 214 wholly unmapped / 8 partly / 124 already
+  report, of which he names 227 / 38; strict convention (partial = mapped) 252 / 45 unmapped, he names
+  217 / 26, leaving 35 / 19 missing. His 385 retailers split 214 wholly unmapped / 8 partly / 124 already
   mapped / 39 absent from the report, his 46 distributors 22 / 10 / 6 / 8. Writes
-  `outputs/turnover-truth/amit-overlap.json`. Counts only — his `Value` is not comparable to report money.
+  `outputs/turnover-truth/amit-overlap.json` (both conventions). Counts only — his `Value` is not
+  comparable to report money.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
