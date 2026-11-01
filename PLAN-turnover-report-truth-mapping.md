@@ -280,4 +280,8 @@ Deviations from the plan as written:
 4. The 207 GST-bearing retailers that are not fully matched = the master-coverage onboarding list.
 5. The six BirlaNu/HIL GSTINs need a rule (primary channel), not onboarding — owner to decide whether
    they are excluded from the distributor KPI or mapped to a synthetic master record.
+6. **Retailer and distributor master not yet supplied.** When it arrives, the accounts this baseline
+   calls unmapped get classified in-master vs missing (GST → phone → name, with the match path kept):
+   of Amit's parties, 214 retailers and 22 distributors are wholly unmapped, so that is the queue to
+   test against the master first.
 
