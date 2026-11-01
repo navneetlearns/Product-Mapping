@@ -414,8 +414,11 @@ across pages and sellers) · ₹19.80 Cr excluding tax · 57 columns carrying `D
 
 - **Retailer failures are master coverage, not identifier capture:** 207 of the 1,010 retailers carrying
   a valid GST are not fully matched; 44 give neither GST nor phone. Failures cluster — 269 retailers
-  carry an unidentified line and 75 make 80% of that value.
-- **Distributors:** 61 accounts carry every unidentified line, 10 make 80% of the value.
+  carry an unidentified line and **78** make 80% of that ₹1.74 Cr gap.
+- **Distributors:** 61 accounts carry every unidentified line and **9** make 80% of the ₹1.11 Cr gap —
+  but **₹68.59 L of it (61.6%) sits on BirlaNu's own six GSTINs** (formerly HIL Limited), i.e.
+  primary-channel records that should be resolved by rule, not onboarded as distributors. Real
+  distributors account for ₹42.85 L.
 - **Products:** Mapped 28,166 · Mapped-Branding-Not-Found 6,024 · Unmapped 9,178 · blank 70. Of the 5,165
   unmapped description+distributor rows, 42.1% are catalogue products (A/A2/B/C — 1,607 ambiguous),
   57.9% are size gaps, qualifier conflicts, competitor brands or unparsed text; 45.7% of unmapped lines

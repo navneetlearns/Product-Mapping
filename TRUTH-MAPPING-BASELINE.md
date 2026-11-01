@@ -1,6 +1,6 @@
 # Mapping truth baseline — Turn Over Report
 
-**Status: built 2026-11-01 16:11 · source `Turn Over Report.xlsx` (downloaded 2026-11-01 15:00, filters 2026-01-01 → 2026-11-01)**
+**Status: built 2026-11-01 16:21 · source `Turn Over Report.xlsx` (downloaded 2026-11-01 15:00, filters 2026-01-01 → 2026-11-01)**
 
 The platform's own line-level secondary-invoice report, used as the truth for mapping coverage. Definitions are the plan's §0 gates (D1–D8): headline = deduplicated population (Duplicate-Invoice lines dropped), MBNF counted as mapped but always split, value = line amount excluding tax.
 
@@ -31,23 +31,25 @@ Retailer identifier coverage (all entities, by what the invoice gives us):
 
 Of the 1,010 retailers that carry a valid GST, 207 are not fully matched — that is master coverage, not identifier capture. 44 retailers give us neither GST nor phone and are not matched, which is a hard limit in the invoice itself.
 
-Unmapped accounts: 61 distributors and 269 retailers carry at least one unidentified line. The 80%-of-value cut is 10 distributors and 75 retailers (sheet `Onboarding 80%`, and the handover pack `Onboarding - retailers and distributors.xlsx` lists every account with its identifiers and flags that cut).
+Unmapped accounts: 61 distributors and 269 retailers carry at least one unidentified line. The 80%-of-value cut (₹1.11 Cr distributor gap + ₹1.74 Cr retailer gap) is 9 distributors and 78 retailers (sheet `Onboarding 80%`, and the handover pack `Onboarding - retailers and distributors.xlsx` lists every account with its identifiers and flags that cut).
+
+Of the ₹1.11 Cr distributor gap, ₹68.59 L (61.6%) sits on BirlaNu's own GSTINs (6 records) — primary-channel lines, not distributors to onboard; real distributors account for ₹42.85 L.
 
 Top distributors by unmapped value:
 
-1. G M ENTERPRISE · 18AATFG1404D1ZM — ₹43.95 L, 22 lines unidentified
-2. MAA VINDHYAWASHINI ENTERPRISES 25-26 · 10AQEPK2900K1ZD — ₹37.29 L, 16 lines unidentified
-3. BirlaNu Limited (formerly HIL Limited) · 21AAACH2676Q1ZC — ₹33.96 L, 22 lines unidentified
-4. M/S KAMAL SANITARY & HARDWARE STORE · 06BAYPS5249E1Z3 — ₹26.37 L, 27 lines unidentified
-5. Future Trade Com (2026-27) · 09AOVPL0075R1ZY — ₹17.46 L, 67 lines unidentified
+1. BirlaNu Limited (formerly HIL Limited) · 21AAACH2676Q1ZC [BirlaNu's own GSTIN] — ₹32.41 L on 22 unidentified lines
+2. BirlaNu Limited (formerly HIL Limited) · 24AAACH2676Q1Z6 [BirlaNu's own GSTIN] — ₹16.90 L on 185 unidentified lines
+3. BirlaNu Limited (formerly HIL Limited) · 06AAACH2676Q1Z4 [BirlaNu's own GSTIN] — ₹11.09 L on 92 unidentified lines
+4. Jeevish Sales Corporation · 09AHMPG9281E1Z0 — ₹8.53 L on 85 unidentified lines
+5. BirlaNu Limited (formerly HIL Limited) · 36AAACH2676Q1Z1 [BirlaNu's own GSTIN] — ₹7.63 L on 7 unidentified lines
 
 Top retailers by unmapped value:
 
-1. Maa Vindhyawasini Hardware · 10DYJPP8353K1Z1 — ₹12.56 L, 125 lines unidentified
-2. Kamal Trading — ₹12.16 L, 30 lines unidentified
-3. M S Construction · 18ALLPM1452G5ZY — ₹8.54 L, 96 lines unidentified
-4. Bajaj Tiles & Sanitary — ₹7.45 L, 102 lines unidentified
-5. SP ENTERPRISES · 18DKXPG3759J1ZA — ₹6.18 L, 95 lines unidentified
+1. Kamal Trading — ₹12.16 L on 30 unidentified lines
+2. Maa Vindhyawasini Hardware · 10DYJPP8353K1Z1 — ₹10.52 L on 125 unidentified lines
+3. Bajaj Tiles & Sanitary — ₹7.45 L on 102 unidentified lines
+4. M S Construction · 18ALLPM1452G5ZY — ₹6.40 L on 96 unidentified lines
+5. SP ENTERPRISES · 18DKXPG3759J1ZA — ₹6.18 L on 95 unidentified lines
 
 ## 2. Products
 
@@ -77,7 +79,7 @@ In-catalogue (A + A2 + B + C): 2,176 rows (42.1%), ₹1.69 Cr (49.4%) — of whi
 
 ## 3. What is not mapped, and why
 
-Distributor identification is high (96.2% of lines) but concentrated: 61 accounts carry every unidentified line and 10 of them make 80% of that value. Retailers are the weaker axis (89.1% of lines, 78.2% of retailers fully identified); the split that matters is master coverage versus no key — 207 of the 1,010 retailers that carry a valid GST are not fully matched, while 44 entities give us neither GST nor phone. Products behave differently again: 78.7% of lines carry a SKU, and of the unmapped description+distributor rows 42.1% are catalogue products (A/A2/B/C — 1,607 of them ambiguous) while 57.9% are size gaps, qualifier conflicts, competitor brands or unparsed text. 45.7% of unmapped lines carry a brand token, so the next product gain is variant/vocabulary rules, not new catalogue entries.
+Distributor identification is high (96.2% of lines) but concentrated: 61 accounts carry every unidentified line and 9 of them make 80% of that value. Retailers are the weaker axis (89.1% of lines, 78.2% of retailers fully identified); the split that matters is master coverage versus no key — 207 of the 1,010 retailers that carry a valid GST are not fully matched, while 44 entities give us neither GST nor phone. Products behave differently again: 78.7% of lines carry a SKU, and of the unmapped description+distributor rows 42.1% are catalogue products (A/A2/B/C — 1,607 of them ambiguous) while 57.9% are size gaps, qualifier conflicts, competitor brands or unparsed text. 45.7% of unmapped lines carry a brand token, so the next product gain is variant/vocabulary rules, not new catalogue entries.
 
 ## 4. Reconciliation with Amit's list
 

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-01 16:11",
+  "built_at": "2026-11-01 16:21",
   "report": "Turn Over Report.xlsx",
   "cache": "turnover-truth-2026-11-01.csv.gz",
   "populations": {
@@ -326,10 +326,16 @@
     "unmatched": 207
   },
   "onboarding": {
-    "distributors_80": 10,
-    "retailers_80": 75,
+    "distributors_80": 9,
+    "retailers_80": 78,
     "distributors_total": 61,
     "retailers_total": 269
+  },
+  "birla_self": {
+    "accounts": 6,
+    "gap_value": 6859201.619999999,
+    "gap_pct": 61.55167780356155,
+    "gap_value_rest": 4284607.72
   },
   "amit": {
     "SKU": {

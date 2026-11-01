@@ -222,6 +222,14 @@ def entity_table(df: pd.DataFrame, key: str, flag: str, name_col: str, gst_col: 
     )
     out = out.merge(reasons, on=key, how="left")
     out["top_failure_reasons"] = out["top_failure_reasons"].fillna("")
+    # value and lines actually sitting on the unmapped side (NOT the entity's total)
+    gap = (
+        df[~df[flag]].groupby(key)
+        .agg(gap_value=("value", "sum"), gap_lines=(flag, "size"))
+        .reset_index()
+    )
+    out = out.merge(gap, on=key, how="left")
+    out[["gap_value", "gap_lines"]] = out[["gap_value", "gap_lines"]].fillna(0)
     return out.sort_values("value", ascending=False)
 
 
@@ -520,17 +528,17 @@ def build_workbook(path: Path, ctx: dict):
                "Cumulative-value cut, distributor then retailer. These are the accounts to fix first.")
     ws.append(["Distributor — accounts carrying unmapped lines"])
     ws.cell(row=ws.max_row, column=1).font = SUB_FONT
-    table(ws, ["#", "Distributor", "GST", "Value ₹", "Cumulative %", "Lines not identified"],
-          [(i, x.dist_name, x.dist_gst, round(x.value), round(x.cum_pct, 1),
-            int(x.rows - x.mapped_rows))
+    table(ws, ["#", "Distributor", "GST", "Value ₹", "Cumulative %", "Lines not identified", "Note"],
+          [(i, x.dist_name, x.dist_gst, round(x.gap_value), round(x.cum_pct, 1),
+            int(x.gap_lines), dist_note(x.dist_name))
            for i, x in enumerate(ctx["dist_80"].itertuples(), start=1)],
-          widths={"Distributor": 40})
+          widths={"Distributor": 40, "Note": 48})
     ws.append([])
     ws.append(["Retailer — accounts carrying unmapped lines"])
     ws.cell(row=ws.max_row, column=1).font = SUB_FONT
     table(ws, ["#", "Retailer", "GST", "Phone", "Value ₹", "Cumulative %", "Lines not identified"],
-          [(i, x.ret_name, x.ret_gst, x.phone, round(x.value),
-            round(x.cum_pct, 1), int(x.rows - x.mapped_rows))
+          [(i, x.ret_name, x.ret_gst, x.phone, round(x.gap_value),
+            round(x.cum_pct, 1), int(x.gap_lines))
            for i, x in enumerate(ctx["ret_80"].itertuples(), start=1)],
           widths={"Retailer": 40})
 
@@ -640,12 +648,19 @@ def build_workbook(path: Path, ctx: dict):
     log(f"workbook → {path}")
 
 
+def dist_note(name: str) -> str:
+    """BirlaNu's own GSTINs appear as "distributors" — they are primary-channel records."""
+    if re.search(r"birla\s*nu|birlanu|hil\s+limited", name, re.I):
+        return "Manufacturer's own GSTIN — resolve as a primary/seller record, not a distributor onboarding"
+    return ""
+
+
 def build_onboarding_workbook(path: Path, ctx: dict):
     """The handover pack: who is missing from the master, in the order to fix them."""
     wb = Workbook()
     wb.remove(wb.active)
     ret, dist = ctx["ret_onboard"], ctx["dist_onboard"]
-    ret_tot, dist_tot = float(ret["value"].sum()), float(dist["value"].sum())
+    ret_tot, dist_tot = float(ret["gap_value"].sum()), float(dist["gap_value"].sum())
     r80, d80 = int(ret["in_80"].sum()), int(dist["in_80"].sum())
 
     ws = wb.create_sheet("Read me")
@@ -667,6 +682,9 @@ def build_onboarding_workbook(path: Path, ctx: dict):
         ("Identity", "GST first, then SAP code (distributor) / phone (retailer); name+pin is the last resort."),
         ("Not included", "Retailers that give neither GST nor phone still appear here — for them the fix is "
                          "capture at the invoice, not onboarding."),
+        ("Watch out", "The top of the distributor list is BirlaNu's own GSTINs (formerly HIL Limited): those "
+                      "are primary-channel records, so resolve them by rule rather than onboarding them as "
+                      "distributors. The `Note` column marks them."),
         ("Rebuild", "python3 eval-datasets/code/build_turnover_truth.py … --out-onboarding <this file>"),
     ]
     for k, v in rows:
@@ -680,32 +698,34 @@ def build_onboarding_workbook(path: Path, ctx: dict):
     sheet_head(ws, f"Retailers — {len(ret):,} accounts, ₹{ret_tot / 1e7:,.2f} Cr on unidentified lines",
                "Ordered by value. `Lines unidentified` = lines whose Retailer Status is Not Identified.")
     hdr = ["#", "Retailer", "GST", "Phone", "Pin", "SFA code", "Identifier", "Lines unidentified",
-           "Value ₹", "Share of retailer gap %", "Distributors", "In 80% cut"]
+           "Unmapped value ₹", "Share of retailer gap %", "Distributors", "In 80% cut"]
     hr = table(ws, hdr, [
         (i, x.ret_name, x.ret_gst, x.phone, x.pin, x.sfa, x.identifier,
-         int(x.rows - x.mapped_rows), round(x.value),
-         round(x.value / ret_tot * 100, 1) if ret_tot else 0.0,
+         int(x.gap_lines), round(x.gap_value),
+         round(x.gap_value / ret_tot * 100, 1) if ret_tot else 0.0,
          getattr(x, "distributors", ""), "YES" if x.in_80 else "")
         for i, x in enumerate(ret.itertuples(), start=1)
     ], widths={"Retailer": 44, "Distributors": 44})
     ws.freeze_panes = "A5"
     ws.auto_filter.ref = f"A4:L{ws.max_row}"
-    fmt_ws(ws, money_cols=["Lines unidentified", "Value ₹"], pct_cols=["Share of retailer gap %"], header_row=hr)
+    fmt_ws(ws, money_cols=["Lines unidentified", "Unmapped value ₹"],
+           pct_cols=["Share of retailer gap %"], header_row=hr)
 
     ws = wb.create_sheet("Distributors to onboard")
     sheet_head(ws, f"Distributors — {len(dist):,} accounts, ₹{dist_tot / 1e7:,.2f} Cr on unidentified lines",
                "Ordered by value. `Lines unidentified` = lines whose Distributor Status is Not Identified.")
-    hdr = ["#", "Distributor", "GST", "SAP code", "Lines unidentified", "Value ₹",
-           "Share of distributor gap %", "Top failure reasons", "In 80% cut"]
+    hdr = ["#", "Distributor", "GST", "SAP code", "Lines unidentified", "Unmapped value ₹",
+           "Share of distributor gap %", "Top failure reasons", "Note", "In 80% cut"]
     hr = table(ws, hdr, [
-        (i, x.dist_name, x.dist_gst, x.dist_code, int(x.rows - x.mapped_rows), round(x.value),
-         round(x.value / dist_tot * 100, 1) if dist_tot else 0.0, x.top_failure_reasons,
-         "YES" if x.in_80 else "")
+        (i, x.dist_name, x.dist_gst, x.dist_code, int(x.gap_lines), round(x.gap_value),
+         round(x.gap_value / dist_tot * 100, 1) if dist_tot else 0.0, x.top_failure_reasons,
+         dist_note(x.dist_name), "YES" if x.in_80 else "")
         for i, x in enumerate(dist.itertuples(), start=1)
-    ], widths={"Distributor": 44, "Top failure reasons": 56})
+    ], widths={"Distributor": 44, "Top failure reasons": 56, "Note": 48})
     ws.freeze_panes = "A5"
-    ws.auto_filter.ref = f"A4:I{ws.max_row}"
-    fmt_ws(ws, money_cols=["Lines unidentified", "Value ₹"], pct_cols=["Share of distributor gap %"], header_row=hr)
+    ws.auto_filter.ref = f"A4:J{ws.max_row}"
+    fmt_ws(ws, money_cols=["Lines unidentified", "Unmapped value ₹"],
+           pct_cols=["Share of distributor gap %"], header_row=hr)
 
     ws = wb.create_sheet("Method")
     sheet_head(ws, "Method and numbers behind the two lists",
@@ -716,9 +736,9 @@ def build_onboarding_workbook(path: Path, ctx: dict):
     ws.append(["Retailer rule", "Retailer Status = Identified"])
     ws.append(["Entity identity", "GST → SAP code (distributor) / phone (retailer) → name+pin"])
     ws.append([])
-    table(ws, ["Gap", "Accounts", "Of which in 80% cut", "Value ₹", "Lines unidentified"],
-          [("Retailers", len(ret), r80, round(ret_tot), int((ret["rows"] - ret["mapped_rows"]).sum())),
-           ("Distributors", len(dist), d80, round(dist_tot), int((dist["rows"] - dist["mapped_rows"]).sum()))],
+    table(ws, ["Gap", "Accounts", "Of which in 80% cut", "Unmapped value ₹", "Lines unidentified"],
+          [("Retailers", len(ret), r80, round(ret_tot), int(ret["gap_lines"].sum())),
+           ("Distributors", len(dist), d80, round(dist_tot), int(dist["gap_lines"].sum()))],
           widths={"Gap": 18})
     for ws2 in wb.worksheets:
         if ws2.title != "Read me":
@@ -778,19 +798,26 @@ def build_markdown(ctx: dict, path: Path):
              f"are not matched, which is a hard limit in the invoice itself.\n")
     L.append(f"Unmapped accounts: {k['dist']['entities'] - k['dist']['entities_full']:,} distributors and "
              f"{k['ret']['entities'] - k['ret']['entities_full']:,} retailers carry at least one unidentified line. "
-             f"The 80%-of-value cut is {len(ctx['dist_80'])} distributors and {len(ctx['ret_80'])} retailers "
-             f"(sheet `Onboarding 80%`, and the handover pack "
+             f"The 80%-of-value cut ({inr(ctx['dist_onboard']['gap_value'].sum())} distributor gap + "
+             f"{inr(ctx['ret_onboard']['gap_value'].sum())} retailer gap) is {len(ctx['dist_80'])} distributors and "
+             f"{len(ctx['ret_80'])} retailers (sheet `Onboarding 80%`, and the handover pack "
              f"`Onboarding - retailers and distributors.xlsx` lists every account with its identifiers "
              f"and flags that cut).\n")
+    bs = ctx["birla_self"]
+    L.append(f"Of the {inr(ctx['dist_onboard']['gap_value'].sum())} distributor gap, "
+             f"{inr(bs['gap_value'])} ({bs['gap_pct']:.1f}%) sits on BirlaNu's own GSTINs "
+             f"({bs['accounts']} records) — primary-channel lines, not distributors to onboard; real "
+             f"distributors account for {inr(bs['gap_value_rest'])}.\n")
     for title, rows, namecol, gstcol in (
         ("Top distributors by unmapped value", ctx["dist_80"].head(5), "dist_name", "dist_gst"),
         ("Top retailers by unmapped value", ctx["ret_80"].head(5), "ret_name", "ret_gst"),
     ):
         L.append(f"{title}:\n")
         for i, row in enumerate(rows.itertuples(), start=1):
+            tag = " [BirlaNu's own GSTIN]" if namecol == "dist_name" and dist_note(getattr(row, namecol)) else ""
             L.append(f"{i}. {getattr(row, namecol)}"
-                     f"{' · ' + getattr(row, gstcol) if getattr(row, gstcol) else ''} — "
-                     f"{inr(row.value)}, {int(row.rows - row.mapped_rows):,} lines unidentified")
+                     f"{' · ' + getattr(row, gstcol) if getattr(row, gstcol) else ''}{tag} — "
+                     f"{inr(row.gap_value)} on {int(row.gap_lines):,} unidentified lines")
         L.append("")
 
     L.append("## 2. Products\n")
@@ -943,8 +970,8 @@ def build(args):
                         ret_table["phone"].astype(str).str.len().eq(10))
     ]
 
-    def with_cum(tab, value_col="value"):
-        """Sort by value and flag the rows that make the first 80% of it."""
+    def with_cum(tab, value_col="gap_value"):
+        """Sort by the value sitting on unmapped lines and flag the rows making the first 80% of it."""
         t = tab.sort_values(value_col, ascending=False).copy()
         tot = t[value_col].sum()
         t["cum_pct"] = ((t[value_col].cumsum() / tot * 100) if tot else 0).round(1)
@@ -964,6 +991,16 @@ def build(args):
     )
     top_dists = dd.groupby("ret_key").head(2).groupby("ret_key")["Distributor Name"].agg("; ".join)
     ret_onboard["distributors"] = ret_onboard["ret_key"].map(top_dists).fillna("")
+
+    # how much of the distributor gap sits on BirlaNu's own GSTINs (primary channel, not a distributor)
+    self_mask = dist_onboard["dist_name"].map(lambda n: bool(dist_note(n)))
+    birla_self = {
+        "accounts": int(self_mask.sum()),
+        "gap_value": float(dist_onboard.loc[self_mask, "gap_value"].sum()),
+        "gap_pct": pct(float(dist_onboard.loc[self_mask, "gap_value"].sum()),
+                       float(dist_onboard["gap_value"].sum())),
+        "gap_value_rest": float(dist_onboard.loc[~self_mask, "gap_value"].sum()),
+    }
 
     # ---- title table
     def top_status(s):
@@ -1138,6 +1175,7 @@ def build(args):
         "ret_80": ret_80,
         "dist_onboard": dist_onboard,
         "ret_onboard": ret_onboard,
+        "birla_self": birla_self,
         "title_table": title_table,
         "unmapped_table": unmapped_table,
         "bucket_summary": bucket_summary,
@@ -1171,6 +1209,7 @@ def build(args):
         "ret_gst_stats": ret_gst_stats,
         "onboarding": {"distributors_80": len(dist_80), "retailers_80": len(ret_80),
                        "distributors_total": len(dist_onboard), "retailers_total": len(ret_onboard)},
+        "birla_self": birla_self,
         "amit": amit, "recon_top": recon[:5], "recon_verdict": verdict,
         "anomalies": {label: len(sub) for label, sub in anomalies},
     }
