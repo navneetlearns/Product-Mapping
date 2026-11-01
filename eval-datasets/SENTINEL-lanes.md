@@ -326,3 +326,15 @@ python3 code/classify_mapping_issues.py \
 Tracker record: `../BirlaNu_ActionTracker_and_Mapping_Analysis.md` §9. The review workbook carries
 buckets A–I, per-row catalogue candidates/reasons, the 19 duplicate pairs, and distributor/retailer
 root-cause/action columns — a review aid, not a verdict.
+
+---
+
+## 11. Turn Over Report — mapping-truth baseline (2026-11-01)
+
+Not a sentinel lane either: the user dropped `01_source/Turn Over Report.xlsx` (secondary invoice
+report, 2026-01-01 → 2026-11-01) as the **source of truth for mapping coverage**, priority
+retailer/distributor before products. Measured from it (deduplicated population, 43,438 lines,
+₹15.97 Cr): retailers 89.1% of lines / 78.2% of 1,233 entities fully identified; distributors 96.2% /
+81.6% of 332; products 78.7% of lines mapped (MBNF counted as mapped — it carries a `Material No`).
+Builder `../code/build_turnover_truth.py`, readout `../../TRUTH-MAPPING-BASELINE.md`, workbook
+`F:\…\03_review\Truth - mapping coverage.xlsx`, full record tracker §10 and `../README.md`.

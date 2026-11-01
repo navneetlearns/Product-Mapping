@@ -1,0 +1,2 @@
+# The report cache is a 25 MB derived copy of the F: source — rebuild it, don't ship it.
+turnover-truth-*.csv.gz

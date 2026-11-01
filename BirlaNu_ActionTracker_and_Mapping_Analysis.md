@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-10-31
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9).
+Last updated: 2026-11-01
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -22,6 +22,11 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
   `Mapping_Inconsistency_Analysis.md`, per-row review workbook
   `Mapping Inconsistency/03_review/Mapping issue analysis.xlsx`, classifier
   `eval-datasets/code/classify_mapping_issues.py` — see §9.
+- Turn Over Report (mapping truth, downloaded 2026-11-01):
+  `/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Turn Over Report.xlsx`
+  (secondary invoice report, 2026-01-01 → 2026-11-01; 53,187 lines / 3,135 invoice numbers / ₹19.80 Cr);
+  coverage workbook `Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx`, readout
+  `TRUTH-MAPPING-BASELINE.md`, builder `eval-datasets/code/build_turnover_truth.py` — see §10.
 
 ---
 
@@ -386,6 +391,48 @@ SCH 40, kg↔CLASS, coupler↔socket, typos/price/pack), price/history variant r
 `AMBIGUOUS` status, master-data canonicalisation + duplicate-CFA merge + top-11 distributor /
 106 retailer onboarding. **P2:** one name = one SKU, missing variants, full `412xxx` export,
 regression set (554 corpus + 100 exact + 19 pairs).
+
+---
+
+## 10. Turn Over Report — mapping-truth baseline (2026-11-01)
+
+Input: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Turn Over Report.xlsx`
+(downloaded 2026-11-01 15:00; sheet `Secondary Invoice Report`; filters 2026-01-01 → 2026-11-01).
+The user designated this file as the source of truth for how many distributors, retailers and products
+are mapped, with **retailer/distributor as the top priority and products second**.
+
+Shape: 53,187 line rows · 3,135 invoice numbers (3,384 invoice+distributor+date keys — numbers repeat
+across pages and sellers) · ₹19.80 Cr excluding tax · 57 columns carrying `Distributor Status`,
+`Retailer Status`, `Parsing Status` and the mapped `Material No`. Headline population deduplicates
+9,749 lines flagged `Duplicate Invoice` → 43,438 lines, ₹15.97 Cr.
+
+| Axis | Rule | Lines mapped | Value mapped | Entities fully mapped |
+|---|---|---:|---:|---:|
+| Retailer | `Retailer Status = Identified` | 38,699 / 43,438 (89.1%) | ₹14.23 Cr (89.1%) | 964 / 1,233 (78.2%) |
+| Distributor | `Distributor Status = Identified` | 41,787 / 43,438 (96.2%) | ₹14.86 Cr (93.0%) | 271 / 332 (81.6%) |
+| Product | `Parsing Status ∈ {Mapped, MBNF}` | 34,190 / 43,438 (78.7%) | ₹12.55 Cr (78.6%) | 9,350 / 14,148 titles (66.1%) |
+
+- **Retailer failures are master coverage, not identifier capture:** 207 of the 1,010 retailers carrying
+  a valid GST are not fully matched; 44 give neither GST nor phone. Failures cluster — 269 retailers
+  carry an unidentified line and 75 make 80% of that value.
+- **Distributors:** 61 accounts carry every unidentified line, 10 make 80% of the value.
+- **Products:** Mapped 28,166 · Mapped-Branding-Not-Found 6,024 · Unmapped 9,178 · blank 70. Of the 5,165
+  unmapped description+distributor rows, 42.1% are catalogue products (A/A2/B/C — 1,607 ambiguous),
+  57.9% are size gaps, qualifier conflicts, competitor brands or unparsed text; 45.7% of unmapped lines
+  carry a brand token (BIRLA / BIRLANU / HIL / BN).
+- **Reconciliation with Amit's list:** no definition reproduces all three of his numbers. Closest is
+  MBNF / desc+distributor / created ≥ 2026-08-01 → 2,948 rows (his 3,216), 4,580 Inv (4,775),
+  ₹1.98 Cr (₹2.48 Cr). His `Value` column is not a line amount in this report (that slice reads
+  ₹1.98 Cr excl-tax, ₹37.17 L incl-tax), so his export filter and Value definition need confirming
+  before his tabs are treated as a KPI.
+
+Deliverables: `03_review/Truth - mapping coverage.xlsx` (11 sheets: Read me, Headline, Distributor
+coverage, Retailer coverage, Onboarding 80%, Product coverage, Unmapped buckets, Unmapped titles,
+Anomalies, Reconciliation vs Amit, Count reconciliation), readout `TRUTH-MAPPING-BASELINE.md`, builder
+`eval-datasets/code/build_turnover_truth.py` (cache in `eval-datasets/outputs/turnover-truth/`), plan
+`PLAN-turnover-report-truth-mapping.md`. Verified by an independent raw-openpyxl recount (identical on
+every axis: 53,187 rows, 9,749 duplicates, 43,438 deduped, parsing 28,166/9,178/6,024/70, entity keys
+332/1,233) and a deterministic rebuild (summary.json identical minus its timestamp).
 
 ---
 

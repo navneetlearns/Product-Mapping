@@ -1,0 +1,429 @@
+{
+  "built_at": "2026-11-01 16:00",
+  "report": "Turn Over Report.xlsx",
+  "cache": "turnover-truth-2026-11-01.csv.gz",
+  "populations": {
+    "all lines": {
+      "lines": 53187,
+      "invoices": 3384,
+      "value": 197951674.04
+    },
+    "deduplicated (headline)": {
+      "lines": 43438,
+      "invoices": 3322,
+      "value": 159703352.41
+    },
+    "distributor+retailer identified": {
+      "lines": 37454,
+      "invoices": 2926,
+      "value": 132683202.26
+    },
+    "ingested last two months (created ≥ 2026-09-01)": {
+      "lines": 31823,
+      "invoices": 2435,
+      "value": 104110257.06
+    }
+  },
+  "kpi": {
+    "dist": {
+      "lines": 43438,
+      "lines_mapped": 41787,
+      "lines_pct": 96.1992,
+      "value": 159703352.41,
+      "value_mapped": 148559543.07,
+      "value_pct": 93.0222,
+      "invoices": 3322,
+      "invoices_all_mapped": 3210,
+      "invoices_pct": 96.6285,
+      "entities": 332,
+      "entities_full": 271,
+      "entities_partial": 16,
+      "entities_none": 45,
+      "entities_full_pct": 81.6265
+    },
+    "dist_all": {
+      "lines": 53187,
+      "lines_mapped": 51465,
+      "lines_pct": 96.7624,
+      "value": 197951674.04,
+      "value_mapped": 186581910.57,
+      "value_pct": 94.2563,
+      "invoices": 3384,
+      "invoices_all_mapped": 3263,
+      "invoices_pct": 96.4243,
+      "entities": 354,
+      "entities_full": 284,
+      "entities_partial": 17,
+      "entities_none": 53,
+      "entities_full_pct": 80.226
+    },
+    "ret": {
+      "lines": 43438,
+      "lines_mapped": 38699,
+      "lines_pct": 89.0902,
+      "value": 159703352.41,
+      "value_mapped": 142277282.24,
+      "value_pct": 89.0885,
+      "invoices": 3322,
+      "invoices_all_mapped": 2974,
+      "invoices_pct": 89.5244,
+      "entities": 1233,
+      "entities_full": 964,
+      "entities_partial": 17,
+      "entities_none": 252,
+      "entities_full_pct": 78.1833
+    },
+    "ret_all": {
+      "lines": 53187,
+      "lines_mapped": 47444,
+      "lines_pct": 89.2022,
+      "value": 197951674.04,
+      "value_mapped": 176622811.94,
+      "value_pct": 89.2252,
+      "invoices": 3384,
+      "invoices_all_mapped": 2978,
+      "invoices_pct": 88.0024,
+      "entities": 1273,
+      "entities_full": 963,
+      "entities_partial": 28,
+      "entities_none": 282,
+      "entities_full_pct": 75.6481
+    },
+    "prod": {
+      "lines": 43438,
+      "lines_mapped": 34190,
+      "lines_pct": 78.7099,
+      "value": 159703352.41,
+      "value_mapped": 125548427.0,
+      "value_pct": 78.6135,
+      "invoices": 3322,
+      "invoices_all_mapped": 1434,
+      "invoices_pct": 43.1668,
+      "entities": 14148,
+      "entities_full": 9350,
+      "entities_partial": 1108,
+      "entities_none": 3690,
+      "entities_full_pct": 66.0871
+    },
+    "prod_all": {
+      "lines": 53187,
+      "lines_mapped": 42298,
+      "lines_pct": 79.527,
+      "value": 197951674.04,
+      "value_mapped": 157288939.25,
+      "value_pct": 79.4583,
+      "invoices": 3384,
+      "invoices_all_mapped": 1434,
+      "invoices_pct": 42.3759,
+      "entities": 14458,
+      "entities_full": 9476,
+      "entities_partial": 1329,
+      "entities_none": 3653,
+      "entities_full_pct": 65.5416
+    },
+    "title": {
+      "lines": 43438,
+      "lines_mapped": 34190,
+      "lines_pct": 78.7099,
+      "value": 159703352.41,
+      "value_mapped": 125548427.0,
+      "value_pct": 78.6135,
+      "invoices": 3322,
+      "invoices_all_mapped": 1434,
+      "invoices_pct": 43.1668,
+      "entities": 14148,
+      "entities_full": 9350,
+      "entities_partial": 1108,
+      "entities_none": 3690,
+      "entities_full_pct": 66.0871
+    },
+    "title_all": {
+      "lines": 53187,
+      "lines_mapped": 42298,
+      "lines_pct": 79.527,
+      "value": 197951674.04,
+      "value_mapped": 157288939.25,
+      "value_pct": 79.4583,
+      "invoices": 3384,
+      "invoices_all_mapped": 1434,
+      "invoices_pct": 42.3759,
+      "entities": 14458,
+      "entities_full": 9476,
+      "entities_partial": 1329,
+      "entities_none": 3653,
+      "entities_full_pct": 65.5416
+    },
+    "sku": {
+      "lines": 43438,
+      "lines_mapped": 34285,
+      "lines_pct": 78.9286,
+      "value": 159703352.41,
+      "value_mapped": 125867101.08,
+      "value_pct": 78.8131,
+      "invoices": 3322,
+      "invoices_all_mapped": 1447,
+      "invoices_pct": 43.5581,
+      "entities": 1325,
+      "entities_full": 1257,
+      "entities_partial": 66,
+      "entities_none": 2,
+      "entities_full_pct": 94.8679
+    },
+    "sku_all": {
+      "lines": 53187,
+      "lines_mapped": 42422,
+      "lines_pct": 79.7601,
+      "value": 197951674.04,
+      "value_mapped": 157694985.01,
+      "value_pct": 79.6634,
+      "invoices": 3384,
+      "invoices_all_mapped": 1448,
+      "invoices_pct": 42.7896,
+      "entities": 1335,
+      "entities_full": 1252,
+      "entities_partial": 81,
+      "entities_none": 2,
+      "entities_full_pct": 93.7828
+    }
+  },
+  "product_tiers": {
+    "Mapped": {
+      "lines": 28166,
+      "lines_pct": 64.84184354712464,
+      "value": 102848212.59,
+      "value_pct": 64.39953265724937
+    },
+    "Mapped - Branding Not Found": {
+      "lines": 6024,
+      "lines_pct": 13.868041806713016,
+      "value": 22700214.409999996,
+      "value_pct": 14.213987413190079
+    },
+    "Unmapped": {
+      "lines": 9178,
+      "lines_pct": 21.128965421980755,
+      "value": 34154925.41,
+      "value_pct": 21.386479929560544
+    },
+    "(blank)": {
+      "lines": 70,
+      "lines_pct": 0.16114922418159217,
+      "value": 0.0,
+      "value_pct": 0.0
+    }
+  },
+  "buckets": {
+    "C · 2+ SKUs fit": {
+      "rows": 1607,
+      "lines": 3138,
+      "value": 12511299.06,
+      "rows_pct": 31.11326234269119,
+      "meaning": "in the catalogue; invoice omits the variant/length"
+    },
+    "I · unparsed": {
+      "rows": 1254,
+      "lines": 1955,
+      "value": 9208755.83,
+      "rows_pct": 24.278799612778315,
+      "meaning": "no family/type/size recoverable"
+    },
+    "B · one SKU after normalisation": {
+      "rows": 438,
+      "lines": 864,
+      "value": 3715161.73,
+      "rows_pct": 8.480154888673766,
+      "meaning": "in the catalogue, resolvable by normalisation"
+    },
+    "D · qualifier conflict": {
+      "rows": 453,
+      "lines": 886,
+      "value": 3104018.1799999997,
+      "rows_pct": 8.77057115198451,
+      "meaning": "stated qualifier contradicts every candidate"
+    },
+    "E · size not in export": {
+      "rows": 770,
+      "lines": 1328,
+      "value": 2668083.0,
+      "rows_pct": 14.908034849951598,
+      "meaning": "family/type exists, this size does not"
+    },
+    "F · no size stated": {
+      "rows": 354,
+      "lines": 558,
+      "value": 1787582.1800000002,
+      "rows_pct": 6.853823814133592,
+      "meaning": "family/type exists, title has no size"
+    },
+    "A · exact catalogue title, one SKU": {
+      "rows": 124,
+      "lines": 207,
+      "value": 598055.63,
+      "rows_pct": 2.4007744433688285,
+      "meaning": "the product is in the catalogue — title matches exactly"
+    },
+    "H · other brand": {
+      "rows": 150,
+      "lines": 220,
+      "value": 483889.25000000006,
+      "rows_pct": 2.904162633107454,
+      "meaning": "competitor line, not a BirlaNu mapping failure"
+    },
+    "A2 · exact title, catalogue has two SKUs": {
+      "rows": 7,
+      "lines": 10,
+      "value": 53084.08,
+      "rows_pct": 0.1355275895450145,
+      "meaning": "duplicate catalogue SKUs block the match"
+    },
+    "G · type not in export": {
+      "rows": 8,
+      "lines": 12,
+      "value": 24996.469999999998,
+      "rows_pct": 0.15488867376573087,
+      "meaning": "family/type absent from the export"
+    }
+  },
+  "bucket_aggregates": {
+    "rows": 5165,
+    "lines": 9178,
+    "value": 34154925.410000004,
+    "in_cat_rows": 2176,
+    "in_cat_rows_pct": 42.1297192642788,
+    "in_cat_value": 16877600.5,
+    "in_cat_value_pct": 49.41483635932203,
+    "ambig_rows": 1607,
+    "gap_rows": 2989,
+    "gap_rows_pct": 57.8702807357212,
+    "brand_lines": 4197,
+    "brand_lines_pct": 45.728916975375896,
+    "brand_value": 16709216.14
+  },
+  "ret_identifier": {
+    "GST only": {
+      "n": 953,
+      "full": 794,
+      "none": 146
+    },
+    "GST+phone": {
+      "n": 56,
+      "full": 8,
+      "none": 46
+    },
+    "none": {
+      "n": 201,
+      "full": 155,
+      "none": 44
+    },
+    "phone only": {
+      "n": 23,
+      "full": 7,
+      "none": 16
+    }
+  },
+  "ret_gst_stats": {
+    "with_gst": 1010,
+    "unmatched": 207
+  },
+  "onboarding": {
+    "distributors_80": 10,
+    "retailers_80": 75
+  },
+  "amit": {
+    "SKU": {
+      "rows": 3216,
+      "names": 2913,
+      "inv": 4775.0,
+      "value": 24752005.16,
+      "keycol": "Material Description in Secondary Invoice"
+    },
+    "Distributor": {
+      "rows": 69,
+      "names": 41,
+      "inv": 73.0,
+      "value": 2957437.94,
+      "keycol": "Distributor Name"
+    },
+    "Retailer": {
+      "rows": 517,
+      "names": 363,
+      "inv": 519.0,
+      "value": 25832080.13,
+      "keycol": "Retailer Name"
+    }
+  },
+  "recon_top": [
+    {
+      "window": "created ≥ 2026-08-01",
+      "status": "MBNF",
+      "key": "desc+distributor",
+      "rows": 2948,
+      "inv": 4580,
+      "value": 19764577.96,
+      "value_incl": 3717434.67,
+      "d_rows": -268,
+      "d_value": -4987427.199999999,
+      "score": 0.325666915264777
+    },
+    {
+      "window": "created ≥ 2026-08-01",
+      "status": "MBNF",
+      "key": "desc+distributor+month",
+      "rows": 3626,
+      "inv": 4580,
+      "value": 19764577.96,
+      "value_incl": 3717434.67,
+      "d_rows": 410,
+      "d_value": -4987427.199999999,
+      "score": 0.3698211441204984
+    },
+    {
+      "window": "invoice 2026-09+10",
+      "status": "Unmapped",
+      "key": "desc+distributor",
+      "rows": 3234,
+      "inv": 5110,
+      "value": 16624461.7,
+      "value_incl": 3273425.48,
+      "d_rows": 18,
+      "d_value": -8127543.460000001,
+      "score": 0.4041130748138146
+    },
+    {
+      "window": "all",
+      "status": "MBNF",
+      "key": "desc+distributor",
+      "rows": 3735,
+      "inv": 5618,
+      "value": 22700214.41,
+      "value_incl": 3942679.21,
+      "d_rows": 519,
+      "d_value": -2051790.75,
+      "score": 0.42081902021560336
+    },
+    {
+      "window": "created ≥ 2026-10-01",
+      "status": "Unmapped",
+      "key": "desc only",
+      "rows": 3205,
+      "inv": 5418,
+      "value": 17343349.86,
+      "value_incl": 3724173.2199999997,
+      "d_rows": -11,
+      "d_value": -7408655.300000001,
+      "score": 0.4373954424522324
+    }
+  ],
+  "recon_verdict": "No definition reproduces all three of Amit's numbers. Closest: MBNF / desc+distributor / created ≥ 2026-08-01 → rows 2,948 vs his 3,216 (Δ -268), Inv 4,580 vs 4,775, ₹19,764,578 vs ₹24,752,005. Matches on Inv; fails rows, value. For this slice the report's other money columns read ₹3,717,435 (incl. tax) and ₹19,764,578 (excl. tax) — neither is his ₹24,752,005, so his Value column is not the line amount. Confirm the export filter (date window) and what Value sums before treating his list as a KPI.",
+  "anomalies": {
+    "Unmapped status but Material No present": 95,
+    "Parsing Status blank, description blank": 70,
+    "Distributor Not Identified but carries an SAP code": 0,
+    "Retailer Not Identified but carries a valid GST": 3465,
+    "Both party names blank": 81,
+    "Distributor Identified but matched name blank": 391,
+    "Retailer Identified but matched name blank": 610,
+    "Invoice number used by more than one distributor": 4592,
+    "Invoice date outside 2026": 636
+  }
+}

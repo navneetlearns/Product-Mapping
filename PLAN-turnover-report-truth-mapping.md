@@ -1,6 +1,6 @@
 # Plan — Turn Over Report as the mapping truth baseline
 
-**Status: Proposed — NOT approved.**
+**Status: EXECUTED 2026-11-01.** Gates D1–D8 were answered by the user's go-ahead on the recommendations below; the build, readout and doc trail exist (see §8). User priority, stated at approval: **retailer/distributor mapping first, products second** — the workbook and readout are ordered that way.
 Date: 2026-11-01
 Source of truth: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Turn Over Report.xlsx`
 (downloaded 2026-11-01 15:00; sheet `Secondary Invoice Report`; filters applied 2026-01-01 → 2026-11-01)
@@ -16,16 +16,16 @@ instead of from a trace sample.
 
 Nothing below §0 gets built until these are answered. Each has a recommendation; none is adopted silently.
 
-| # | Gate | Options | Recommendation |
-|---|---|---|---|
-| D1 | Population: keep rows flagged `Duplicate Invoice` in `Validation Status`? | (a) all 53,187 lines as delivered · (b) exclude duplicate-flagged (8,699 + combo rows) · (c) both | **(c)** — headline on deduplicated, all-lines number beside it as sensitivity |
-| D2 | Is `Mapped - Branding Not Found` counted as **mapped**? | (a) yes, split out · (b) no, count as a failure | **(a)** — it carries a `Material No`; the split stays visible because this is the crux of Amit's list |
-| D3 | KPI unit | line · invoice · distinct entity · ₹ value | **all four**, headline = line share **and** value share |
-| D4 | Entity identity | GST-first · SAP code (distributor) · phone (retailer) · matched name | **GST first**, then SAP/phone, name is display only |
-| D5 | Scope window | invoice date 2026-01-01→11-01 as delivered · only ingested data (`Created At` ≥ 2026-07-07) | **as delivered**, ingested-only as a sensitivity line |
-| D6 | Unmapped-product depth | counts only · counts + catalogue-join buckets + candidates | **catalogue join** (reuse the existing A–I classifier) |
-| D7 | Reconcile against Amit's 3-sheet list in this deliverable? | yes · separate note | **yes**, one sheet — he shared it and the numbers will be compared anyway |
-| D8 | Delivery form | workbook + md readout in `03_review` · client deck | **workbook + readout**; no deck (a deck is a separate, separately-approved job) |
+| # | Gate | Options | Recommendation | Resolved 2026-11-01 |
+|---|---|---|---|---|
+| D1 | Population: keep rows flagged `Duplicate Invoice` in `Validation Status`? | (a) all 53,187 lines as delivered · (b) exclude duplicate-flagged (8,699 + combo rows) · (c) both | **(c)** — headline on deduplicated, all-lines number beside it as sensitivity | **RESOLVED — (c)**, headline deduplicated (43,438 lines), all-lines beside it |
+| D2 | Is `Mapped - Branding Not Found` counted as **mapped**? | (a) yes, split out · (b) no, count as a failure | **(a)** — it carries a `Material No`; the split stays visible because this is the crux of Amit's list | **RESOLVED — (a)**, MBNF mapped and split (6,024 lines) |
+| D3 | KPI unit | line · invoice · distinct entity · ₹ value | **all four**, headline = line share **and** value share | **RESOLVED — all four** |
+| D4 | Entity identity | GST-first · SAP code (distributor) · phone (retailer) · matched name | **GST first**, then SAP/phone, name is display only | **RESOLVED — GST → SAP/phone → name+pin** |
+| D5 | Scope window | invoice date 2026-01-01→11-01 as delivered · only ingested data (`Created At` ≥ 2026-07-07) | **as delivered**, ingested-only as a sensitivity line | **RESOLVED — as delivered**; sensitivity uses created ≥ 2026-09-01 (all rows were created after 7-Jul, so that window was identical to the whole file) |
+| D6 | Unmapped-product depth | counts only · counts + catalogue-join buckets + candidates | **catalogue join** (reuse the existing A–I classifier) | **RESOLVED — catalogue join**, buckets A–I + candidates |
+| D7 | Reconcile against Amit's 3-sheet list in this deliverable? | yes · separate note | **yes**, one sheet — he shared it and the numbers will be compared anyway | **RESOLVED — in scope**, sheet `Reconciliation vs Amit` |
+| D8 | Delivery form | workbook + md readout in `03_review` · client deck | **workbook + readout**; no deck (a deck is a separate, separately-approved job) | **RESOLVED — workbook + readout**, no deck |
 
 ---
 
@@ -209,3 +209,53 @@ python3 eval-datasets/code/build_turnover_truth.py \
 The plan is executed when `Truth - mapping coverage.xlsx` exists in `03_review`, every headline number in
 `TRUTH-MAPPING-BASELINE.md` is reproduced by one command, the verification checklist passes, and the doc
 trail (§3.4) is committed locally with the gates' answers recorded in `Read me`.
+
+---
+
+## 8. Build record
+
+Built 2026-11-01 (builder `eval-datasets/code/build_turnover_truth.py`, ~35 s from cache).
+
+| Output | Path |
+|---|---|
+| Workbook (11 sheets) | `F:\…\Mapping Inconsistency\03_review\Truth - mapping coverage.xlsx` |
+| Readout | `TRUTH-MAPPING-BASELINE.md` (+ copy in `03_review/Truth - mapping baseline.md`) |
+| Machine summary | `eval-datasets/outputs/turnover-truth/summary.json` |
+| Cache | `eval-datasets/outputs/turnover-truth/turnover-truth-2026-11-01.csv.gz` (gitignored) |
+
+Headline (deduplicated population, 43,438 lines / ₹15.97 Cr): retailers 89.1% of lines, 78.2% of 1,233
+entities fully identified; distributors 96.2% / 81.6% of 332; products 78.7% of lines, 66.1% of 14,148
+titles fully mapped.
+
+Verification actually run:
+
+- **Independent recount** — a separate raw-openpyxl pass (no pandas, no cache) reproduced every axis
+  exactly: 53,187 rows, 9,749 duplicate-flagged, 43,438 deduped, ₹19,79,51,674.04 / ₹15,97,03,352.41,
+  parsing 28,166 / 9,178 / 6,024 / 70, status 41,787 / 1,651 and 38,699 / 4,739, entity keys 332 / 1,233.
+- **Determinism** — two builds produce identical `summary.json` modulo the `built_at` timestamp.
+- **Workbook audit** — all 11 sheets present; 0 cells whose rendered number exceeds its column width
+  (no `###`); every headline value present in `Headline`; row counts match the tables.
+- **Not run, and why:** the LibreOffice→PDF→`pdftotext` gate (checklist item 7) — LibreOffice is not
+  installed in this environment, and `openpyxl` cannot render. The structural width audit stands in;
+  a visual pass is still owed if the workbook is presented on screen.
+
+Deviations from the plan as written:
+
+- The "ingested ≥ 2026-07-07" sensitivity was useless: every row was created on/after that date, so the
+  population equalled the whole file. It was replaced with `created ≥ 2026-09-01`.
+- The reconciliation's first scoring ignored the ₹ axis and ranked a slice that matched rows but was 33%
+  off on value; scoring now weighs rows, Inv **and** ₹, and the verdict names which axes match.
+- Amit's list does **not** reconcile: closest is MBNF / desc+distributor / created ≥ 2026-08-01
+  (2,948 rows / 4,580 Inv / ₹1.98 Cr vs his 3,216 / 4,775 / ₹2.48 Cr), and his `Value` is not any line
+  amount in this report. This is now an open question for him, not a build defect.
+
+---
+
+## 9. What is still open
+
+1. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions).
+2. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
+   lines "Identified" with a blank matched name, 4,592 lines whose invoice number is used by more than one
+   distributor, 636 lines dated outside 2026.
+3. The 207 GST-bearing retailers that are not fully matched = the master-coverage onboarding list.
+

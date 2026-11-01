@@ -213,6 +213,44 @@ python3 code/classify_mapping_issues.py \
   --out "F:/Product/zotok/Product Mapping/Mapping Inconsistency/03_review/Mapping issue analysis.xlsx"
 ```
 
+## Mapping truth — Turn Over Report coverage baseline (2026-11-01)
+
+The user designated `01_source/Turn Over Report.xlsx` (secondary invoice report, 2026-01-01 → 2026-11-01)
+as the **source of truth for how many distributors, retailers and products are mapped**, priority
+retailer/distributor first. `code/build_turnover_truth.py` reads the 16.8 MB xlsx once into a cached
+CSV (`outputs/turnover-truth/turnover-truth-<date>.csv.gz`), then computes every number from the cache
+(~35 s per rebuild). Plan: `../PLAN-turnover-report-truth-mapping.md`; readout
+`../TRUTH-MAPPING-BASELINE.md`; workbook
+`F:/…/Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx` (11 sheets).
+
+Headline (deduplicated population: 9,749 `Duplicate Invoice` lines dropped from 53,187 → 43,438 lines,
+₹15.97 Cr):
+
+| Axis | Rule | Lines mapped | Value | Entities fully mapped |
+|---|---|---:|---:|---:|
+| Retailer | `Retailer Status = Identified` | 38,699 (89.1%) | ₹14.23 Cr (89.1%) | 964 / 1,233 (78.2%) |
+| Distributor | `Distributor Status = Identified` | 41,787 (96.2%) | ₹14.86 Cr (93.0%) | 271 / 332 (81.6%) |
+| Product | `Parsing Status ∈ {Mapped, MBNF}` | 34,190 (78.7%) | ₹12.55 Cr (78.6%) | 9,350 / 14,148 titles |
+
+- MBNF is **mapped** (it carries a `Material No`): Mapped 28,166 + MBNF 6,024 = 34,190; Unmapped 9,178;
+  blank 70. Counting `status <> 'MAPPED'` as "not mapped" would report 15,202 lines as failures.
+- Retailer failures are master coverage: 207 of 1,010 GST-bearing retailers are not fully matched,
+  44 have neither GST nor phone. Distributor failures concentrate: 61 accounts, 10 making 80% of value.
+- Unmapped product rows (5,165 desc+distributor): 42.1% are catalogue products (A/A2/B/C, 1,607
+  ambiguous), 57.9% gaps/other brand/unparsed; 45.7% of unmapped lines carry a brand token.
+- **Amit's list does not reconcile:** closest definition (MBNF / desc+distributor / created ≥ 2026-08-01)
+  gives 2,948 rows / 4,580 Inv / ₹1.98 Cr vs his 3,216 / 4,775 / ₹2.48 Cr. His `Value` is not a line
+  amount — confirm his export filter before using his tabs as a KPI.
+
+```
+python3 code/build_turnover_truth.py \
+  --report "F:/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Turn Over Report.xlsx" \
+  --catalogue "F:/Product/zotok/Product Mapping/Eval Related Product Mapping/products-18-October-2026-10-52-16.csv" \
+  --amit "F:/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issue list shared by amit.xlsx" \
+  --out-workbook "F:/Product/zotok/Product Mapping/Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx" \
+  --out-md ../TRUTH-MAPPING-BASELINE.md --out-json outputs/turnover-truth/summary.json
+```
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -273,6 +311,9 @@ python3 code/classify_mapping_issues.py \
 - `code/classify_mapping_issues.py` — buckets Amit's 3-sheet issue list (29-Oct-2026) against the
   18-Oct catalogue: SKU buckets A–I, duplicate-SKU pairs, distributor/retailer root-cause/action
   columns, trace evidence → `03_review/Mapping issue analysis.xlsx` in the F: folder
+- `code/build_turnover_truth.py` — mapping-truth builder for the Turn Over Report (distributor /
+  retailer / product coverage under the agreed definitions; caches the xlsx read to
+  `outputs/turnover-truth/`; also emits the readout + `summary.json`)
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
