@@ -327,6 +327,12 @@ python3 code/build_turnover_truth.py \
   handover pack)
 - `code/qa_render.py` — renders workbook sheets to HTML/PNG via Playwright and measures text clipping
   per cell (the no-Excel visual gate; exits non-zero on any clipped cell)
+- `code/amit_overlap.py` — Amit's 29-Oct list vs the report at **account** level: collapses his invoice
+  rows to parties (GST, else name) and answers how many report-unmapped accounts his sheet already names,
+  and how many of his parties still hold up. Current: 269 unmapped retailers / 61 distributors in the
+  report, of which he names 227 / 38; his 385 retailers split 214 wholly unmapped / 8 partly / 124 already
+  mapped / 39 absent from the report, his 46 distributors 22 / 10 / 6 / 8. Writes
+  `outputs/turnover-truth/amit-overlap.json`. Counts only — his `Value` is not comparable to report money.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 

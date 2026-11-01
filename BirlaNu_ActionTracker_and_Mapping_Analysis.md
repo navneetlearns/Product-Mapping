@@ -454,6 +454,34 @@ the gap-ranked build (md5 `8e323ebf…`, same bytes as the staged copy in
 `eval-datasets/outputs/turnover-truth/`). The onboarding pack and the markdown were already current. The
 earlier `Permission denied` was Excel holding a `~$` lock; close the workbook before any rebuild.
 
+### Amit's issue list at account level (2026-11-01)
+
+His tabs are invoice-level rows, so they are not comparable to the entity counts above until they are
+collapsed to parties (GST where he gives one, else normalised name): **385 retailers, 46 distributors**.
+Everything below is counts, not value.
+
+| | retailers | distributors |
+|---|---:|---:|
+| unmapped in the report (01-Nov) | 269 | 61 |
+| … named somewhere in his list | 227 | 38 |
+| … missing from his list | 42 | 23 |
+| parties in his list | 385 | 46 |
+| … wholly unmapped | 214 | 22 |
+| … partly mapped | 8 | 10 |
+| … fully mapped already | 124 | 6 |
+| … not in the report at all | 39 | 8 |
+| … with at least one unmapped row | 222 | 32 |
+
+Two consequences. First, his list is not a subset of the report: 39 retailer parties and 8 distributor
+parties in it do not exist in the 01-Nov report, and 124 + 6 are already fully mapped — so the difference
+between his 29-Oct list and this report **cannot** be read as a mapping rate over three days (it is 32%
+of his retailers and 13% of his distributors mapped, not ~50%). Measuring that needs the report exported
+on 29-Oct too. Second, "unmapped" for him means *any* bad invoice: 10 of his 46 distributors and 8 of his
+385 retailers have a mix of resolved and unresolved invoices, which is why his 22 wholly-unmapped
+distributors and his 32 rows are different numbers.
+
+Reproduce: `eval-datasets/code/amit_overlap.py` (reads the same cache) → `outputs/turnover-truth/amit-overlap.json`.
+
 ---
 
 ## Related AP refs

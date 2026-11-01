@@ -1,0 +1,48 @@
+{
+  "source": {
+    "report": "/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Turn Over Report.xlsx",
+    "amit": "/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issue list shared by amit.xlsx"
+  },
+  "retailers": {
+    "report_unmapped": 269,
+    "named_in_amit": 227,
+    "absent_from_amit": 42,
+    "amit_parties": 385,
+    "amit_parties_named_by_gap": 230,
+    "amit_party_verdict": {
+      "wholly unmapped": 214,
+      "fully mapped": 124,
+      "not in report": 39,
+      "partly mapped": 8
+    },
+    "amit_parties_with_any_unmapped_row": 222,
+    "amit_rows": 517,
+    "amit_row_verdict": {
+      "still unmapped": 280,
+      "already resolved": 170,
+      "invoice exists, party not on it": 61,
+      "partly identified": 6
+    }
+  },
+  "distributors": {
+    "report_unmapped": 61,
+    "named_in_amit": 38,
+    "absent_from_amit": 23,
+    "amit_parties": 46,
+    "amit_parties_named_by_gap": 40,
+    "amit_party_verdict": {
+      "wholly unmapped": 22,
+      "partly mapped": 10,
+      "not in report": 8,
+      "fully mapped": 6
+    },
+    "amit_parties_with_any_unmapped_row": 32,
+    "amit_rows": 69,
+    "amit_row_verdict": {
+      "still unmapped": 32,
+      "already resolved": 15,
+      "partly identified": 14,
+      "invoice exists, party not on it": 8
+    }
+  }
+}

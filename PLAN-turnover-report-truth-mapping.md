@@ -271,7 +271,9 @@ Deviations from the plan as written:
    `Permission denied`); after it closed, the corrected 16:21 build was copied over and verified by md5
    (`8e323ebf…`, identical to the staged copy in `eval-datasets/outputs/turnover-truth/`). Close the
    workbook before any future rebuild.
-2. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions).
+2. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions;
+   the account-level comparison is `eval-datasets/code/amit_overlap.py` — 384 of his 431 parties appear in
+   the report, 47 do not).
 3. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
    lines "Identified" with a blank matched name, 4,592 lines whose invoice number is used by more than one
    distributor, 636 lines dated outside 2026.
