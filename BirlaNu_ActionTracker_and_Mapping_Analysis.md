@@ -449,10 +449,10 @@ deduped, parsing 28,166/9,178/6,024/70, entity keys 332/1,233), a deterministic 
 identical minus its timestamp), and a Playwright render check (0 cells clipped on the presentation
 sheets and on the onboarding pack).
 
-**File state (2026-11-01 16:25):** the F: copy of `Truth - mapping coverage.xlsx` is still the 16:11
-build — Excel held it open and the write was refused. The corrected build (gap-ranked onboarding, Note
-column) is staged at `eval-datasets/outputs/turnover-truth/Truth - mapping coverage.xlsx`; swap once the
-workbook is closed. The onboarding pack and the markdown on F: are current. See plan §9 item 1.
+**File state (2026-11-01 16:26 UTC):** swapped — the F: copy of `Truth - mapping coverage.xlsx` is now
+the gap-ranked build (md5 `8e323ebf…`, same bytes as the staged copy in
+`eval-datasets/outputs/turnover-truth/`). The onboarding pack and the markdown were already current. The
+earlier `Permission denied` was Excel holding a `~$` lock; close the workbook before any rebuild.
 
 ---
 

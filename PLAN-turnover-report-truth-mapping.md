@@ -267,10 +267,10 @@ Deviations from the plan as written:
 
 ## 9. What is still open
 
-1. **File swap on F: (blocked at 16:25).** Excel held `03_review/Truth - mapping coverage.xlsx` open
-   (`~$` lock), so the corrected 16:21 build is staged in
-   `eval-datasets/outputs/turnover-truth/Truth - mapping coverage.xlsx` and the F: copy is still the
-   16:11 build. Close the workbook and copy it over; the onboarding pack was unlocked and is current.
+1. **File swap on F: — DONE 2026-11-01 16:26 UTC.** Excel held the workbook open at 16:25 (`~$` lock,
+   `Permission denied`); after it closed, the corrected 16:21 build was copied over and verified by md5
+   (`8e323ebf…`, identical to the staged copy in `eval-datasets/outputs/turnover-truth/`). Close the
+   workbook before any future rebuild.
 2. Amit's export filter and `Value` definition (the reconciliation sheet lists the 12 closest definitions).
 3. Anomaly follow-ups: 95 lines Unmapped-yet-coded, 70 blank-status rows, 391 distributor + 610 retailer
    lines "Identified" with a blank matched name, 4,592 lines whose invoice number is used by more than one
