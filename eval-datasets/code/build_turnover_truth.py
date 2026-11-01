@@ -22,6 +22,7 @@ Definitions (agreed 2026-11-01, plan §0):
 
 Outputs
   <out-workbook>  the review workbook (Headline first, distributor/retailer ahead of products)
+  <out-onboarding> optional handover pack: the accounts to onboard, 80%-of-value cut flagged
   <out-md>        the written readout, rendered from the same computed numbers
   <out-json>      summary.json — every headline number, for rebuild diffing
   cache           <cache-dir>/turnover-truth-<report-mtime>.csv.gz (skips the 80 s xlsx read)
@@ -639,6 +640,94 @@ def build_workbook(path: Path, ctx: dict):
     log(f"workbook → {path}")
 
 
+def build_onboarding_workbook(path: Path, ctx: dict):
+    """The handover pack: who is missing from the master, in the order to fix them."""
+    wb = Workbook()
+    wb.remove(wb.active)
+    ret, dist = ctx["ret_onboard"], ctx["dist_onboard"]
+    ret_tot, dist_tot = float(ret["value"].sum()), float(dist["value"].sum())
+    r80, d80 = int(ret["in_80"].sum()), int(dist["in_80"].sum())
+
+    ws = wb.create_sheet("Read me")
+    sheet_head(ws, "Onboarding — retailers and distributors missing from the master",
+               f"Built {ctx['built_at']} from {ctx['report_name']} (secondary invoice report, "
+               f"filters 2026-01-01 → 2026-11-01)")
+    rows = [
+        ("What this is", "Every distributor and retailer that still carries at least one unidentified line, "
+                         "with the identifiers to onboard or merge them, ordered by the value at stake."),
+        ("Retailers to onboard", f"{len(ret):,} accounts · ₹{ret_tot / 1e7:,.2f} Cr · "
+                                  f"{r80} of them make the first 80%"),
+        ("Distributors to onboard", f"{len(dist):,} accounts · ₹{dist_tot / 1e7:,.2f} Cr · "
+                                     f"{d80} of them make the first 80%"),
+        ("80% cut", "The `In 80% cut` column marks the rows to do first: they account for 80% of the value "
+                    "carried by unidentified lines."),
+        ("How to use", "1) Work the 80% cut rows first. 2) Match on GST; phone is the fallback for retailers, "
+                       "SAP code for distributors. 3) After onboarding, re-pull the Turn Over Report and "
+                       "re-run the builder — the account should move to Identified."),
+        ("Identity", "GST first, then SAP code (distributor) / phone (retailer); name+pin is the last resort."),
+        ("Not included", "Retailers that give neither GST nor phone still appear here — for them the fix is "
+                         "capture at the invoice, not onboarding."),
+        ("Rebuild", "python3 eval-datasets/code/build_turnover_truth.py … --out-onboarding <this file>"),
+    ]
+    for k, v in rows:
+        ws.append([k, v])
+        ws.cell(row=ws.max_row, column=1).font = Font(bold=True, color=INK)
+        ws.cell(row=ws.max_row, column=2).alignment = Alignment(wrap_text=True, vertical="top")
+    ws.column_dimensions["A"].width = 26
+    ws.column_dimensions["B"].width = 110
+
+    ws = wb.create_sheet("Retailers to onboard")
+    sheet_head(ws, f"Retailers — {len(ret):,} accounts, ₹{ret_tot / 1e7:,.2f} Cr on unidentified lines",
+               "Ordered by value. `Lines unidentified` = lines whose Retailer Status is Not Identified.")
+    hdr = ["#", "Retailer", "GST", "Phone", "Pin", "SFA code", "Identifier", "Lines unidentified",
+           "Value ₹", "Share of retailer gap %", "Distributors", "In 80% cut"]
+    hr = table(ws, hdr, [
+        (i, x.ret_name, x.ret_gst, x.phone, x.pin, x.sfa, x.identifier,
+         int(x.rows - x.mapped_rows), round(x.value),
+         round(x.value / ret_tot * 100, 1) if ret_tot else 0.0,
+         getattr(x, "distributors", ""), "YES" if x.in_80 else "")
+        for i, x in enumerate(ret.itertuples(), start=1)
+    ], widths={"Retailer": 44, "Distributors": 44})
+    ws.freeze_panes = "A5"
+    ws.auto_filter.ref = f"A4:L{ws.max_row}"
+    fmt_ws(ws, money_cols=["Lines unidentified", "Value ₹"], pct_cols=["Share of retailer gap %"], header_row=hr)
+
+    ws = wb.create_sheet("Distributors to onboard")
+    sheet_head(ws, f"Distributors — {len(dist):,} accounts, ₹{dist_tot / 1e7:,.2f} Cr on unidentified lines",
+               "Ordered by value. `Lines unidentified` = lines whose Distributor Status is Not Identified.")
+    hdr = ["#", "Distributor", "GST", "SAP code", "Lines unidentified", "Value ₹",
+           "Share of distributor gap %", "Top failure reasons", "In 80% cut"]
+    hr = table(ws, hdr, [
+        (i, x.dist_name, x.dist_gst, x.dist_code, int(x.rows - x.mapped_rows), round(x.value),
+         round(x.value / dist_tot * 100, 1) if dist_tot else 0.0, x.top_failure_reasons,
+         "YES" if x.in_80 else "")
+        for i, x in enumerate(dist.itertuples(), start=1)
+    ], widths={"Distributor": 44, "Top failure reasons": 56})
+    ws.freeze_panes = "A5"
+    ws.auto_filter.ref = f"A4:I{ws.max_row}"
+    fmt_ws(ws, money_cols=["Lines unidentified", "Value ₹"], pct_cols=["Share of distributor gap %"], header_row=hr)
+
+    ws = wb.create_sheet("Method")
+    sheet_head(ws, "Method and numbers behind the two lists",
+               "Same definitions as `Truth - mapping coverage.xlsx` — the 80% cut is a cumulative-value flag, "
+               "not a separate population.")
+    ws.append(["Population", "Deduplicated Turn Over Report lines (Duplicate-Invoice lines dropped)"])
+    ws.append(["Distributor rule", "Distributor Status = Identified"])
+    ws.append(["Retailer rule", "Retailer Status = Identified"])
+    ws.append(["Entity identity", "GST → SAP code (distributor) / phone (retailer) → name+pin"])
+    ws.append([])
+    table(ws, ["Gap", "Accounts", "Of which in 80% cut", "Value ₹", "Lines unidentified"],
+          [("Retailers", len(ret), r80, round(ret_tot), int((ret["rows"] - ret["mapped_rows"]).sum())),
+           ("Distributors", len(dist), d80, round(dist_tot), int((dist["rows"] - dist["mapped_rows"]).sum()))],
+          widths={"Gap": 18})
+    for ws2 in wb.worksheets:
+        if ws2.title != "Read me":
+            fit_widths(ws2)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(path)
+    log(f"onboarding pack → {path}")
+
+
 # ------------------------------------------------------------------ readout
 def inr(v: float) -> str:
     if abs(v) >= 1e7:
@@ -690,7 +779,9 @@ def build_markdown(ctx: dict, path: Path):
     L.append(f"Unmapped accounts: {k['dist']['entities'] - k['dist']['entities_full']:,} distributors and "
              f"{k['ret']['entities'] - k['ret']['entities_full']:,} retailers carry at least one unidentified line. "
              f"The 80%-of-value cut is {len(ctx['dist_80'])} distributors and {len(ctx['ret_80'])} retailers "
-             f"(sheet `Onboarding 80%`).\n")
+             f"(sheet `Onboarding 80%`, and the handover pack "
+             f"`Onboarding - retailers and distributors.xlsx` lists every account with its identifiers "
+             f"and flags that cut).\n")
     for title, rows, namecol, gstcol in (
         ("Top distributors by unmapped value", ctx["dist_80"].head(5), "dist_name", "dist_gst"),
         ("Top retailers by unmapped value", ctx["ret_80"].head(5), "ret_name", "ret_gst"),
@@ -852,16 +943,27 @@ def build(args):
                         ret_table["phone"].astype(str).str.len().eq(10))
     ]
 
-    def cut80(tab, value_col="value"):
-        tab = tab.sort_values(value_col, ascending=False)
-        tot = tab[value_col].sum()
-        cum = tab[value_col].cumsum() / tot * 100 if tot else tab[value_col] * 0
-        cut = tab.loc[cum <= 80.0].copy()
-        cut["cum_pct"] = cum.loc[cut.index]
-        return cut
+    def with_cum(tab, value_col="value"):
+        """Sort by value and flag the rows that make the first 80% of it."""
+        t = tab.sort_values(value_col, ascending=False).copy()
+        tot = t[value_col].sum()
+        t["cum_pct"] = ((t[value_col].cumsum() / tot * 100) if tot else 0).round(1)
+        t["in_80"] = t["cum_pct"] <= 80.0
+        return t
 
-    dist_80 = cut80(dist_table[dist_table["status"] != "Fully mapped"])
-    ret_80 = cut80(ret_table[ret_table["status"] != "Fully mapped"])
+    dist_onboard = with_cum(dist_table[dist_table["status"] != "Fully mapped"])
+    ret_onboard = with_cum(ret_table[ret_table["status"] != "Fully mapped"])
+    dist_80 = dist_onboard[dist_onboard["in_80"]]
+    ret_80 = ret_onboard[ret_onboard["in_80"]]
+
+    # which distributor(s) each unmatched retailer is buying through (top 2 by value)
+    dd = (
+        ded.loc[~ded["ret_ok"]]
+        .groupby(["ret_key", "Distributor Name"])["value"].sum().reset_index()
+        .sort_values("value", ascending=False)
+    )
+    top_dists = dd.groupby("ret_key").head(2).groupby("ret_key")["Distributor Name"].agg("; ".join)
+    ret_onboard["distributors"] = ret_onboard["ret_key"].map(top_dists).fillna("")
 
     # ---- title table
     def top_status(s):
@@ -1034,6 +1136,8 @@ def build(args):
         "ret_gst_col": "ret_gst",
         "dist_80": dist_80,
         "ret_80": ret_80,
+        "dist_onboard": dist_onboard,
+        "ret_onboard": ret_onboard,
         "title_table": title_table,
         "unmapped_table": unmapped_table,
         "bucket_summary": bucket_summary,
@@ -1050,6 +1154,8 @@ def build(args):
 
     # ---- write
     build_workbook(Path(args.out_workbook), ctx)
+    if args.out_onboarding:
+        build_onboarding_workbook(Path(args.out_onboarding), ctx)
     if args.out_md:
         build_markdown(ctx, Path(args.out_md))
 
@@ -1063,7 +1169,8 @@ def build(args):
         "bucket_aggregates": bucket_aggregates,
         "ret_identifier": ret_identifier,
         "ret_gst_stats": ret_gst_stats,
-        "onboarding": {"distributors_80": len(dist_80), "retailers_80": len(ret_80)},
+        "onboarding": {"distributors_80": len(dist_80), "retailers_80": len(ret_80),
+                       "distributors_total": len(dist_onboard), "retailers_total": len(ret_onboard)},
         "amit": amit, "recon_top": recon[:5], "recon_verdict": verdict,
         "anomalies": {label: len(sub) for label, sub in anomalies},
     }
@@ -1082,6 +1189,7 @@ def main():
     ap.add_argument("--catalogue", required=True)
     ap.add_argument("--amit", default="")
     ap.add_argument("--out-workbook", required=True)
+    ap.add_argument("--out-onboarding", default="", help="handover pack: unmatched retailers/distributors")
     ap.add_argument("--out-md", default="")
     ap.add_argument("--out-json", default="")
     ap.add_argument("--cache-dir", default=str(HERE.parent / "outputs" / "turnover-truth"))

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-01 16:00",
+  "built_at": "2026-11-01 16:11",
   "report": "Turn Over Report.xlsx",
   "cache": "turnover-truth-2026-11-01.csv.gz",
   "populations": {
@@ -327,7 +327,9 @@
   },
   "onboarding": {
     "distributors_80": 10,
-    "retailers_80": 75
+    "retailers_80": 75,
+    "distributors_total": 61,
+    "retailers_total": 269
   },
   "amit": {
     "SKU": {

@@ -241,6 +241,10 @@ Headline (deduplicated population: 9,749 `Duplicate Invoice` lines dropped from 
 - **Amit's list does not reconcile:** closest definition (MBNF / desc+distributor / created ≥ 2026-08-01)
   gives 2,948 rows / 4,580 Inv / ₹1.98 Cr vs his 3,216 / 4,775 / ₹2.48 Cr. His `Value` is not a line
   amount — confirm his export filter before using his tabs as a KPI.
+- **Handover pack:** `--out-onboarding` also writes `Onboarding - retailers and distributors.xlsx` —
+  every unmatched retailer and distributor with its identifiers, ordered by value, `In 80% cut` flagged.
+  QA the rendered result with `code/qa_render.py` (Playwright; 0 clipped cells on the presentation
+  sheets). LibreOffice is not installed, so the PDF render gate cannot run here.
 
 ```
 python3 code/build_turnover_truth.py \
@@ -313,7 +317,10 @@ python3 code/build_turnover_truth.py \
   columns, trace evidence → `03_review/Mapping issue analysis.xlsx` in the F: folder
 - `code/build_turnover_truth.py` — mapping-truth builder for the Turn Over Report (distributor /
   retailer / product coverage under the agreed definitions; caches the xlsx read to
-  `outputs/turnover-truth/`; also emits the readout + `summary.json`)
+  `outputs/turnover-truth/`; also emits the readout + `summary.json`; `--out-onboarding` adds the
+  handover pack)
+- `code/qa_render.py` — renders workbook sheets to HTML/PNG via Playwright and measures text clipping
+  per cell (the no-Excel visual gate; exits non-zero on any clipped cell)
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 

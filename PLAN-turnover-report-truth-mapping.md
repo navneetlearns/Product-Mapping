@@ -219,6 +219,7 @@ Built 2026-11-01 (builder `eval-datasets/code/build_turnover_truth.py`, ~35 s fr
 | Output | Path |
 |---|---|
 | Workbook (11 sheets) | `F:\…\Mapping Inconsistency\03_review\Truth - mapping coverage.xlsx` |
+| Onboarding handover pack | `F:\…\Mapping Inconsistency\03_review\Onboarding - retailers and distributors.xlsx` |
 | Readout | `TRUTH-MAPPING-BASELINE.md` (+ copy in `03_review/Truth - mapping baseline.md`) |
 | Machine summary | `eval-datasets/outputs/turnover-truth/summary.json` |
 | Cache | `eval-datasets/outputs/turnover-truth/turnover-truth-2026-11-01.csv.gz` (gitignored) |
@@ -235,9 +236,12 @@ Verification actually run:
 - **Determinism** — two builds produce identical `summary.json` modulo the `built_at` timestamp.
 - **Workbook audit** — all 11 sheets present; 0 cells whose rendered number exceeds its column width
   (no `###`); every headline value present in `Headline`; row counts match the tables.
-- **Not run, and why:** the LibreOffice→PDF→`pdftotext` gate (checklist item 7) — LibreOffice is not
-  installed in this environment, and `openpyxl` cannot render. The structural width audit stands in;
-  a visual pass is still owed if the workbook is presented on screen.
+- **Rendered check** — `eval-datasets/code/qa_render.py` lays each presentation sheet out the way Excel
+  does (fixed layout, Excel column widths), screenshots it through Chromium and measures text clipping
+  per cell: **0 clipped cells** on Read me, Headline, Onboarding 80%, Reconciliation vs Amit,
+  Distributor coverage, and on every sheet of the onboarding pack. Screenshots land in `/tmp/qa_render_*`
+  (scratch, not a deliverable). LibreOffice is still not installed here, so this stands in for the
+  PDF→`pdftotext` gate; it catches the same defect class (text/numbers too wide for their column).
 
 Deviations from the plan as written:
 

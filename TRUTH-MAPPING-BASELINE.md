@@ -1,6 +1,6 @@
 # Mapping truth baseline — Turn Over Report
 
-**Status: built 2026-11-01 16:00 · source `Turn Over Report.xlsx` (downloaded 2026-11-01 15:00, filters 2026-01-01 → 2026-11-01)**
+**Status: built 2026-11-01 16:11 · source `Turn Over Report.xlsx` (downloaded 2026-11-01 15:00, filters 2026-01-01 → 2026-11-01)**
 
 The platform's own line-level secondary-invoice report, used as the truth for mapping coverage. Definitions are the plan's §0 gates (D1–D8): headline = deduplicated population (Duplicate-Invoice lines dropped), MBNF counted as mapped but always split, value = line amount excluding tax.
 
@@ -31,7 +31,7 @@ Retailer identifier coverage (all entities, by what the invoice gives us):
 
 Of the 1,010 retailers that carry a valid GST, 207 are not fully matched — that is master coverage, not identifier capture. 44 retailers give us neither GST nor phone and are not matched, which is a hard limit in the invoice itself.
 
-Unmapped accounts: 61 distributors and 269 retailers carry at least one unidentified line. The 80%-of-value cut is 10 distributors and 75 retailers (sheet `Onboarding 80%`).
+Unmapped accounts: 61 distributors and 269 retailers carry at least one unidentified line. The 80%-of-value cut is 10 distributors and 75 retailers (sheet `Onboarding 80%`, and the handover pack `Onboarding - retailers and distributors.xlsx` lists every account with its identifiers and flags that cut).
 
 Top distributors by unmapped value:
 

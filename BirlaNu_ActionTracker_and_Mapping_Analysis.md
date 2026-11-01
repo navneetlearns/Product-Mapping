@@ -428,11 +428,15 @@ across pages and sellers) · ₹19.80 Cr excluding tax · 57 columns carrying `D
 
 Deliverables: `03_review/Truth - mapping coverage.xlsx` (11 sheets: Read me, Headline, Distributor
 coverage, Retailer coverage, Onboarding 80%, Product coverage, Unmapped buckets, Unmapped titles,
-Anomalies, Reconciliation vs Amit, Count reconciliation), readout `TRUTH-MAPPING-BASELINE.md`, builder
-`eval-datasets/code/build_turnover_truth.py` (cache in `eval-datasets/outputs/turnover-truth/`), plan
-`PLAN-turnover-report-truth-mapping.md`. Verified by an independent raw-openpyxl recount (identical on
-every axis: 53,187 rows, 9,749 duplicates, 43,438 deduped, parsing 28,166/9,178/6,024/70, entity keys
-332/1,233) and a deterministic rebuild (summary.json identical minus its timestamp).
+Anomalies, Reconciliation vs Amit, Count reconciliation), handover pack
+`03_review/Onboarding - retailers and distributors.xlsx` (269 retailers / 61 distributors with their
+identifiers, 80%-of-value cut flagged), readout `TRUTH-MAPPING-BASELINE.md`, builder
+`eval-datasets/code/build_turnover_truth.py` (cache in `eval-datasets/outputs/turnover-truth/`), render
+QA `eval-datasets/code/qa_render.py`, plan `PLAN-turnover-report-truth-mapping.md`. Verified by an
+independent raw-openpyxl recount (identical on every axis: 53,187 rows, 9,749 duplicates, 43,438
+deduped, parsing 28,166/9,178/6,024/70, entity keys 332/1,233), a deterministic rebuild (summary.json
+identical minus its timestamp), and a Playwright render check (0 cells clipped on the presentation
+sheets and on the onboarding pack).
 
 ---
 
