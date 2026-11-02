@@ -493,16 +493,17 @@ distributors and his 32 rows are different numbers.
 
 Reproduce: `eval-datasets/code/amit_overlap.py` (reads the same cache) → `outputs/turnover-truth/amit-overlap.json`.
 
-**Status annotation (2026-11-02):** `03_review/Mapping issue list shared by amit - with report status.xlsx`
-puts a status on every row of his distributor and retailer tabs — report status, the report party it
-matched, and the match key — plus a `Party status` sheet (one row per retailer / distributor) and a
-summary. Matching inside the invoice is GST, then GST-near + name, then phone, then name / fuzzy; every
-non-exact match is flagged in `Matched on`. With that variant fallback his 385 retailer parties read
-213 not mapped / 9 partly / 157 fully mapped / 6 no match, his 46 distributors 22 / 10 / 14 / 0 — the
-exact-key table above is the strict view (214 / 8 / 124 / 39 and 22 / 10 / 6 / 8). The difference is
-GST typos in his sheet and truncated GSTs in the report (e.g. his `06BAYPS5249E1ZJ` vs report
-`…E1Z3`, report `BDCPP4866P`), not proof that those parties are missing; 13 retailer rows (6 parties)
-still need a manual call. Builder `eval-datasets/code/annotate_amit_status.py`.
+**Status annotation (2026-11-02):** `03_review/Mapping issue list shared by amit - unique parties.xlsx`
+is the unique party view of his list — his 69 distributor / 517 retailer invoice rows collapse by
+normalised name to **40 distributors / 358 retailers**, with every GST kept in one cell — each carrying
+its report status, report party, report GST and match key. Matching inside the invoice is GST, then
+GST-near + name, then phone, then name / fuzzy; every non-exact match is flagged in `Matched on`.
+Party status: distributors 19 not mapped / 11 partly / 10 fully, retailers 196 / 16 / 144 / 2 no match
+(the exact-key GST-party table above is the strict view). A `Distributor master check` sheet carries the
+user's 02-Nov manual verification of the 45 report-unmapped distributors: 34 not in the master, 1 in the
+master but unmapped (Jeevish Sales — its report lines are split across two typo'd GSTs that were matched
+via SAP 1118617), 3 BirlaNu own GSTINs, 7 with no GST. Builder
+`eval-datasets/code/annotate_amit_status.py`.
 
 ---
 

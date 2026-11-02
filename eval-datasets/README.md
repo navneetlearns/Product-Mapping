@@ -342,13 +342,13 @@ python3 code/build_turnover_truth.py \
   mapped / 39 absent from the report, his 46 distributors 22 / 10 / 6 / 8. Writes
   `outputs/turnover-truth/amit-overlap.json` (both conventions). Counts only — his `Value` is not
   comparable to report money.
-- `code/annotate_amit_status.py` — annotates his two party tabs with the Turn Over Report status of each
-  row (status / report party / match key) and adds a party-level sheet + summary →
-  `03_review/Mapping issue list shared by amit - with report status.xlsx`. Match is GST, then GST-near
-  + name, then phone, then name/fuzzy, inside the same invoice; every non-exact match is flagged in
-  `Matched on`. With that variant fallback his 385 retailer parties read 213 not mapped / 9 partly /
-  157 fully / 6 no match, his 46 distributors 22 / 10 / 14 / 0 — the exact-key figures above are the
-  strict view; 13 retailer rows (6 parties) still need a manual call.
+- `code/annotate_amit_status.py` — unique party view of his issue list: collapses his invoice rows by
+  normalised name (69 distributor rows → 40 shops, 517 retailer rows → 358), keeps every GST in one
+  cell, and gives each party its Turn Over Report status, report party, report GST and match key.
+  Match inside the invoice is GST, then GST-near + name, then phone, then name/fuzzy; non-exact
+  matches are flagged. Adds `Distributor master check` (the 45 report-unmapped distributors with the
+  user's 02-Nov manual verdict: 34 not in master, 1 in master but unmapped — Jeevish, 3 BirlaNu
+  GSTINs, 7 no-GST) → `03_review/Mapping issue list shared by amit - unique parties.xlsx`.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 

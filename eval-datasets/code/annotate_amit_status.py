@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
-"""Annotate Amit's issue list with the Turn Over Report status of each retailer / distributor.
+"""Unique retailer / distributor list from Amit's issue list, with Turn Over Report status.
 
-His workbook is invoice-level rows. Each row gets the status of that party on that invoice in the
-report (deduplicated population), the report's own name for the party, and the key the match used.
-A party-level sheet collapses the rows to one status per retailer / distributor. The SKU tab is
-copied untouched.
+One row per party (grouped by normalised name), not one row per invoice. Each party carries its
+report status, the report party it matched, the match key, and — for distributors — the manual
+master check the user reported on 02-Nov. The SKU tab is not part of this view; the source workbook
+stays untouched.
 
     python3 code/annotate_amit_status.py \
         --amit "<Mapping issue list shared by amit.xlsx>" \
         --out "<03_review/Mapping issue list shared by amit - with report status.xlsx>"
 
-Matching is GST first, then phone (retailers), then normalised name, inside the report rows carrying
-the same invoice number. The fallback matters: his GSTs carry typos and the report's own GST column
-carries truncated values, so a GST-only join marks mapped parties as absent. The `Matched on` column
-says which key was used and flags `GST differs` when his GST is not the report's.
+Matching inside the invoice: GST, then GST-near + name, then phone (retailers), then normalised
+name, then a conservative name fuzzy. Every non-exact match is named in `Matched on`.
 """
 from __future__ import annotations
 
@@ -36,16 +34,11 @@ F_DIR = Path("/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency")
 DEFAULT_AMIT = F_DIR / "01_source" / "Mapping issue list shared by amit.xlsx"
 DEFAULT_OUT = F_DIR / "03_review" / "Mapping issue list shared by amit - with report status.xlsx"
 
-ROW_ORDER = ["Not mapped", "Partly mapped", "Mapped", "Invoice not in report", "No match on invoice"]
-PARTY_ORDER = ["Not mapped", "Partly mapped", "Fully mapped", "No match found"]
-
+STATUS_ORDER = {"Not mapped": 0, "Partly mapped": 1, "No match found": 2, "Fully mapped": 3}
 FILL = {
     "Not mapped": ("FFC7CE", "9C0006"),
     "Partly mapped": ("FFEB9C", "9C6500"),
-    "Mapped": ("C6EFCE", "006100"),
     "Fully mapped": ("C6EFCE", "006100"),
-    "Invoice not in report": ("EDEDED", "595959"),
-    "No match on invoice": ("EDEDED", "595959"),
     "No match found": ("EDEDED", "595959"),
 }
 THIN = Side(style="thin", color="D9D9D9")
@@ -53,17 +46,17 @@ BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 HEAD_FILL = PatternFill("solid", start_color="14402A")
 
 
-def fill_cell(cell, status: str) -> None:
-    bg, fg = FILL.get(status, ("FFFFFF", "000000"))
-    cell.fill = PatternFill("solid", start_color=bg)
-    cell.font = Font(bold=True, color=fg)
+def head(cell) -> None:
+    cell.font = Font(bold=True, color="FFFFFF")
+    cell.fill = HEAD_FILL
     cell.alignment = Alignment(horizontal="left", vertical="center")
     cell.border = BORDER
 
 
-def head(cell) -> None:
-    cell.font = Font(bold=True, color="FFFFFF")
-    cell.fill = HEAD_FILL
+def fill_cell(cell, status: str) -> None:
+    bg, fg = FILL.get(status, ("FFFFFF", "000000"))
+    cell.fill = PatternFill("solid", start_color=bg)
+    cell.font = Font(bold=True, color=fg)
     cell.alignment = Alignment(horizontal="left", vertical="center")
     cell.border = BORDER
 
@@ -78,14 +71,20 @@ def report_name(row, side: str) -> str:
 
 
 def gst_near(a: str, b: str) -> int:
-    """Hamming distance between two 15-char GSTs, or 99 if not comparable."""
     if not a or not b or len(a) != 15 or len(b) != 15:
         return 99
     return sum(x != y for x, y in zip(a, b))
 
 
+def name_score(a: str, b: str) -> tuple[float, int]:
+    if not a or not b:
+        return 0.0, 0
+    ratio = difflib.SequenceMatcher(None, a, b).ratio()
+    ta, tb = set(a.split()), set(b.split())
+    return ratio, len(ta & tb)
+
+
 def fuzzy_name(cand, nm: str, spec: dict):
-    """Closest report party on the invoice, only when the names are genuinely close."""
     if not nm:
         return None
     best, best_score = None, 0.0
@@ -93,22 +92,12 @@ def fuzzy_name(cand, nm: str, spec: dict):
         rn = row[spec["ncol"]]
         if not rn:
             continue
-        ratio = difflib.SequenceMatcher(None, nm, rn).ratio()
-        a, b = set(nm.split()), set(rn.split())
-        contain = (a <= b or b <= a) and min(len(a), len(b)) >= 2
+        ratio, shared = name_score(nm, rn)
+        contain = shared >= 2 and (set(nm.split()) <= set(rn.split()) or set(rn.split()) <= set(nm.split()))
         score = max(ratio, 1.0 if contain else 0.0)
         if score > best_score:
             best, best_score = row, score
     return best if best is not None and best_score >= 0.85 else None
-
-
-def name_score(a: str, b: str) -> tuple[float, int]:
-    """(difflib ratio, shared significant tokens) between two normalised names."""
-    if not a or not b:
-        return 0.0, 0
-    ratio = difflib.SequenceMatcher(None, a, b).ratio()
-    ta, tb = set(a.split()), set(b.split())
-    return ratio, len(ta & tb)
 
 
 def match_row(rec: dict, cand, spec: dict, side: str) -> tuple[str, str, str, str]:
@@ -119,8 +108,6 @@ def match_row(rec: dict, cand, spec: dict, side: str) -> tuple[str, str, str, st
         dist = cand[spec["gcol"]].map(lambda g: gst_near(rec["_gst"], str(g) if g else ""))
         near = cand[dist <= 2]
         if len(near):
-            # a 1-2 char GST difference is only evidence when the name agrees: the same invoice can
-            # carry several near-identical GSTs (e.g. two shops whose PANs differ by one digit)
             scored = [(name_score(rec["_nm"], str(r[spec["ncol"]] or "")), i) for i, r in near.iterrows()]
             (ratio, shared), idx = max(scored, key=lambda x: (x[0][1], x[0][0]))
             if shared >= 1 or ratio >= 0.5:
@@ -147,45 +134,6 @@ def match_row(rec: dict, cand, spec: dict, side: str) -> tuple[str, str, str, st
     return status, report_name(m.iloc[0], side), basis, rgst
 
 
-def annotate_tab(ws, spec: dict, head_by_inv: dict, side: str) -> tuple[list[dict], dict]:
-    hdr = [str(c.value).strip() if c.value is not None else "" for c in ws[1]]
-    ncols = len(hdr)
-    new_cols = ["Turn Over Report status", "Report party name", "Matched on"]
-    for j, h in enumerate(new_cols, start=ncols + 1):
-        head(ws.cell(row=1, column=j, value=h))
-    ws.column_dimensions[get_column_letter(ncols + 1)].width = 24
-    ws.column_dimensions[get_column_letter(ncols + 2)].width = 38
-    ws.column_dimensions[get_column_letter(ncols + 3)].width = 22
-
-    records = []
-    for r in range(2, ws.max_row + 1):
-        raw = {h: ws.cell(row=r, column=i + 1).value for i, h in enumerate(hdr)}
-        if all(v is None for v in raw.values()):
-            continue
-        rec = dict(raw)
-        rec["_gst"] = A.gst(raw.get(spec["gst_hdr"]))
-        rec["_nm"] = A.nm(raw.get(spec["name_hdr"]))
-        rec["_phone"] = A.phone(raw.get(spec["phone_hdr"])) if spec["phone_hdr"] else ""
-        rec["_party"] = rec["_gst"] or ("NAME:" + rec["_nm"])
-        rec["_inv"] = A.inv(raw.get("Invoice Number"))
-
-        cand = head_by_inv.get(rec["_inv"])
-        if cand is None:
-            status, rname, basis, rgst = "Invoice not in report", "", "", ""
-        else:
-            status, rname, basis, rgst = match_row(rec, cand, spec, side)
-        rec.update(_status=status, _rname=rname, _basis=basis, _rgst=rgst)
-        records.append(rec)
-
-        fill_cell(ws.cell(row=r, column=ncols + 1, value=status), status)
-        for j, val in ((ncols + 2, rname or None), (ncols + 3, basis or None)):
-            c = ws.cell(row=r, column=j, value=val)
-            c.border = BORDER
-            c.alignment = Alignment(horizontal="left", vertical="center")
-
-    return records, dict(Counter(r["_status"] for r in records))
-
-
 def party_verdict(verdicts: list[str]) -> str:
     matched = [v for v in verdicts if v in ("Mapped", "Not mapped", "Partly mapped")]
     if not matched:
@@ -197,96 +145,190 @@ def party_verdict(verdicts: list[str]) -> str:
     return "Partly mapped"
 
 
-def add_party_sheet(wb, sides: dict) -> dict:
-    ws = wb.create_sheet("Party status")
-    ws.append(["Side", "Party (as in Amit's sheet)", "GST in his sheet", "Rows",
-               "Turn Over Report status", "Report party name", "GST in report", "Matched on"])
-    parties = {}
-    for side_label, (spec, records) in sides.items():
-        groups: dict[str, list[dict]] = {}
-        for rec in records:
-            groups.setdefault(rec["_party"], []).append(rec)
-        for key, recs in groups.items():
-            pname = next((str(r.get(spec["name_hdr"])).strip() for r in recs
-                          if r.get(spec["name_hdr"]) not in (None, "")), key)
-            gst = next((r["_gst"] for r in recs if r["_gst"]), "")
-            status = party_verdict([r["_status"] for r in recs])
-            rname = next((r["_rname"] for r in recs if r["_rname"]), "")
-            rgst = next((r["_rgst"] for r in recs if r["_rgst"]), "")
-            bases = [r["_basis"] for r in recs if r["_basis"]]
-            basis = " / ".join(sorted(set(bases)))
-            parties[(side_label, key)] = dict(side=side_label, name=pname, gst=gst, rows=len(recs),
-                                              status=status, rname=rname, rgst=rgst, basis=basis)
+def read_party_rows(wb, sheet: str, spec: dict, side: str, head_by_inv: dict) -> list[dict]:
+    ws = wb[sheet]
+    hdr = [str(c.value).strip() if c.value is not None else "" for c in ws[1]]
+    out = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if all(v is None for v in row):
+            continue
+        raw = dict(zip(hdr, row))
+        rec = dict(raw)
+        rec["_gst"] = A.gst(raw.get(spec["gst_hdr"]))
+        rec["_nm"] = A.nm(raw.get(spec["name_hdr"]))
+        rec["_phone"] = A.phone(raw.get(spec["phone_hdr"])) if spec["phone_hdr"] else ""
+        rec["_inv"] = A.inv(raw.get("Invoice Number"))
+        cand = head_by_inv.get(rec["_inv"])
+        if cand is None:
+            rec.update(_status="Invoice not in report", _rname="", _basis="", _rgst="")
+        else:
+            status, rname, basis, rgst = match_row(rec, cand, spec, side)
+            rec.update(_status=status, _rname=rname, _basis=basis, _rgst=rgst)
+        out.append(rec)
+    return out
 
-    order = {"Not mapped": 0, "Partly mapped": 1, "No match found": 2, "Fully mapped": 3}
-    rows = sorted(parties.values(), key=lambda p: (p["side"] != "Distributor", order[p["status"]], -p["rows"]))
-    for p in rows:
-        ws.append([p["side"], p["name"], p["gst"] or None, p["rows"], p["status"],
-                   p["rname"] or None, p["rgst"] or None, p["basis"] or None])
-        fill_cell(ws.cell(row=ws.max_row, column=5), p["status"])
 
-    for i, w in enumerate([13, 46, 20, 8, 24, 40, 20, 22], start=1):
+def unique_parties(records: list[dict], name_key: str) -> list[dict]:
+    groups: dict[str, list[dict]] = {}
+    for rec in records:
+        groups.setdefault(rec["_nm"], []).append(rec)
+    parties = []
+    for key, recs in groups.items():
+        gsts = sorted({r["_gst"] for r in recs if r["_gst"]})
+        name = next((str(r.get(name_key)).strip() for r in recs
+                     if r.get(name_key) not in (None, "")), key)
+        rname = next((r["_rname"] for r in recs if r["_rname"]), "")
+        rgst = next((r["_rgst"] for r in recs if r["_rgst"]), "")
+        bases = [r["_basis"] for r in recs if r["_basis"]]
+        parties.append(dict(
+            key=key, name=name, gsts=gsts, rows=len(recs),
+            status=party_verdict([r["_status"] for r in recs]),
+            rname=rname, rgst=rgst, basis=" / ".join(sorted(set(bases))),
+        ))
+    return sorted(parties, key=lambda p: (STATUS_ORDER[p["status"]], -p["rows"], p["name"]))
+
+
+def strict_unmapped_distributors(df) -> list[dict]:
+    head = df[~df["dup"]].copy()
+    per = head.groupby("dist_key")["dist_ok"].agg(["sum", "count"])
+    keys = set(per[per["sum"] == 0].index)
+    sub = head[head.dist_key.isin(keys)]
+    out = []
+    for key, g in sub.groupby("dist_key"):
+        out.append(dict(
+            key=key, name=str(g["Distributor Name"].iloc[0]).strip(),
+            gst=str(g["gst_ok"].iloc[0]) if str(g["gst_ok"].iloc[0]) != "nan" else "",
+            lines=len(g),
+        ))
+    return sorted(out, key=lambda d: (-d["lines"], d["name"]))
+
+
+def master_check(party: dict, strict: list[dict]) -> str:
+    """The user's 02-Nov manual check, applied to the party it covers."""
+    by_name = [s for s in strict if A.nm(s["name"]) == party["key"]]
+    by_gst = [s for s in strict if s["gst"] and s["gst"] in party["gsts"]]
+    hit = by_gst[0] if by_gst else (by_name[0] if by_name else None)
+    if hit is None:
+        return "Not in the 45 checked"
+    if "AAACH2676Q" in hit["gst"] or "BIRLANU LIMITED" in A.nm(hit["name"]):
+        return "BirlaNu's own GSTIN (excluded)"
+    if not hit["gst"]:
+        return "No GST — not checked"
+    if "JEEVISH" in A.nm(hit["name"]):
+        return "In master — not matched"
+    return "Not in master"
+
+
+def write_party_sheet(wb, title: str, parties: list[dict], with_master: bool) -> None:
+    ws = wb.create_sheet(title)
+    cols = ["Party (as in Amit's sheet)", "GST in his sheet", "Rows in his list",
+            "Turn Over Report status", "Report party name", "GST in report", "Matched on"]
+    if with_master:
+        cols.append("Distributor master (your check, 02-Nov)")
+    ws.append(cols)
+    for p in parties:
+        row = [p["name"], ", ".join(p["gsts"]) or None, p["rows"], p["status"],
+               p["rname"] or None, p["rgst"] or None, p["basis"] or None]
+        if with_master:
+            row.append(p["master"])
+        ws.append(row)
+        fill_cell(ws.cell(row=ws.max_row, column=4), p["status"])
+    widths = [46, 34, 8, 22, 40, 20, 26] + ([30] if with_master else [])
+    for i, w in enumerate(widths, start=1):
         ws.column_dimensions[get_column_letter(i)].width = w
     for c in ws[1]:
         head(c)
     ws.freeze_panes = "A2"
-    ws.auto_filter.ref = f"A1:H{ws.max_row}"
-    return parties
+    ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
 
 
-def add_summary(wb, sides: dict, parties: dict, source: str) -> None:
-    ws = wb.create_sheet("Status summary")
-    ws["A1"] = "Amit's issue list — status in the Turn Over Report"
+def write_master_sheet(wb, strict: list[dict], his_parties: list[dict]) -> None:
+    ws = wb.create_sheet("Distributor master check")
+    ws.append(["#", "Distributor in the report", "GST", "Report lines", "In Amit's sheet?",
+               "Manual check (your 02-Nov verification)"])
+    his_names = {p["key"] for p in his_parties}
+    his_gsts = {g for p in his_parties for g in p["gsts"]}
+    for i, s in enumerate(strict, start=1):
+        nm = A.nm(s["name"])
+        in_sheet = "Yes" if nm in his_names or (s["gst"] and s["gst"] in his_gsts) else ""
+        if "AAACH2676Q" in s["gst"] or "BIRLANU LIMITED" in nm:
+            verdict = "BirlaNu's own GSTIN — not a distributor to onboard"
+        elif not s["gst"]:
+            verdict = "No GST on the invoice — not part of the GST check"
+        elif "JEEVISH" in nm:
+            verdict = "In master — not matched"
+        else:
+            verdict = "Not in master"
+        ws.append([i, s["name"], s["gst"] or None, s["lines"], in_sheet or None, verdict])
+        if verdict == "Not in master":
+            ws.cell(row=ws.max_row, column=6).fill = PatternFill("solid", start_color="FFC7CE")
+        elif verdict.startswith("In master"):
+            ws.cell(row=ws.max_row, column=6).fill = PatternFill("solid", start_color="FFEB9C")
+        else:
+            ws.cell(row=ws.max_row, column=6).fill = PatternFill("solid", start_color="EDEDED")
+    for i, w in enumerate([5, 50, 20, 10, 14, 44], start=1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    for c in ws[1]:
+        head(c)
+    ws.freeze_panes = "A2"
+    ws.auto_filter.ref = f"A1:F{ws.max_row}"
+
+
+def write_summary(wb, dists: list[dict], rets: list[dict], source: str, strict: list[dict]) -> None:
+    ws = wb.create_sheet("Status summary", 0)
+    ws["A1"] = "Amit's issue list — unique retailers and distributors, with report status"
     ws["A1"].font = Font(bold=True, size=14, color="14402A")
     ws["A2"] = f"Report: {source}"
-    ws["A3"] = ("Status is the party's mapping state on the invoice named in his row, from the "
-                "deduplicated report population. Match: GST, then phone (retailers), then normalised "
-                "name, inside the same invoice number.")
-    ws["A4"] = ("'Matched on' shows the key used. '(GST differs)' = his GST is not the report's for "
-                "that party — the party is in the report under a different/typo'd GST.")
-    ws["A5"] = ("Row status = that invoice; party status = all of that party's rows in his sheet. "
-                "SKU tab unchanged. His Value column is untouched and not used.")
-    for r in (2, 3, 4, 5):
+    ws["A3"] = ("One row per party, grouped by normalised name (his sheet is invoice-level; duplicate "
+                "rows for the same shop are collapsed, all GSTs kept in one cell).")
+    ws["A4"] = ("Status is the party's mapping state in the deduplicated report. Match inside the "
+                "invoice: GST, then GST-near + name, then phone (retailers), then name / fuzzy; "
+                "`Matched on` names the key and flags `(GST differs)`.")
+    ws["A5"] = ("`Distributor master check` applies the 02-Nov manual verification: every GST-bearing "
+                "distributor among the 45 report-unmapped is absent from the master except Jeevish "
+                "Sales Corporation; BirlaNu's own GSTINs and no-GST records are marked separately.")
+    for r in range(2, 6):
         ws.cell(row=r, column=1).font = Font(italic=True, size=10, color="595959")
 
     r0 = 7
-    ws.cell(row=r0, column=1, value="Rows in his sheet").font = Font(bold=True, size=11)
-    headers = ["Tab", "Rows"] + ROW_ORDER
-    for j, h in enumerate(headers, start=1):
+    ws.cell(row=r0, column=1, value="Unique parties").font = Font(bold=True, size=11)
+    heads = ["Side", "Parties", "Not mapped", "Partly mapped", "Fully mapped", "No match found"]
+    for j, h in enumerate(heads, start=1):
         head(ws.cell(row=r0 + 1, column=j, value=h))
     row = r0 + 2
-    for side_label, (spec, records) in sides.items():
-        counts = Counter(r["_status"] for r in records)
-        ws.cell(row=row, column=1, value=side_label)
-        ws.cell(row=row, column=2, value=len(records))
-        for j, h in enumerate(ROW_ORDER, start=3):
+    for label, parties in (("Distributor", dists), ("Retailer", rets)):
+        counts = Counter(p["status"] for p in parties)
+        ws.cell(row=row, column=1, value=label)
+        ws.cell(row=row, column=2, value=len(parties))
+        for j, h in enumerate(heads[2:], start=3):
             ws.cell(row=row, column=j, value=counts.get(h, 0))
         row += 1
 
     r1 = row + 2
-    ws.cell(row=r1, column=1, value="Parties (one row per retailer / distributor)").font = Font(bold=True, size=11)
-    headers2 = ["Side", "Parties"] + PARTY_ORDER
-    for j, h in enumerate(headers2, start=1):
+    ws.cell(row=r1, column=1, value="Distributor master check (45 report-unmapped)").font = Font(bold=True, size=11)
+    heads2 = ["Verdict", "Distributors"]
+    for j, h in enumerate(heads2, start=1):
         head(ws.cell(row=r1 + 1, column=j, value=h))
+    verdicts = []
+    for s in strict:
+        nm = A.nm(s["name"])
+        if "AAACH2676Q" in s["gst"] or "BIRLANU LIMITED" in nm:
+            verdicts.append("BirlaNu's own GSTIN")
+        elif not s["gst"]:
+            verdicts.append("No GST — not checked")
+        elif "JEEVISH" in nm:
+            verdicts.append("In master — not matched")
+        else:
+            verdicts.append("Not in master")
     row = r1 + 2
-    for side_label in sides:
-        vals = [p for p in parties.values() if p["side"] == side_label]
-        counts = Counter(p["status"] for p in vals)
-        ws.cell(row=row, column=1, value=side_label)
-        ws.cell(row=row, column=2, value=len(vals))
-        for j, h in enumerate(PARTY_ORDER, start=3):
-            ws.cell(row=row, column=j, value=counts.get(h, 0))
+    for k, v in Counter(verdicts).most_common():
+        ws.cell(row=row, column=1, value=k)
+        ws.cell(row=row, column=2, value=v)
         row += 1
+    ws.cell(row=row, column=1, value="Total")
+    ws.cell(row=row, column=2, value=len(strict))
 
-    ws.cell(row=row + 2, column=1,
-            value="Legend: Mapped / Fully mapped = every report line identified · Partly mapped = "
-                  "some identified · Not mapped = none identified · grey = no match found on that "
-                  "invoice (check by hand).").font = Font(italic=True, size=10, color="595959")
-    ws.cell(row=row + 3, column=1,
-            value="Manual master check (user, 02-Nov): of the 45 strictly unmapped distributors, none "
-                  "appear in the distributor master except Jeevish Sales Corporation.").font = Font(
-        italic=True, size=10, color="595959")
-    for i, w in enumerate([16, 10, 16, 16, 14, 22, 22], start=1):
+    for i, w in enumerate([34, 10, 14, 14, 14, 16], start=1):
         ws.column_dimensions[get_column_letter(i)].width = w
 
 
@@ -305,23 +347,31 @@ def main() -> int:
     head["ret_phone"] = head["Retailer Mobile No"].map(A.phone)
     head_by_inv = {k: v for k, v in head.groupby("inv_n")}
 
-    wb = openpyxl.load_workbook(a.amit)
-    sides = {}
-    for side_label, sheet, spec in (
-        ("Distributor", "Distributor not mapped", A.SIDES["distributors"]),
-        ("Retailer", "retailer not mapped", A.SIDES["retailers"]),
-    ):
-        records, counts = annotate_tab(wb[sheet], spec, head_by_inv,
-                                       "dist" if side_label == "Distributor" else "ret")
-        sides[side_label] = (spec, records)
-        print(f"{side_label}: {len(records)} rows | " + " · ".join(f"{k} {v}" for k, v in counts.items()))
-        print("  matched on:", dict(Counter(r["_basis"] for r in records)))
+    wb_src = openpyxl.load_workbook(a.amit, data_only=True)
+    d_rows = read_party_rows(wb_src, "Distributor not mapped", A.SIDES["distributors"], "dist", head_by_inv)
+    r_rows = read_party_rows(wb_src, "retailer not mapped", A.SIDES["retailers"], "ret", head_by_inv)
 
-    parties = add_party_sheet(wb, sides)
-    add_summary(wb, sides, parties, Path(a.report).name)
-    wb.active = wb.sheetnames.index("Distributor not mapped")
+    dists = unique_parties(d_rows, "Distributor Name")
+    rets = unique_parties(r_rows, "Retailer Name")
+    strict = strict_unmapped_distributors(df)
+    for p in dists:
+        p["master"] = master_check(p, strict)
+
+    print(f"distributors: {len(d_rows)} rows -> {len(dists)} unique | " +
+          " · ".join(f"{k} {v}" for k, v in Counter(p["status"] for p in dists).most_common()))
+    print(f"retailers:    {len(r_rows)} rows -> {len(rets)} unique | " +
+          " · ".join(f"{k} {v}" for k, v in Counter(p["status"] for p in rets).most_common()))
+    print("master:", dict(Counter(p["master"] for p in dists)))
+
+    wb = openpyxl.Workbook()
+    wb.remove(wb.active)
+    write_summary(wb, dists, rets, Path(a.report).name, strict)
+    write_party_sheet(wb, "Distributors", dists, with_master=True)
+    write_party_sheet(wb, "Retailers", rets, with_master=False)
+    write_master_sheet(wb, strict, dists)
+    wb.active = wb.sheetnames.index("Distributors")
     wb.save(a.out)
-    print(f"parties: {len(parties)} -> {a.out}")
+    print(f"wrote {a.out}")
     return 0
 
 
