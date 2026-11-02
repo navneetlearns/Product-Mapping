@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-11-01
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10).
+Last updated: 2026-11-02
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -492,6 +492,17 @@ on 29-Oct too. Second, "unmapped" for him means *any* bad invoice: 10 of his 46 
 distributors and his 32 rows are different numbers.
 
 Reproduce: `eval-datasets/code/amit_overlap.py` (reads the same cache) → `outputs/turnover-truth/amit-overlap.json`.
+
+**Status annotation (2026-11-02):** `03_review/Mapping issue list shared by amit - with report status.xlsx`
+puts a status on every row of his distributor and retailer tabs — report status, the report party it
+matched, and the match key — plus a `Party status` sheet (one row per retailer / distributor) and a
+summary. Matching inside the invoice is GST, then GST-near + name, then phone, then name / fuzzy; every
+non-exact match is flagged in `Matched on`. With that variant fallback his 385 retailer parties read
+213 not mapped / 9 partly / 157 fully mapped / 6 no match, his 46 distributors 22 / 10 / 14 / 0 — the
+exact-key table above is the strict view (214 / 8 / 124 / 39 and 22 / 10 / 6 / 8). The difference is
+GST typos in his sheet and truncated GSTs in the report (e.g. his `06BAYPS5249E1ZJ` vs report
+`…E1Z3`, report `BDCPP4866P`), not proof that those parties are missing; 13 retailer rows (6 parties)
+still need a manual call. Builder `eval-datasets/code/annotate_amit_status.py`.
 
 ---
 
