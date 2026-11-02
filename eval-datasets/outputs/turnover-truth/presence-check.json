@@ -1,0 +1,112 @@
+{
+  "source": "/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Mapping issues - presence check in catalogue.xlsx",
+  "status_source": "/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/03_review/Mapping issue list shared by amit - unique parties.xlsx",
+  "products": {
+    "rows": 3216,
+    "distinct_descriptions": 2455,
+    "in_catalog": {
+      "rows": 2611,
+      "descriptions": 1903,
+      "detail": {
+        "Matched (different wording)": {
+          "rows": 1115,
+          "descriptions": 926
+        },
+        "Same name in catalog": {
+          "rows": 849,
+          "descriptions": 436
+        },
+        "Product type present, invoice lacks detail to pick SKU": {
+          "rows": 647,
+          "descriptions": 567
+        }
+      }
+    },
+    "not_in_catalog": {
+      "rows": 605,
+      "descriptions": 564,
+      "detail": {
+        "Not in catalog": {
+          "rows": 383,
+          "descriptions": 355
+        },
+        "Competitor brand": {
+          "rows": 222,
+          "descriptions": 209
+        }
+      }
+    }
+  },
+  "distributors": {
+    "rows": 69,
+    "unique_names": 40,
+    "in_workspace_rows": {
+      "Yes": 36,
+      "No": 33
+    },
+    "matched_by_rows": {
+      "GST": 35,
+      "(blank)": 33,
+      "Exact name": 1
+    },
+    "unique_presence": {
+      "No": 23,
+      "Yes": 16,
+      "Mixed": 1
+    },
+    "status_cross": {
+      "Not mapped": {
+        "No": 16,
+        "Yes": 3
+      },
+      "Partly mapped": {
+        "Yes": 9,
+        "Mixed": 1,
+        "No": 1
+      },
+      "Fully mapped": {
+        "Yes": 4,
+        "No": 6
+      }
+    }
+  },
+  "retailers": {
+    "rows": 517,
+    "unique_names": 358,
+    "in_workspace_rows": {
+      "Yes": 295,
+      "No": 222
+    },
+    "matched_by_rows": {
+      "(blank)": 222,
+      "GST": 125,
+      "Exact name": 114,
+      "Phone": 56
+    },
+    "unique_presence": {
+      "Yes": 196,
+      "No": 160,
+      "Mixed": 2
+    },
+    "status_cross": {
+      "Not mapped": {
+        "No": 144,
+        "Yes": 51,
+        "(not in sheet)": 1
+      },
+      "Partly mapped": {
+        "Yes": 12,
+        "No": 3,
+        "Mixed": 1
+      },
+      "No match found": {
+        "No": 1,
+        "Yes": 1
+      },
+      "Fully mapped": {
+        "Yes": 132,
+        "No": 12
+      }
+    }
+  }
+}

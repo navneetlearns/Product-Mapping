@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
 Last updated: 2026-11-02
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10).
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -504,6 +504,45 @@ user's 02-Nov manual verification of the 45 report-unmapped distributors: 34 not
 master but unmapped (Jeevish Sales — its report lines are split across two typo'd GSTs that were matched
 via SAP 1118617), 3 BirlaNu own GSTINs, 7 with no GST. Builder
 `eval-datasets/code/annotate_amit_status.py`.
+
+## 11. Presence check in catalogue / workspace — Amit sheet (2026-11-02)
+
+Input: `01_source/Mapping issues - presence check in catalogue.xlsx` — Amit's three tabs with the
+platform's own presence flags: `In Workspace` (distributor / retailer, with the workspace identity
+columns) and `In Catalog` + `Detail` (SKU). Bucketed by `eval-datasets/code/presence_check_summary.py`
+→ `eval-datasets/outputs/turnover-truth/presence-check.json`; readout `03_review/Presence check - brief.md`.
+
+**Products — 3,216 rows / 2,455 distinct descriptions**
+
+| In Catalog | rows | descriptions | Detail |
+|---|---:|---:|---|
+| Yes | 2,611 | 1,903 | different wording 1,115 / same name 849 / product type present but invoice lacks detail 647 |
+| No | 605 | 564 | not in catalog 383 / 355 · competitor brand 222 / 209 |
+
+The genuine BirlaNu catalogue gap is **383 rows / 355 descriptions** (11.9% of the list); the 222
+competitor-brand rows are not missing catalogue. Of the 2,611 that exist, 647 are ambiguous variant —
+the product type is in the catalogue, the invoice does not state SDR/class/length — and 1,115 only
+differ in wording. The product problem is variant detail and vocabulary, not missing products.
+
+**Parties, crossed with the unique-party status (§10)**
+
+| Side | unique | not mapped | present but unmapped | absent → onboarding |
+|---|---:|---:|---:|---:|
+| Distributors | 40 | 19 | 3 | 16 |
+| Retailers | 358 | 196 | 51 | 144 |
+
+- The **3 distributors** are GST-matched to the workspace: Sri Lakshmi Electrical & Hardware, Jeevish
+  Sales Corporation, Nepolite Concrete Solutions — present on the platform, never mapped.
+- The **51 retailers** are exact-name (50) or phone (1) matches. Those workspace records carry no GST
+  and one is a clearly wrong name match (Tatsam Enterprises → Manish Choudhary), so 51 is a candidate
+  list, not a verified count. They need identity confirmation before being treated as a matching fix.
+- The other **16 distributors / 144 retailers** are absent from the workspace — master onboarding, not
+  a matching fix. This is the queue the 02-Nov manual master check (34 not in master) points at.
+- **Presence-check noise:** 6 distributors and 12 retailers that the report has fully mapped read `No`
+  because the check joins on the GST in his sheet and his GST has typos (Kamal Sanitary, Future Trade
+  Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore; 12 retailers). So its raw No
+  counts (23 distributors / 160 retailers) overstate absence; the intersection with our status above
+  is the defensible number.
 
 ---
 

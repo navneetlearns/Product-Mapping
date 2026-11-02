@@ -3,7 +3,7 @@
 Analysis of the three-sheet issue list shared by the BirlaNu team, checked against the
 18-Oct-2026 catalogue export and the 21-Oct production trace in the same folder.
 
-Last updated: 2026-10-31
+Last updated: 2026-11-02
 Workbook analysed: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Mapping issue list shared by amit.xlsx`
 Catalogue: `F:\Product\zotok\Product Mapping\Eval Related Product Mapping\products-18-October-2026-10-52-16.csv` (2,335 rows)
 Trace: `01_source\trace-01a15db1-41cb-73e2-a1b3-bd1cc5283723.json` (Vaibhav Enterprises, invoice GST-492, 21-Oct-2026)
@@ -390,3 +390,30 @@ SKU on the turnover line.
   title buckets (A/A2) are string-exact after normalisation and are the most reliable.
 - The MBNF explanation is a hypothesis supported by one production trace, not a proven
   conclusion. Confirm with §7.1 before changing the pipeline.
+
+---
+
+## 10. Update — unique party view and presence check (2026-11-02)
+
+Two follow-ups landed after the 31-Oct analysis; the numbers below supersede the row counts for
+party-level questions.
+
+**Unique party view.** His 69 distributor / 517 retailer invoice rows collapse by normalised name to
+**40 distributors / 358 retailers** (raw spellings 41 / 363). Status from the Turn Over Report:
+distributors 19 not mapped / 11 partly / 10 fully; retailers 196 / 16 / 144 (+2 no match).
+Workbook `03_review/Mapping issue list shared by amit - unique parties.xlsx` (builder
+`eval-datasets/code/annotate_amit_status.py`), with a `Distributor master check` sheet carrying the
+user's 02-Nov verification of the 45 report-unmapped distributors (34 not in master, 1 in master —
+Jeevish, 3 BirlaNu GSTINs, 7 no GST).
+
+**Presence check.** `01_source/Mapping issues - presence check in catalogue.xlsx` checks his tabs
+against the workspace / catalogue. Products: 2,611 of 3,216 rows found in the catalogue (849 same name,
+1,115 different wording, 647 product type present but invoice lacks the variant); **605 not** — 383
+genuine gap (355 descriptions) + 222 competitor brand. Parties, of those we call not mapped:
+**3 distributors and 51 retailers are present on the platform but unmapped**; 16 / 144 are absent
+→ master onboarding. The 51 retailers are name/phone matches (workspace records carry no GST), so
+they are candidates to confirm, not verified matches. Presence-check false negatives: 6 distributors
+and 12 retailers that the report has fully mapped read `No` because his GST has typos.
+
+Full bucket tables: tracker §11 and `03_review/Presence check - brief.md`; reproduce with
+`eval-datasets/code/presence_check_summary.py` → `outputs/turnover-truth/presence-check.json`.

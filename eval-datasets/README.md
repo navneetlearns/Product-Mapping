@@ -268,6 +268,39 @@ python3 code/build_turnover_truth.py \
   --out-md ../TRUTH-MAPPING-BASELINE.md --out-json outputs/turnover-truth/summary.json
 ```
 
+## Presence check — Amit sheet vs catalogue / workspace (2026-11-02)
+
+Input: `F:/…/Mapping Inconsistency/01_source/Mapping issues - presence check in catalogue.xlsx` —
+Amit's three tabs with the platform's own presence flags (`In Workspace` for distributor/retailer,
+`In Catalog` + `Detail` for SKU, plus the workspace identity columns). `code/presence_check_summary.py`
+buckets it and crosses it with the unique-party status; output `outputs/turnover-truth/presence-check.json`.
+
+Products — 3,216 rows / 2,455 distinct descriptions:
+
+| In Catalog | rows | descriptions | Detail |
+|---|---:|---:|---|
+| Yes | 2,611 | 1,903 | matched (different wording) 1,115 / same name 849 / product type present but invoice lacks detail 647 |
+| No | 605 | 564 | not in catalog 383 / 355 · competitor brand 222 / 209 |
+
+So the genuine BirlaNu catalogue gap is 383 rows / 355 descriptions; the 222 competitor-brand rows are
+not missing catalogue. Of the 2,611 that exist, 647 are ambiguous variant (the product type is in the
+catalogue, the invoice does not state SDR/class/length) and 1,115 need wording normalisation.
+
+Parties, crossed with the unique-party status (`annotate_amit_status.py`):
+
+| Side | unique | not mapped | present but unmapped | absent → onboarding |
+|---|---:|---:|---:|---:|
+| Distributors | 40 | 19 | 3 | 16 |
+| Retailers | 358 | 196 | 51 | 144 |
+
+The 3 distributors are GST-matched (Sri Lakshmi Electrical & Hardware, Jeevish Sales, Nepolite
+Concrete). The 51 retailers are name-matched (50) or phone-matched (1); those workspace records carry
+no GST and one is a clearly wrong name match (Tatsam Enterprises → Manish Choudhary), so 51 is a
+candidate count. The presence check keys on the GST/name in his sheet, so it has false negatives:
+6 distributors and 12 retailers that the report has fully mapped read `No` because his GST has typos
+(Kamal Sanitary, Future Trade Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore;
+12 retailers).
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -349,6 +382,9 @@ python3 code/build_turnover_truth.py \
   matches are flagged. Adds `Distributor master check` (the 45 report-unmapped distributors with the
   user's 02-Nov manual verdict: 34 not in master, 1 in master but unmapped — Jeevish, 3 BirlaNu
   GSTINs, 7 no-GST) → `03_review/Mapping issue list shared by amit - unique parties.xlsx`.
+- `code/presence_check_summary.py` — buckets the platform's presence-check workbook (products by
+  `In Catalog`/`Detail`, parties by `In Workspace`/`Matched By`) and crosses it with the unique-party
+  status → `outputs/turnover-truth/presence-check.json`; numbers in the Presence check section above.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
