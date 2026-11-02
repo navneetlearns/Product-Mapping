@@ -417,3 +417,26 @@ and 12 retailers that the report has fully mapped read `No` because his GST has 
 
 Full bucket tables: tracker §11 and `03_review/Presence check - brief.md`; reproduce with
 `eval-datasets/code/presence_check_summary.py` → `outputs/turnover-truth/presence-check.json`.
+
+---
+
+## 11. Platform status note checked (2026-11-02)
+
+The platform team's summary (69 distributors / 518 retailers / 3,217 products; 9 / 98 / 21 marked
+unmapped; all 9 distributors "already mapped") does not hold together against the 1-Nov report:
+
+- **Presence rows tie**: 36 distributors / 295 retailers / 2,611 products match `In Workspace` /
+  `In Catalog = Yes` exactly. But they are rows, not parties — 16 + 1 mixed distributors, 196 + 2
+  mixed retailers, 1,903 product descriptions.
+- **Record counts**: 69 distributors is right; 518 retailers and 3,217 products are the tabs'
+  `max_row` including the header — 517 and 3,216 data rows, and only 2,359 unique product
+  descriptions.
+- **Unmapped counts**: the report has only Identified / Not Identified. Strict join gives 32/69
+  distributor rows (11 of the 36 present; 3 names) and 280/517 retailer rows (89 of the 295 present;
+  51 names). No cut produces 9 or 98; the closest are 8 distributor and 91 retailer invoices.
+- **Products**: 21 is close to the 22 descriptions present in the master with every line Unmapped,
+  but it ignores the 605 rows / 564 descriptions not in the master (383 genuine gap + 222 competitor
+  brand) and the 2,240 MBNF descriptions.
+
+Verdict: usable as a presence check, not as a mapping count. The party-level residue is 3
+distributors / 51 retailers. Reproduce with `eval-datasets/code/verify_platform_note.py`; tracker §12.

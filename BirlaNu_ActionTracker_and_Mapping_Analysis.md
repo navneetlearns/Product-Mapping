@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
 Last updated: 2026-11-02
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11).
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -543,6 +543,34 @@ differ in wording. The product problem is variant detail and vocabulary, not mis
   Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore; 12 retailers). So its raw No
   counts (23 distributors / 160 retailers) overstate absence; the intersection with our status above
   is the defensible number.
+
+---
+
+## 12. Platform status note checked (2026-11-02)
+
+The ZoTok side circulated a summary — 69 distributors / 518 retailers / 3,217 products, of which
+9 / 98 / 21 are "marked unmapped", and all 9 distributors are already mapped on the invoice list
+page. Checked line by line against the 1-Nov report and the presence-check sheet with
+`eval-datasets/code/verify_platform_note.py`.
+
+| Claim | Verdict | What the sources say |
+|---|---|---|
+| 69 distributor records | correct | 69 rows; 40 unique names |
+| 36 present in catalogue | correct as rows | 16 names all-present + 1 mixed; 23 absent; "catalogue" = workspace |
+| 9 marked unmapped | not reproducible | report has only Identified / Not Identified; strict join: 32/69 rows, 11/36 present rows, 3 names wholly unmapped, 10 distinct invoices; closest cut is 8 invoices all-unmapped |
+| all 9 already mapped on the invoice page | unverifiable here | if true, the discrepancy is 3 parties / 11 rows, not 9 parties |
+| 518 retailer records | wrong | 517 data rows; 518 is the tab's `max_row` including the header |
+| 295 present in Customer Master | correct as rows | 196 names all-present + 2 mixed; 160 absent |
+| 98 marked unmapped | not reproducible | strict join: 280/517 rows, 89/295 present rows, 51 names present, 85 present invoices; closest invoice cut 91 |
+| 3,217 product descriptions | wrong | 3,216 line rows; only 2,359 unique descriptions (2,455 with the looser normaliser) — rows are not descriptions |
+| 2,611 present in Product Master | correct as rows | 1,903 unique descriptions |
+| 21 marked unmapped | roughly right | 22 unique descriptions present in the master have every line Unmapped; 236 have at least one Unmapped line |
+| "only 21 products flagged" | misleading | 605 rows / 564 descriptions are not in the master at all (383 genuine gap + 222 competitor brand); 2,240 descriptions carry MBNF |
+
+The note's three presence counts tie exactly to the presence sheet at row level. Its record counts are
+row counts and two of them include the header. Its unmapped counts are not party counts — the
+party-level residue is **3 distributors / 51 retailers**, and 21 is only the present-in-master-and-
+wholly-Unmapped product slice.
 
 ---
 

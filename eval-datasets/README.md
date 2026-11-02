@@ -301,6 +301,18 @@ candidate count. The presence check keys on the GST/name in his sheet, so it has
 (Kamal Sanitary, Future Trade Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore;
 12 retailers).
 
+## Platform status note checked (2026-11-02)
+
+The platform side's summary — 69 distributors / 518 retailers / 3,217 products, with 9 / 98 / 21
+marked unmapped — was checked with `code/verify_platform_note.py`. Presence rows tie exactly
+(36 / 295 / 2,611), but they are rows, not parties (16+1 / 196+2 / 1,903 descriptions). The record
+counts 518 and 3,217 are the tabs' `max_row` including the header; the data rows are 517 and 3,216,
+and the product tab holds 2,359 unique descriptions. The report has only Identified / Not Identified,
+so 9 and 98 are not party counts — strict join gives 32/69 and 280/517 rows, 11/36 and 89/295 present
+rows, and 3 / 51 present unique names. The product 21 is close to the 22 descriptions present in the
+master with every line Unmapped, but ignores the 605 rows / 564 descriptions absent from the master
+(383 genuine gap + 222 competitor brand) and 2,240 MBNF descriptions.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -385,6 +397,9 @@ candidate count. The presence check keys on the GST/name in his sheet, so it has
 - `code/presence_check_summary.py` — buckets the platform's presence-check workbook (products by
   `In Catalog`/`Detail`, parties by `In Workspace`/`Matched By`) and crosses it with the unique-party
   status → `outputs/turnover-truth/presence-check.json`; numbers in the Presence check section above.
+- `code/verify_platform_note.py` — checks the platform team's status note line by line: rows vs
+  unique names, presence rows vs names, strict row / present-row / party / invoice cuts, and product
+  descriptions wholly vs partly Unmapped; numbers in the Platform status note section above.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
