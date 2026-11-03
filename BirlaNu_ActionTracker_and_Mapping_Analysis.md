@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
 Last updated: 2026-11-03
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13).
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13) + the sqlit/SSM access path verified and documented (runbook in db-schemas).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -583,6 +583,9 @@ Input: `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema, 80,946 by
 `~/AgentWork/vault/zotok/db-schemas/turnover-invoice-ddl-analysis.md`; table inventory:
 `turnover-invoice-schema.md`.
 
+- **Access:** sqlit 1.6.5 → `127.0.0.1:5434` (SSM port-forward) → Postgres; setup/troubleshooting in
+  `~/AgentWork/vault/zotok/db-schemas/sqlit-ssm-connection-runbook.md`. The connection is verified
+  (2026-11-03); the findings below remain DDL-derived until row-level checks are run.
 - 32 tables: 19 business/domain + 11 LangGraph runtime + 2 infra. The product master is **not** here;
   it lives in commerceservice (`product_variant`, `ProductVariantAttributes`, `product_mapping`,
   `POFileLine`).
@@ -602,8 +605,8 @@ Input: `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema, 80,946 by
 - No FKs on the line-scheme bridge, `turnover_scheme_actions.scheme_id`, `turnover_customer.invoice_id`,
   or the history tables. `turnover_customer.invoice_id` is varchar vs uuid; workspace IDs are
   uuid/varchar/text across tables. These are the join hazards to control.
-- Status: DDL-only; exact status strings, the `Material No` column, JSON shapes, and the report formula
-  still need one live sample. No DB connection was made.
+- Status: DDL-only findings; the sqlit/SSM connection is verified, but exact status strings, the
+  `Material No` column, JSON shapes, and the report formula still need one live sample.
 
 ---
 
