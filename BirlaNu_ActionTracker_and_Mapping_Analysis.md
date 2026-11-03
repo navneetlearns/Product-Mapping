@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-11-02
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12).
+Last updated: 2026-11-03
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -27,6 +27,9 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
   (secondary invoice report, 2026-01-01 → 2026-11-01; 53,187 lines / 3,135 invoice numbers / ₹19.80 Cr);
   coverage workbook `Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx`, readout
   `TRUTH-MAPPING-BASELINE.md`, builder `eval-datasets/code/build_turnover_truth.py` — see §10.
+- Turnover DB DDL (2026-11-03): `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema,
+  80,946 bytes); analysis `~/AgentWork/vault/zotok/db-schemas/turnover-invoice-ddl-analysis.md`,
+  inventory `turnover-invoice-schema.md` — see §13.
 
 ---
 
@@ -571,6 +574,36 @@ The note's three presence counts tie exactly to the presence sheet at row level.
 row counts and two of them include the header. Its unmapped counts are not party counts — the
 party-level residue is **3 distributors / 51 retailers**, and 21 is only the present-in-master-and-
 wholly-Unmapped product slice.
+
+---
+
+## 13. Turnover DB DDL — where mapping and report truth live (2026-11-03)
+
+Input: `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema, 80,946 bytes). Full analysis:
+`~/AgentWork/vault/zotok/db-schemas/turnover-invoice-ddl-analysis.md`; table inventory:
+`turnover-invoice-schema.md`.
+
+- 32 tables: 19 business/domain + 11 LangGraph runtime + 2 infra. The product master is **not** here;
+  it lives in commerceservice (`product_variant`, `ProductVariantAttributes`, `product_mapping`,
+  `POFileLine`).
+- Product-mapping result is on `turnoverinvoice_line`: `product_name` (raw),
+  `sku_code`/`product_variant_id`/`mapped_product_name` (mapped), `product_match_context` (JSON evidence),
+  `mapping_confidence_score`, `status`, `issues`. The source invoice line has `status` but no SKU; the
+  turnover line is authoritative for the mapped SKU.
+- Distributor-specific catalog path: `turnoverinvoice.cfa_id` → commerceservice
+  `product_mapping.cfaId` (+ `channelId`). Empty `product_mapping` for the CFA explains
+  `fetch_distributor_catalog` returning `[]`; it is a coverage/CFA identity issue, not necessarily a
+  product-name issue.
+- Turnover report: `Parsing Status` → `turnoverinvoice_line.status`; `Material No` → likely
+  `sku_code`; `Distributor/Retailer Status` → likely `turnoverinvoice_details.matched_*` (there is no
+  explicit status column); `Invoice Status` → `turnoverinvoice.status`; amounts → line
+  `total_amount`/`taxable_value` vs header `invoice_amount` (header discounts/round-off/freight explain
+  residuals); duplicate-invoice dedupe is a report rule, not a DB constraint.
+- No FKs on the line-scheme bridge, `turnover_scheme_actions.scheme_id`, `turnover_customer.invoice_id`,
+  or the history tables. `turnover_customer.invoice_id` is varchar vs uuid; workspace IDs are
+  uuid/varchar/text across tables. These are the join hazards to control.
+- Status: DDL-only; exact status strings, the `Material No` column, JSON shapes, and the report formula
+  still need one live sample. No DB connection was made.
 
 ---
 
