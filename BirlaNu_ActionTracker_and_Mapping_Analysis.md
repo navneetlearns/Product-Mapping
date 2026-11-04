@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-11-03
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13) + the sqlit/SSM access path verified and documented (runbook in db-schemas).
+Last updated: 2026-11-04
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13) + the sqlit/SSM access path verified and documented (runbook in db-schemas) + the 4-Nov report refresh and the 51-retailer matching-fix queue (§14).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -607,6 +607,67 @@ Input: `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema, 80,946 by
   uuid/varchar/text across tables. These are the join hazards to control.
 - Status: DDL-only findings; the sqlit/SSM connection is verified, but exact status strings, the
   `Material No` column, JSON shapes, and the report formula still need one live sample.
+
+---
+
+## 14. Report refresh (4-Nov export) and the 51-retailer matching-fix queue (2026-11-04)
+
+Input: the same `01_source/Turn Over Report.xlsx` path, re-exported 2026-11-04 06:07 with filters
+2026-01-01 → 2026-11-04. Nothing had processed it; the numbers in §10 and `TRUTH-MAPPING-BASELINE.md`
+describe the 1-Nov snapshot.
+
+Shape: 54,903 line rows (was 53,187) · 3,431 invoice+date keys · 10,005 Duplicate-Invoice lines →
+44,898 deduplicated (was 43,438).
+
+| Axis | 1-Nov | 4-Nov |
+|---|---|---|
+| Retailer lines identified | 38,699 / 43,438 (89.1%) | 40,092 / 44,898 (89.3%) |
+| Distributor lines identified | 41,787 / 43,438 (96.2%) | 43,787 / 44,898 (97.5%) |
+| Product lines (Mapped / MBNF / Unmapped / NA) | 28,166 / 6,024 / 9,178 / 70 | 28,834 / 6,337 / 9,657 / 70 |
+| Retailer entities | 1,233 = 964 full / 17 partial / 252 none | 1,271 = 992 / 28 / 251 |
+
+Retailer entities were recomputed with the §10 identity rule (GST → phone → name+pin) and the dedup
+population; distributor and product ENTITY counts were not recomputed, so quote the line figures only.
+
+**Export-format defect.** The 4-Nov file adds a leading `Column1…` row, so the header moved from row 3
+to row 4. `build_turnover_truth.load_report`'s fixed `header=2` read the filter line as the header and
+silently cached a garbage frame (every downstream join then returned "no match"). The loader now sniffs
+the header row (first cell == `Invoice Number`) and was re-tested on the 4-Nov file: 54,903 × 57. The
+1-Nov cache (`turnover-truth-2026-11-01.csv.gz`) remains valid.
+
+**Amit's retailer tab against the 4-Nov report** (party grain, reusing `annotate_amit_status.py`):
+517 rows / 474 invoices / 363 spellings → 358 parties; status 194 not mapped · 17 partly · 145 fully ·
+2 no party match (1-Nov: 196 / 16 / 144 / 2). Presence: **198 parties in the master, 160 absent** —
+295 is the ROW count inside 517 (222 rows read No). The cross:
+
+| | present | absent |
+|---|---:|---:|
+| not mapped | 51 | 143 |
+| partly mapped | 13 | 4 |
+| fully mapped | 133 | 12 |
+| no party match | 1 | 1 |
+
+Row grain inside the 295 present rows: 200 mapped · 3 partly · 89 not mapped · 3 no party match.
+(19 rows flagged `No` by the presence check are mapped in the report — the known GST-typo false
+negatives.) "358 → 295 → 51" therefore mixes grains: it is 358 parties → 198 present → 51 unmapped.
+
+**Matching-fix queue.** `03_review/Retailers present but unmapped - 51.xlsx` + `.csv`: one row per
+party with his GST/phone, the workspace record the presence check returned, its match basis (49 exact
+name · 2 phone · 0 GST) and `GST relation` (6 near-typo ≤2 chars · 11 different GST · 34 no GST on the
+workspace record). Builder `eval-datasets/code/build_master_match_queue.py`; renders clean (0 clipped
+cells). Read: only the 6 are clean GST-typo fixes; the 11 need identity confirmation because the exact
+name match carries a different GST; the 34 can only be matched on name/phone.
+
+**Name cross-check, held back:** against the user's 63-name list, 46 entries match the 51. The six of
+the 51 not on the list are ASHOK ENTERPRISES, BALA JI ENTERPRISES, MAHADEV ELECTRICALS, RAJESHWAR
+ELECTRICALS, SHIVAM ENTERPRISE and one party whose name is literally `NA` (GST 29BPWPNG683Q1ZA). Most
+of the list entries outside the 51 are already fully mapped in the report (Riddhi Siddhi 224/224,
+Shiv Tara 109/109, BDC PROJECT 278/278; Kishan Traders Thana Chappur 57/71 partly), so the list reads as
+a master list rather than an unmapped list.
+
+Still stale, deliberately: the delivered `Mapping issue list shared by amit - unique parties.xlsx` and
+`Truth - mapping coverage.xlsx` carry the 1-Nov statuses — the 4-Nov run wrote to `/tmp` for this check.
+Refresh them when the client needs current status columns.
 
 ---
 

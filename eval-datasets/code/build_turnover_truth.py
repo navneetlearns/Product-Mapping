@@ -50,7 +50,7 @@ import time
 from pathlib import Path
 
 import pandas as pd
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
@@ -98,7 +98,18 @@ def load_report(xlsx: Path, cache_dir: Path, refresh: bool) -> tuple[pd.DataFram
         df = pd.read_csv(cache, dtype=str, keep_default_na=False, na_values=[])
     else:
         log(f"reading {xlsx.name} (this is the slow part, ~80 s)")
-        df = pd.read_excel(xlsx, sheet_name="Secondary Invoice Report", header=2, dtype=str)
+        # The export's preamble is not fixed: the 2026-11-04 file added a leading "Column1…" row, so a
+        # hard-coded header=2 silently read the filter line as the header and cached a garbage frame.
+        # Locate the real header row (first cell == "Invoice Number") instead of assuming a position.
+        wb = load_workbook(xlsx, read_only=True, data_only=True)
+        ws = wb["Secondary Invoice Report"]
+        header_row = 2  # 0-based fallback = third row (the 2026-11-01 layout)
+        for i, row in enumerate(ws.iter_rows(min_row=1, max_row=10, values_only=True)):
+            if row and str(row[0]).strip() == "Invoice Number":
+                header_row = i
+                break
+        wb.close()
+        df = pd.read_excel(xlsx, sheet_name="Secondary Invoice Report", header=header_row, dtype=str)
         df.columns = [str(c).strip() for c in df.columns]
         df = df.loc[:, [c for c in df.columns if c and not c.startswith("Unnamed")]]
         df.to_csv(cache, index=False, compression="gzip")

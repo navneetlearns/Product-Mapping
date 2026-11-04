@@ -440,3 +440,26 @@ unmapped; all 9 distributors "already mapped") does not hold together against th
 
 Verdict: usable as a presence check, not as a mapping count. The party-level residue is 3
 distributors / 51 retailers. Reproduce with `eval-datasets/code/verify_platform_note.py`; tracker §12.
+
+## 12. 4-Nov report refresh — the retailer funnel, correct grains (2026-11-04)
+
+The Turn Over Report was re-exported on 4-Nov (54,903 lines → 44,898 deduplicated). Against it, his
+retailer tab reads: 517 rows / 474 invoices / 363 spellings → **358 parties**; 194 not mapped · 17
+partly · 145 fully · 2 no party match (1-Nov: 196 / 16 / 144 / 2).
+
+The presence check is the trap: **295 is a ROW count** (295 of his 517 rows read `In Workspace = Yes`,
+222 read No). At party grain **198 of the 358 are in the master and 160 are absent**. Crossing the two:
+
+| | present | absent |
+|---|---:|---:|
+| not mapped | 51 | 143 |
+| partly mapped | 13 | 4 |
+| fully mapped | 133 | 12 |
+| no party match | 1 | 1 |
+
+So "358 shared → 295 in master → 51 unmapped" mixes grains twice; the party-level sentence is
+**358 → 198 → 51**, with 13 partly and 133 fully mapped among the present. The 51 present-and-unmapped
+parties are the matching-fix queue: `03_review/Retailers present but unmapped - 51.xlsx` (GST relation:
+6 near-typo, 11 different GST, 34 no GST on the workspace record; presence matched 49 by exact name and
+2 by phone, none by GST). The 143 absent-not-mapped parties are the onboarding queue. Builder
+`eval-datasets/code/build_master_match_queue.py`; tracker §14.

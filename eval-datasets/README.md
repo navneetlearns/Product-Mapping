@@ -313,6 +313,28 @@ rows, and 3 / 51 present unique names. The product 21 is close to the 22 descrip
 master with every line Unmapped, but ignores the 605 rows / 564 descriptions absent from the master
 (383 genuine gap + 222 competitor brand) and 2,240 MBNF descriptions.
 
+## 4-Nov report refresh and the 51-retailer matching-fix queue (2026-11-04)
+
+The Turn Over Report at `01_source/Turn Over Report.xlsx` was re-exported on 4-Nov (filters 2026-01-01 →
+2026-11-04). Line grain: 54,903 lines (was 53,187), 10,005 duplicate-flagged → 44,898 deduplicated;
+retailer 40,092 identified (89.3%, was 38,699/89.1%), distributor 43,787 (97.5%, was 41,787/96.2%),
+product 28,834 Mapped / 6,337 MBNF / 9,657 Unmapped / 70 NA. Retailer entities recomputed with the §10
+rule: 1,271 = 992 fully / 28 partly / 251 not identified (was 1,233 = 964/17/252). Distributor and
+product entity counts were NOT recomputed.
+
+Amit's retailer tab at party grain, 4-Nov: 358 parties → 194 not mapped / 17 partly / 145 fully /
+2 no party match; 198 present in the master (295 is the ROW count) and 160 absent. Cross: 51 present &
+unmapped, 13 present & partly, 133 present & fully, 1 present & unmatched. Builder
+`code/build_master_match_queue.py` turns the present & unmapped cell into
+`03_review/Retailers present but unmapped - 51.xlsx` + `.csv` — his GST/phone, the workspace record the
+presence check returned, the match basis (49 exact name / 2 phone / 0 GST) and `GST relation`
+(6 near-typo / 11 different GST / 34 no GST on the workspace record). Tracker §14 has the full table.
+
+The 4-Nov file also changed the export preamble: it adds a leading `Column1…` row, moving the header
+from row 3 to row 4. `load_report` used a fixed `header=2`, which read the filter line as the header and
+silently cached a garbage frame for every downstream join; it now locates the header row (first cell ==
+`Invoice Number`). Re-tested on the 4-Nov file: 54,903 × 57.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
