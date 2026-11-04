@@ -22,11 +22,14 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
   `Mapping_Inconsistency_Analysis.md`, per-row review workbook
   `Mapping Inconsistency/03_review/Mapping issue analysis.xlsx`, classifier
   `eval-datasets/code/classify_mapping_issues.py` — see §9.
-- Turn Over Report (mapping truth, downloaded 2026-11-01):
+- Turn Over Report (mapping truth — the path now holds the 4-Nov re-export, §14; the 1-Nov snapshot
+  behind §10 is preserved as the cached CSV):
   `/mnt/f/Product/zotok/Product Mapping/Mapping Inconsistency/01_source/Turn Over Report.xlsx`
-  (secondary invoice report, 2026-01-01 → 2026-11-01; 53,187 lines / 3,135 invoice numbers / ₹19.80 Cr);
-  coverage workbook `Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx`, readout
-  `TRUTH-MAPPING-BASELINE.md`, builder `eval-datasets/code/build_turnover_truth.py` — see §10.
+  (secondary invoice report, 2026-01-01 → 2026-11-04; 54,903 lines / 3,431 invoice+date keys / 44,898
+  deduplicated; the 1-Nov snapshot read 53,187 lines / 3,135 invoice numbers / ₹19.80 Cr);
+  coverage workbook `Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx` (1-Nov build),
+  readout `TRUTH-MAPPING-BASELINE.md`, builder `eval-datasets/code/build_turnover_truth.py` — see §10
+  and §14.
 - Turnover DB DDL (2026-11-03): `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema,
   80,946 bytes); analysis `~/AgentWork/vault/zotok/db-schemas/turnover-invoice-ddl-analysis.md`,
   inventory `turnover-invoice-schema.md` — see §13.
@@ -407,6 +410,7 @@ regression set (554 corpus + 100 exact + 19 pairs).
 
 Input: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Turn Over Report.xlsx`
 (downloaded 2026-11-01 15:00; sheet `Secondary Invoice Report`; filters 2026-01-01 → 2026-11-01).
+**Superseded on disk by the 4-Nov re-export — see §14; this section is the 1-Nov snapshot.**
 The user designated this file as the source of truth for how many distributors, retailers and products
 are mapped, with **retailer/distributor as the top priority and products second**.
 
