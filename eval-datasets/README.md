@@ -400,6 +400,14 @@ master with every line Unmapped, but ignores the 605 rows / 564 descriptions abs
 - `code/verify_platform_note.py` — checks the platform team's status note line by line: rows vs
   unique names, presence rows vs names, strict row / present-row / party / invoice cuts, and product
   descriptions wholly vs partly Unmapped; numbers in the Platform status note section above.
+- `code/build_master_match_queue.py` — the matching-fix queue behind the retailer tab: the parties that
+  are `Not mapped` on every invoice in his sheet AND `In Workspace = Yes` in the platform presence
+  check (51 of 358 at the 4-Nov export). One row per party with his GST/phone, the workspace record the
+  presence check returned, how it matched (49 exact name / 2 phone; none GST) and a `GST relation`
+  column (same / near ≤2 chars / different / no GST in workspace — 6 / 11 / 34 here) so dev can tell a
+  typo fix from a possible wrong name match → `03_review/Retailers present but unmapped - 51.xlsx` +
+  `.csv`. Reuses `annotate_amit_status`'s party logic, so the 51 equal that workbook's present/not-mapped
+  cell.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
