@@ -723,6 +723,16 @@ invoice number and date, qty and line value; duplicate-invoice lines are flagged
 `eval-datasets/code/build_never_mapped_products.py`. One line (`HRS5AM2018`, Samarth Enterprises →
 M/s Devika & Company) carries no invoice date in the export — report-data defect, kept blank.
 
+**Other-brand split — 11 of the 56 (₹76,840, 18.5% of the ₹4.15 L gap).** Four are flagged by the
+platform's own presence check as `Competitor brand`: NEROLAC WALL PUTTY _20K, FINOLEX - 4" RCC COUPLER,
+25MM and 32MM CPVC FABT (SUDHAKAR). Six more read as other-brand / non-BirlaNu category from the
+description: ROTO TANK 1000 LITRE 3PLY, QUICKFIX PVC SOL TIN 500ML (Quickfix is a Wembley solvent
+brand), HC EWC 31 W S TRAP, BODY OF CONC. WALL MIXER CAST BODY, Diverter Jal, CPVC Bibcock 1". One is
+probable: 4 LAYER GRAND TANK 1000 LTR (BirlaNu tanks are BIRLA HIL 3Layer). The platform flag misses
+these because `tank` and `solvent` exist in the catalogue and the check tests for a competitor keyword,
+not the product category. The other **45 are BirlaNu-family or brandless — the actionable set**. The
+workbook's `Brand read` / `Evidence` columns carry the per-product verdict.
+
 ---
 
 ## Related AP refs

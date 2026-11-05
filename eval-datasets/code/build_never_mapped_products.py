@@ -32,6 +32,23 @@ HEADER_FILL = PatternFill("solid", fgColor="1F3864")
 HEADER_FONT = Font(bold=True, color="FFFFFF", size=10)
 BODY_FONT = Font(size=10)
 
+# Brand read for the 56 (2026-11-04 snapshot). "platform" = the platform's own presence check
+# flags it Competitor brand; "description" = brand name / non-BirlaNu category visible in the text.
+BRAND_READ: dict[str, tuple[str, str]] = {
+    "NEROLAC WALL PUTTY _20K": ("Other brand", "platform: Competitor brand (Nerolac)"),
+    'FINOLEX - 4" RCC COUPLER': ("Other brand", "platform: Competitor brand (Finolex)"),
+    "25MM CPVC FABT ( SUDHAKAR)": ("Other brand", "platform: Competitor brand (Sudhakar)"),
+    "32MM CPVC FABT ( SUDHAKAR)": ("Other brand", "platform: Competitor brand (Sudhakar)"),
+    "ROTO TANK 1000 LITRE 3PLY": ("Other brand", "description: Roto tank brand; not BIRLA HIL tank naming"),
+    "QUICKFIX PVC SOL TIN 500ML": ("Other brand", "description: Quickfix solvent-cement brand (Wembley)"),
+    "HC EWC 31 W S TRAP": ("Other brand", "description: EWC sanitaryware; not a BirlaNu category"),
+    "BODY OF CONC. WALL MIXER CAST BODY": ("Other brand", "description: concealed mixer body; not a BirlaNu category"),
+    "Diverter Jal": ("Other brand", "description: faucet diverter; not a BirlaNu category"),
+    'CPVC Bibcock 1"': ("Other brand", "description: bibcock/tap; no bibcock in the BirlaNu catalogue"),
+    "4 LAYER GRAND TANK 1000 LTR ( WHITE )": ("Other brand?",
+                                              "description: 4-layer tank, Grand naming; BirlaNu tanks are BIRLA HIL 3Layer"),
+}
+
 
 def load_amit_products(xlsx: Path) -> pd.DataFrame:
     wb = load_workbook(xlsx, read_only=True, data_only=True)
@@ -105,7 +122,9 @@ def main() -> None:
     prod = prod.merge(example, on="desc_norm", how="left").merge(retailer_example, on="desc_norm", how="left")
 
     prod_rows = [[r.amit_desc, int(r.lines), int(r.dups), int(r.dists), int(r.invs),
-                  round(float(r.value), 2), r.dist_examples or "", r.ret_examples or ""]
+                  round(float(r.value), 2), r.dist_examples or "", r.ret_examples or "",
+                  BRAND_READ.get(r.amit_desc, ("BirlaNu / generic", ""))[0],
+                  BRAND_READ.get(r.amit_desc, ("BirlaNu / generic", ""))[1]]
                  for r in prod.itertuples()]
     total_value = round(float(prod["value"].sum()), 2)
 
@@ -127,8 +146,9 @@ def main() -> None:
     wb.remove(wb.active)
     sheet(wb, "Never mapped products",
           ["Product (Amit list)", "Lines", "Duplicate lines", "Distributors", "Invoices",
-           "Value (₹, excl tax)", "Distributor(s) on those lines", "Retailer(s) on those lines"],
-          prod_rows, [58, 8, 10, 12, 9, 16, 44, 44], money_cols={6})
+           "Value (₹, excl tax)", "Distributor(s) on those lines", "Retailer(s) on those lines",
+           "Brand read", "Evidence"],
+          prod_rows, [52, 8, 10, 12, 9, 16, 40, 40, 16, 52], money_cols={6})
     ws = wb["Never mapped products"]
     ws.cell(row=ws.max_row + 1, column=1, value="TOTAL").font = Font(bold=True, size=10)
     c = ws.cell(row=ws.max_row, column=6, value=total_value)
@@ -141,6 +161,9 @@ def main() -> None:
           line_rows, [42, 42, 30, 18, 12, 30, 18, 14, 9, 18, 11, 10, 8, 14], money_cols={14})
 
     notes = wb.create_sheet("Method")
+    other = [r for r in prod_rows if str(r[8]).startswith("Other brand")]
+    other_val = sum(float(r[5]) for r in other)
+    other_platform = sum(1 for r in other if "platform:" in str(r[9]))
     yr = l["Invoice Date"].str[:4]
     date_note = (f"as exported: 2018 ×{int(yr.eq('2018').sum())}, 2016 ×{int(yr.eq('2016').sum())}, "
                  f"2025 ×{int(yr.eq('2025').sum())}, blank ×{int(l['Invoice Date'].eq('').sum())} — "
@@ -156,6 +179,9 @@ def main() -> None:
         ["Definition", "Never mapped = no line for the description carries Parsing Status Mapped or "
                        "Mapped - Branding Not Found anywhere in the export"],
         ["Counts", f"{len(prod)} products / {len(l)} lines / ₹{total_value:,.2f} (line amount excl. tax)"],
+        ["Other brand", f"{len(other)} products / ₹{other_val:,.2f} — {other_platform} flagged by the platform's "
+                        "presence check (Competitor brand); the rest read from the brand name / non-BirlaNu "
+                        "category. The other 45 are BirlaNu-family or brandless descriptions."],
         ["Duplicates", "Lines flagged 'Duplicate invoice?' are duplicate-invoice records in the report; "
                        "they are included so the list matches the platform view"],
         ["Repeated lines", repeat_note],
@@ -182,6 +208,7 @@ def main() -> None:
                                      "Qty", "Line value (Rs, excl tax)"]).to_csv(csv_out, index=False)
 
     print(f"products {len(prod)} · lines {len(l)} · value ₹{total_value:,.2f}")
+    print(f"other-brand read: {len(other)} products / ₹{other_val:,.2f} ({other_platform} platform-flagged)")
     print("wrote", out)
     print("wrote", csv_out)
 
