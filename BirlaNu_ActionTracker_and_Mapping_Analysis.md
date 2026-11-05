@@ -1,7 +1,7 @@
 # BirlaNu — Action Tracker & Invoice Mapping Analysis
 
-Last updated: 2026-11-04
-Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13) + the sqlit/SSM access path verified and documented (runbook in db-schemas) + the 4-Nov report refresh and the 51-retailer matching-fix queue (§14).
+Last updated: 2026-11-05
+Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action tracker review + a live mapping-pipeline trace post-mortem + LangSmith turnover-mapping eval analysis (§6) + the sentinel lane exports cleaned and corrected (§7) + turnover OCR-setup benchmark arm verified (§8) + the BirlaNu "mapping issue" list (Amit, 29-Oct) verified against the catalogue (§9) + the Turn Over Report designated as the mapping truth, with distributor/retailer/product coverage measured from it (§10) + Amit's own tabs annotated with each party's report status (§10) + the platform's presence check bucketed against the catalogue and workspace (§11) + the platform team's status note checked line by line (§12) + the turnover DB DDL mapped to the product-mapping and turnover-report paths (§13) + the sqlit/SSM access path verified and documented (runbook in db-schemas) + the 4-Nov report refresh and the 51-retailer matching-fix queue (§14) + Amit's unique SKU-tab products compared with the 4-Nov report at product grain (§15).
 
 ## Source artifacts
 - Action Tracker (PDF, exported from the live workbook):
@@ -672,6 +672,50 @@ a master list rather than an unmapped list.
 Still stale, deliberately: the delivered `Mapping issue list shared by amit - unique parties.xlsx` and
 `Truth - mapping coverage.xlsx` carry the 1-Nov statuses — the 4-Nov run wrote to `/tmp` for this check.
 Refresh them when the client needs current status columns.
+
+---
+
+## 15. Amit's unique products vs the 4-Nov report (2026-11-05)
+
+Input: the `SKU not mapped` tab of `01_source/Mapping issue list shared by amit.xlsx` — 3,216 data rows,
+one description column. Report: the 4-Nov export already described in §14 (54,903 lines / 44,898 after
+dropping duplicate-invoice rows).
+
+**Uniqueness.** `cmi.norm_text` dedupes case, quote/inch spellings, unit spacing and the known typo
+pairs (`pusfit`/`push fit`, `socket`/`soc`, `sofit`/`solfit`): 3,216 rows → 2,913 exact strings →
+2,737 case/space → **2,359 unique products**. MBNF counts as mapped; product status is `Parsing
+Status`, which is decided per line and distributor-specific, so "partly mapped" is a real state.
+
+| Product status | dedup population | all rows as delivered |
+|---|---:|---:|
+| Fully mapped | 1,945 | 1,903 |
+| Partially mapped | 350 | 400 |
+| Never mapped | 64 | 56 |
+| total | 2,359 | 2,359 |
+
+**Answer at product grain: 56 of the 2,359 unique products (2.4%) never appear on a mapped line
+anywhere in the 4-Nov report; 400 are partly mapped and 1,903 fully mapped.** On the deduplicated
+population (the §10 baseline convention) the split is 64 / 350 / 1,945. If the question is instead
+"still carries at least one Unmapped line", the count is **456** (414 dedup) — that is the wider
+"not clean" set, not "unmapped".
+
+**Why the two populations differ.** The export carries 10,005 duplicate-invoice lines whose `Parsing
+Status` can differ from the non-duplicate copy: 11 of the dedup never-mapped 64 have a mapped duplicate
+line, and 32 products appear only on duplicate rows. **No product on his list is absent from the report
+entirely** — all 2,359 appear somewhere.
+
+**The never-mapped set** (dedup: 64 products / 107 lines / 57 invoices / 32 distributors / ₹4.51 L).
+Four carry a clear competitor brand and are unmapped by design — NEROLAC WALL PUTTY _20K, ROTO TANK
+1000 LITRE 3PLY, 20MM UPVC UNION SUPREME, ASTRAL UPVC STEP OVER BEND 40SCH 1 1/2". The rest are
+BirlaNu descriptions with wording/qualifier defects; largest: `Cpvc Pipe 11/2 13.5 SDR` (13 lines /
+7 invoices), the U-Pipe SCH40 sizes 1/2"–1 1/4" (13 lines), `CPVC9600037- CPVC ELBOW 90° 3/4` (4
+lines), `CPVC Elbow 45D 40mm - B` (4 lines).
+
+**Repro:** `eval-datasets/code/amit_products_vs_report.py` (default paths, `--refresh` to re-read the
+xlsx); per-product CSV `outputs/turnover-truth/amit-products-vs-report-2026-11-04.csv`. Caveat: exact
+join after normalisation — a product reworded beyond the normaliser would read never-mapped, but since
+all 2,359 appear in the report that class is empty; 70 report lines carry no parsing status, and MBNF
+is counted as mapped.
 
 ---
 

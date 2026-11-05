@@ -335,6 +335,16 @@ from row 3 to row 4. `load_report` used a fixed `header=2`, which read the filte
 silently cached a garbage frame for every downstream join; it now locates the header row (first cell ==
 `Invoice Number`). Re-tested on the 4-Nov file: 54,903 × 57.
 
+## Amit's unique products vs the report (2026-11-05)
+
+The `SKU not mapped` tab (3,216 rows) dedupes to **2,359 unique products** under `cmi.norm_text`
+(2,913 exact strings, 2,737 case/space). Joined to the 4-Nov report at description grain, product
+status is — export as delivered: **1,903 fully mapped / 400 partly mapped / 56 never mapped**; on the
+deduplicated population: 1,945 / 350 / 64. "Never mapped" = no mapped-tier line anywhere; 456 products
+still carry at least one Unmapped line. No product on his list is absent from the report (32 appear
+only on duplicate-invoice rows). Builder `code/amit_products_vs_report.py`, per-product CSV
+`outputs/turnover-truth/amit-products-vs-report-2026-11-04.csv`; tracker §15.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -430,6 +440,10 @@ silently cached a garbage frame for every downstream join; it now locates the he
   typo fix from a possible wrong name match → `03_review/Retailers present but unmapped - 51.xlsx` +
   `.csv`. Reuses `annotate_amit_status`'s party logic, so the 51 equal that workbook's present/not-mapped
   cell.
+- `code/amit_products_vs_report.py` — product-grain comparison of Amit's SKU tab (3,216 rows → 2,359
+  unique) against a report snapshot: per-product fully / partly / never mapped from `Parsing Status`,
+  reported on both the deduplicated population and all rows (duplicate-invoice rows flip a handful of
+  products). Writes `outputs/turnover-truth/amit-products-vs-report.csv`; tracker §15.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
