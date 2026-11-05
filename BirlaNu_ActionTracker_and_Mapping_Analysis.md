@@ -547,9 +547,13 @@ differ in wording. The product problem is variant detail and vocabulary, not mis
   a matching fix. This is the queue the 02-Nov manual master check (34 not in master) points at.
 - **Presence-check noise:** 6 distributors and 12 retailers that the report has fully mapped read `No`
   because the check joins on the GST in his sheet and his GST has typos (Kamal Sanitary, Future Trade
-  Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore; 12 retailers). So its raw No
-  counts (23 distributors / 160 retailers) overstate absence; the intersection with our status above
-  is the defensible number.
+  Com, Jagdamba, Maa Sherawalis, S.K. Enterprises, Satyam Home Decore; 12 retailers). A seventh,
+  A.K.Traders, is partly mapped with the same GST in his sheet and the report. So the raw No counts
+  (23 distributors / 160 retailers) overstate absence by those 7 / 12; 23 − 7 = **16 genuinely absent
+  distributor parties**, the same 16 in the table above — the intersection with our status is the
+  defensible number. Row grain: 33 of his 69 distributor rows read No — 21 belong to the 16 absent
+  parties, 9 to the 7 noise parties, and 3 are the G M Enterprise spellings that sit inside an
+  otherwise-present party.
 
 ---
 
