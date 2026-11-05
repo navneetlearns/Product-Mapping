@@ -717,6 +717,12 @@ join after normalisation — a product reworded beyond the normaliser would read
 all 2,359 appear in the report that class is empty; 70 report lines carry no parsing status, and MBNF
 is counted as mapped.
 
+**Line-level list handed to the dev team:** `03_review/Products never mapped - 56 (report 2026-11-04).xlsx`
++ `.csv` — 56 products / 103 lines with distributor (+GST, SAP code), retailer (+GST, mobile, pin),
+invoice number and date, qty and line value; duplicate-invoice lines are flagged, not dropped. Builder
+`eval-datasets/code/build_never_mapped_products.py`. One line (`HRS5AM2018`, Samarth Enterprises →
+M/s Devika & Company) carries no invoice date in the export — report-data defect, kept blank.
+
 ---
 
 ## Related AP refs

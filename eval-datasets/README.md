@@ -443,7 +443,11 @@ only on duplicate-invoice rows). Builder `code/amit_products_vs_report.py`, per-
 - `code/amit_products_vs_report.py` — product-grain comparison of Amit's SKU tab (3,216 rows → 2,359
   unique) against a report snapshot: per-product fully / partly / never mapped from `Parsing Status`,
   reported on both the deduplicated population and all rows (duplicate-invoice rows flip a handful of
-  products). Writes `outputs/turnover-truth/amit-products-vs-report.csv`; tracker §15.
+  products). Writes `outputs/turnover-truth/amit-products-vs-report-<snapshot>.csv`; tracker §15.
+- `code/build_never_mapped_products.py` — the never-mapped fix list for the dev team: one row per
+  product plus one row per unmapped report line with distributor, retailer, invoice number/date and
+  value. Writes the workbook + CSV to the F: `03_review/` folder (party identifiers — not committed
+  to this public repo); tracker §15.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 
