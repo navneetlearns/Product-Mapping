@@ -3,7 +3,7 @@
 Analysis of the three-sheet issue list shared by the BirlaNu team, checked against the
 18-Oct-2026 catalogue export and the 21-Oct production trace in the same folder.
 
-Last updated: 2026-11-02
+Last updated: 2026-11-05
 Workbook analysed: `F:\Product\zotok\Product Mapping\Mapping Inconsistency\01_source\Mapping issue list shared by amit.xlsx`
 Catalogue: `F:\Product\zotok\Product Mapping\Eval Related Product Mapping\products-18-October-2026-10-52-16.csv` (2,335 rows)
 Trace: `01_source\trace-01a15db1-41cb-73e2-a1b3-bd1cc5283723.json` (Vaibhav Enterprises, invoice GST-492, 21-Oct-2026)
@@ -463,3 +463,49 @@ parties are the matching-fix queue: `03_review/Retailers present but unmapped - 
 6 near-typo, 11 different GST, 34 no GST on the workspace record; presence matched 49 by exact name and
 2 by phone, none by GST). The 143 absent-not-mapped parties are the onboarding queue. Builder
 `eval-datasets/code/build_master_match_queue.py`; tracker §14.
+
+## 13. Product side — the never-mapped unique products (2026-11-05)
+
+His `SKU not mapped` tab: 3,216 rows → 2,913 exact strings → **2,359 unique products** after
+`cmi.norm_text` (case, quote/inch spellings, unit spacing, typo pairs). Joined to the 4-Nov report at
+description grain, product status from `Parsing Status` (MBNF counted as mapped):
+
+| Product status | all rows as delivered | dedup population |
+|---|---:|---:|
+| Fully mapped | 1,903 | 1,945 |
+| Partly mapped | 400 | 350 |
+| Never mapped | 56 | 64 |
+| total | 2,359 | 2,359 |
+
+**56 of the 2,359 (2.4%) never appear on a mapped line anywhere; 400 are partly mapped** — product
+mapping is distributor-specific (`product_mapping.cfaId`), so "partly" is a real state. The dedup
+convention gives 64 / 350 / 1,945: the export carries 10,005 duplicate-invoice lines whose status can
+differ from the non-duplicate twin (11 of the 64 map on a duplicate copy; 32 products appear only on
+duplicate rows). **No product on his list is absent from the report** — all 2,359 appear somewhere.
+
+The never-mapped set is **103 lines / ₹4,15,030** (line amount excl. tax; 13 duplicate-invoice lines
+flagged). Deliverable `03_review/Products never mapped - 56 (report 2026-11-04).xlsx` + `.csv`: one row
+per product (distributor/retailer names exposed, line and invoice counts, value) and one row per line
+(distributor + GST + SAP code, retailer + GST/mobile/pin, invoice number/date, qty, value).
+
+**Other brand — 11 of the 56 (₹76,840, 18.5%).** 4 are platform-flagged `Competitor brand`
+(NEROLAC WALL PUTTY _20K, FINOLEX - 4" RCC COUPLER, 25MM and 32MM CPVC FABT (SUDHAKAR)); 6 read
+other-brand / non-BirlaNu category (ROTO TANK 1000 LITRE 3PLY, QUICKFIX PVC SOL TIN 500ML — Wembley
+brand, HC EWC 31 W S TRAP, BODY OF CONC. WALL MIXER CAST BODY, Diverter Jal, CPVC Bibcock 1"); 1 is
+probable (4 LAYER GRAND TANK — BirlaNu tanks are BIRLA HIL 3Layer). The platform flag misses them
+because `tank` and `solvent` exist in the catalogue and the check tests competitor keywords, not the
+category. The other 45 are the actionable BirlaNu-family / brandless set; the workbook's `Brand read` /
+`Evidence` columns carry the per-product verdict.
+
+**Distributor absence reconciled.** Of his 40 unique distributor parties the presence check reads `No`
+for 23; 7 are noise (6 fully mapped with typo'd GSTs + A.K.Traders partly mapped on the same GST), so
+**16 are genuinely absent** from the master (21 of his 69 rows). Two of the 16 carry no GST. Same 16 as
+tracker §11.
+
+**Report-data caveats** (carried in the workbook's Method sheet): 48 of the 103 lines sit in 19
+same-invoice / same-product / same-qty / same-amount groups, and the date column carries 2018 ×2,
+2016 ×4, 2025 ×1 and 1 blank — parsing noise.
+
+**Repro:** `eval-datasets/code/amit_products_vs_report.py` (product-grain comparison; per-product CSV
+`outputs/turnover-truth/amit-products-vs-report-2026-11-04.csv`) and
+`build_never_mapped_products.py` (workbook). Tracker §15 and §11.

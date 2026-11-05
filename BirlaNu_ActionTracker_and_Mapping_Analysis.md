@@ -30,6 +30,11 @@ Context: BirlaNu (seller "Birlanu Limited") invoice digitisation — action trac
   coverage workbook `Mapping Inconsistency/03_review/Truth - mapping coverage.xlsx` (1-Nov build),
   readout `TRUTH-MAPPING-BASELINE.md`, builder `eval-datasets/code/build_turnover_truth.py` — see §10
   and §14.
+- Product-side fix list (2026-11-05): `Mapping Inconsistency/03_review/Products never mapped - 56
+  (report 2026-11-04).xlsx` + `.csv` — his SKU tab's 56 never-mapped unique products, one row per line
+  with distributor / retailer / invoice and a `Brand read`; builders
+  `eval-datasets/code/amit_products_vs_report.py` (product-grain comparison, per-product CSV) and
+  `build_never_mapped_products.py` — see §15.
 - Turnover DB DDL (2026-11-03): `F:\reports\Dbeaver\turnoverinvoice.sql` (full `public` schema,
   80,946 bytes); analysis `~/AgentWork/vault/zotok/db-schemas/turnover-invoice-ddl-analysis.md`,
   inventory `turnover-invoice-schema.md` — see §13.
