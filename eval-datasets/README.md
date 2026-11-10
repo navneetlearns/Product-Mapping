@@ -345,6 +345,19 @@ still carry at least one Unmapped line. No product on his list is absent from th
 only on duplicate-invoice rows). Builder `code/amit_products_vs_report.py`, per-product CSV
 `outputs/turnover-truth/amit-products-vs-report-2026-11-04.csv`; tracker §15.
 
+## Weekly export 2–8 Nov (2026-11-10) — unique counts and reasons
+
+The 10-Nov export is a one-week window (the sheet's own filter reads 2026-11-02): 4,007 lines / 326
+duplicate-flagged / **3,681 counted** / 279 invoices. Unique: **60 distributors** (56 fully / 1
+partly / 3 none), **168 retailers** (137 / 13 / 18), **2,187 product descriptions** (1,462 / 49 /
+676; 1,511 mapped at least once, on 580 SKUs). Lines: 1,902 Mapped / 629 MBNF / 1,150 Unmapped.
+Entity counts are proven against the 1-Nov calibration triple before being quoted; product grain is
+`code/turnover_product_counts.py`. The 676 never-mapped descriptions are grouped by the check that
+was run against the 18-Oct 2,335-SKU catalogue (`../birlanu-mapping-report/code/unmapped_reasons.py`):
+203 written differently / 278 not in the extract (84 brand-named) / 177 size-or-grade not listed /
+14 no size / 4 exact but unmapped. Client deliverable `../birlanu-mapping-report/` (3-page A4 HTML +
+PDF). Tracker §16.
+
 ## Files
 
 - `code/build_datasets.py` — the builder (single source of truth for the sets)
@@ -448,6 +461,12 @@ only on duplicate-invoice rows). Builder `code/amit_products_vs_report.py`, per-
   product plus one row per unmapped report line with distributor, retailer, invoice number/date and
   value. Writes the workbook + CSV to the F: `03_review/` folder (party identifiers — not committed
   to this public repo); tracker §15.
+- `code/turnover_product_counts.py` — unique-product coverage straight from a Turn Over Report export:
+  one read-only pass, titles deduped with `norm_text`, three-way status per product (fully / partly /
+  never) with MBNF counted as mapped, both populations in the same run; tracker §16.
+- `../birlanu-mapping-report/code/unmapped_reasons.py` — groups the never-mapped descriptions and
+  parties by the check that was actually run (catalogue wording / size / brand / identifier), and
+  `--update-numbers` writes the client report's figures; tracker §16.
 - `SENTINEL-lanes.md` §10 / `../Mapping_Inconsistency_Analysis.md` — the issue-list record and the
   full solution/verification proposal (tracker §9 is the short version)
 

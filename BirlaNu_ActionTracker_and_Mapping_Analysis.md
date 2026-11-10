@@ -744,6 +744,69 @@ workbook's `Brand read` / `Evidence` columns carry the per-product verdict.
 
 ---
 
+## 16. Weekly export 2–8 Nov — coverage, reasons, client report (2026-11-10)
+
+Input: `Turn Over Report.xlsx` on F:, overwritten in place — the sheet's own filter line reads
+`Start Date: 2026-11-02`, file mtime 2026-11-10 09:26. 4,007 lines · 326 duplicate-flagged ·
+**3,681 counted** · 279 invoices. Unlike §10/§14 this is a **one-week window**, so it is a different
+population from the all-history exports and no number here is a trend.
+
+| | Unique | Fully | Partly | Nothing |
+|---|---:|---:|---:|---:|
+| Distributors | 60 | 56 | 1 | 3 |
+| Retailers | 168 | 137 | 13 | 18 |
+| Products | 2,187 | 1,462 | 49 | 676 |
+
+Line status: 1,902 Mapped (51.7%) · 629 MBNF (17.1%) · 1,150 Unmapped (31.2%). 1,511 product
+descriptions mapped at least once, on 580 distinct SKUs.
+
+**Method.** Entity counts from `turnover_entity_counts.py`, proven first with `--calibrate` against
+the 1-Nov truth cache — reproduced `ret=1233,964,17,252` and `dist=332,271,16,45` exactly — then run
+on the new export. Product grain from the new `eval-datasets/code/turnover_product_counts.py` (same
+dedup rule, `norm_text` titles, MBNF counted as mapped). Both are one read-only pass; no workbook was
+built for this refresh.
+
+**Reasons for the 676 never-mapped descriptions / 1,043 lines.** Classified, not asserted —
+`birlanu-mapping-report/code/unmapped_reasons.py`, read against the 2,335-SKU catalogue export of
+18 Oct 2026. Each group is a statement about the check that was run, not a root-cause verdict:
+
+| Group | Desc | Lines | What it establishes |
+|---|---:|---:|---|
+| Catalogue product, title written differently | 203 | 409 | a catalogue name shares the title's product words **and** carries all its sizes |
+| Not in the catalogue extract | 278 | 377 | no catalogue name shares a product word; 84 name another maker's brand |
+| Family, this size or grade not listed | 177 | 225 | word shared, sizes not |
+| Family, no size in the title | 14 | 27 | word shared, title carries no size |
+| Exactly as the catalogue, still unmapped | 4 | 5 | title is a catalogue name word for word — a mapper miss |
+
+The largest group is a **vocabulary gap, not a catalogue gap**: invoice titles write
+`pvc pipe 90mmx4 kg birla` where the catalogue writes `pressure pipe class 4 6m 90 mm` (kg-class vs
+class-N). The 4 exact-match misses are `upvc elbow 90 1/2 in`, `upvc elbow 90 3/4 in`,
+`upvc elbow 90 1 1/4 in` and `swr pipe type a pushfit d/s 3m 110 mm` — 5 lines, a dev-queue row in
+the AP-23/AP-25 family.
+
+Parties never identified — retailers 18: 16 carried a valid GSTIN that did not resolve (162 lines),
+1 was phone-only, 1 had no usable identifier; 13 partly, where the mobile was blank on 89% of the
+missed lines and half also wrote the name differently. Distributors 3: 1 GSTIN not resolved (38
+lines), 1 with no identifier (18), 1 that is BirlaNu's own GSTIN (`09AAACH…Q1ZY`, name field "BirlaNu Limited (formerly HIL
+Limited)") — 2 lines, a branch/stock-transfer invoice, not a trade account; 1 distributor partly.
+
+**Client report.** `birlanu-mapping-report/` — 3-page A4 "Quiet Ledger" document,
+`outputs/BirlaNu-Mapping-Coverage-2026-11-08.html` (self-contained, fonts embedded) plus a PDF twin
+from the QA pass. Counts only: no ₹, no party names, no tooling or internal terms (the QA greps the
+rendered PDF for them). Figures in `code/numbers.json` with identity assertions in the builder; QA
+`code/qa_report.py` — 26 checks: three A4 pages, no overflow or clipped text, fonts loaded, reason
+rows sum to the entity totals, zero internal terms. `PROJECTS.md` and the pack README updated.
+
+**Caveats.** (1) The catalogue extract is 18 Oct — a SKU added since then reads as "not in the
+extract", so a current export would move the reason split, not the coverage counts. (2) Group labels
+are only as strong as that check: "not in the catalogue extract" is not "not a BirlaNu product".
+(3) The 2–8 Nov window must not be compared with the §10/§14 populations.
+
+**Repro:** `turnover_entity_counts.py "<xlsx>" --json` · `turnover_product_counts.py "<xlsx>"` ·
+`unmapped_reasons.py "<xlsx>" "<catalogue csv>" --update-numbers birlanu-mapping-report/code/numbers.json`.
+
+---
+
 ## Related AP refs
 AP-23, AP-25 (SKU-in-description-not-mapped) — directly demonstrated by line 6.
 AP-15 (invoice "not found" vs success caption) — also visible in this trace.

@@ -10,6 +10,12 @@ snapshot and is reproducible from `turnover-truth-2026-11-01.csv.gz`. 4-Nov line
 workbook `Truth - mapping coverage.xlsx` has NOT been rebuilt on the 4-Nov export — the two numbers
 above are a line-level recount plus the retailer entity rule, nothing else. Details: tracker §14.
 
+**Superseded again (2026-11-10):** the same path now holds a 2–8 Nov export — **one week**, 4,007
+lines / 326 duplicate-flagged / 3,681 counted / 279 invoices. A different population from this
+10-month snapshot: distributors 60 = 56 fully / 1 partly / 3 not identified, retailers 168 = 137 / 13
+/ 18, products 2,187 = 1,462 / 49 / 676 (1,511 mapped at least once, on 580 SKUs); lines 1,902
+mapped / 629 MBNF / 1,150 unmapped. Reasons for the unmapped set and the client report: tracker §16.
+
 The platform's own line-level secondary-invoice report, used as the truth for mapping coverage. Definitions are the plan's §0 gates (D1–D8): headline = deduplicated population (Duplicate-Invoice lines dropped), MBNF counted as mapped but always split, value = line amount excluding tax.
 
 Population: 43,438 lines · 3,322 invoices · ₹15.97 Cr (as delivered: 53,187 lines, ₹19.80 Cr).
