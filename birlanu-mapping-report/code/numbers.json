@@ -1,0 +1,112 @@
+{
+  "window": "2–8 November 2026",
+  "prepared": "10 November 2026",
+  "source": "Secondary Invoice Report",
+  "catalogue_extract": "18 October 2026",
+  "catalogue_skus": 2335,
+  "lines_all": 4007,
+  "duplicates": 326,
+  "lines": 3681,
+  "invoices": 279,
+  "distributors": {
+    "total": 60,
+    "full": 56,
+    "partial": 1,
+    "none": 3
+  },
+  "retailers": {
+    "total": 168,
+    "full": 137,
+    "partial": 13,
+    "none": 18
+  },
+  "products": {
+    "total": 2187,
+    "full": 1462,
+    "partial": 49,
+    "never": 676,
+    "never_lines": 1043,
+    "any": 1511,
+    "skus": 580
+  },
+  "lines_split": {
+    "mapped": 1902,
+    "mbnf": 629,
+    "unmapped": 1150
+  },
+  "reasons": {
+    "products": [
+      {
+        "key": "wording",
+        "desc": 203,
+        "lines": 409
+      },
+      {
+        "key": "outside",
+        "desc": 278,
+        "lines": 377,
+        "brand_desc": 84
+      },
+      {
+        "key": "size",
+        "desc": 177,
+        "lines": 225
+      },
+      {
+        "key": "nosize",
+        "desc": 14,
+        "lines": 27
+      },
+      {
+        "key": "exact",
+        "desc": 4,
+        "lines": 5
+      }
+    ],
+    "retailers": {
+      "none": 18,
+      "lines": 175,
+      "partial": 13,
+      "rows": [
+        {
+          "key": "gst",
+          "parties": 16,
+          "lines": 162
+        },
+        {
+          "key": "phone",
+          "parties": 1,
+          "lines": 12
+        },
+        {
+          "key": "no_id",
+          "parties": 1,
+          "lines": 1
+        }
+      ],
+      "missed_no_phone_pct": 89
+    },
+    "distributors": {
+      "none": 3,
+      "lines": 58,
+      "partial": 1,
+      "rows": [
+        {
+          "key": "gst",
+          "parties": 1,
+          "lines": 38
+        },
+        {
+          "key": "no_id",
+          "parties": 1,
+          "lines": 18
+        },
+        {
+          "key": "own",
+          "parties": 1,
+          "lines": 2
+        }
+      ]
+    }
+  }
+}

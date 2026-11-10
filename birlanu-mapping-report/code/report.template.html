@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>BirlaNu · Invoice mapping coverage · @@WINDOW@@</title>
+<style>
+@font-face{font-family:'Inst';src:url(data:font/ttf;base64,@@FONT_SANS@@) format('truetype');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'Inst';src:url(data:font/ttf;base64,@@FONT_SANS_B@@) format('truetype');font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:'Serif';src:url(data:font/ttf;base64,@@FONT_SERIF@@) format('truetype');font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:'Mono';src:url(data:font/ttf;base64,@@FONT_MONO@@) format('truetype');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'Mono';src:url(data:font/ttf;base64,@@FONT_MONO_B@@) format('truetype');font-weight:700;font-style:normal;font-display:block}
+
+@page{size:A4;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#f4f6f5;--ink:#111c16;--muted:#5c6f66;--hair:#dfe6e2;
+  --green:#1f5c3d;--teal:#5e9575;--pine:#14402a;--clay:#b0812c;--line:#cbd6d0;
+}
+html,body{background:#e6ebe8}
+body{font-family:'Inst',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;padding:8mm 0}
+.page{width:210mm;height:297mm;background:var(--paper);position:relative;overflow:hidden;
+  margin:0 auto 8mm;box-shadow:0 2px 18px rgba(17,28,22,.14);display:flex;flex-direction:column}
+.page:last-child{margin-bottom:0}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--pine);color:#fff;padding:16.5mm 18mm 11.5mm;position:relative;flex:none}
+.mast .grain{position:absolute;inset:0;opacity:.06;
+  background-image:radial-gradient(#fff 1px,transparent 1px);background-size:32px 32px}
+.mast>*{position:relative;z-index:2}
+.kicker{display:flex;align-items:center;gap:9px;font-family:'Mono';font-size:6.4pt;
+  letter-spacing:.22em;text-transform:uppercase;color:#c9e3d4}
+.kicker .mk{font-weight:700;color:#fff}
+.kicker .dot{width:3px;height:3px;background:#8fb7a2;border-radius:50%}
+h1{font-weight:400;font-size:36pt;line-height:1.14;letter-spacing:-.02em;margin-top:8.5mm;padding-bottom:2px}
+h1 .serif{font-family:'Serif';font-style:italic;color:#a9d3bd}
+.mast .sub{font-size:11pt;color:#d6e6dd;margin-top:4.6mm;letter-spacing:.01em}
+.mast .sub .sep{color:#8fb7a2;padding:0 3px}
+.mastmeta{display:flex;justify-content:space-between;align-items:baseline;margin-top:9mm;
+  padding-top:3.4mm;border-top:1px solid rgba(255,255,255,.18);
+  font-family:'Mono';font-size:6.6pt;letter-spacing:.13em;text-transform:uppercase;color:#9db8aa}
+.mastmeta i{font-style:normal;color:#76937f;padding:0 2px}
+
+/* ---------- body ---------- */
+.body{flex:1;padding:9.5mm 18mm 0;display:flex;flex-direction:column;gap:0}
+.lbl{font-family:'Mono';font-size:6.4pt;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* at a glance */
+.glance{flex:none}
+.glancegrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:3.4mm;border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--hair)}
+.gcell{padding:4.2mm 6mm 3.4mm 0;border-right:1px solid var(--hair)}
+.gcell:last-child{border-right:none;padding-right:0}
+.gcell:not(:first-child){padding-left:6mm}
+.gnum{font-size:25pt;line-height:1;letter-spacing:-.03em;display:flex;align-items:baseline;gap:3px}
+.gnum b{font-weight:400}
+.gnum span{font-size:12.5pt;color:var(--muted);letter-spacing:0}
+.gcap{font-family:'Mono';font-size:6.1pt;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);margin-top:3.2mm;line-height:1.5}
+.gpct{font-family:'Mono';font-size:6.6pt;color:var(--green);font-weight:700;margin-top:1.2mm;letter-spacing:.06em}
+
+/* section */
+.sec{margin-top:7mm}
+.sechead{display:flex;align-items:baseline;gap:5mm;border-bottom:1px solid var(--hair);padding-bottom:2.4mm}
+.sechead .num{font-family:'Mono';font-size:7pt;font-weight:700;color:var(--green);letter-spacing:.14em}
+.sechead .num::after{content:' /';font-weight:400;color:var(--muted)}
+.sechead .lbl{letter-spacing:.18em}
+.sechead .rule{flex:1}
+h2{font-weight:400;font-size:15.5pt;line-height:1.16;letter-spacing:-.01em;margin-top:3.1mm}
+h2 .serif{font-family:'Serif';font-style:italic;color:var(--green)}
+.lead{font-size:8.9pt;line-height:1.6;color:var(--muted);margin-top:2.2mm;max-width:168mm}
+.lead b{color:var(--ink);font-weight:700}
+
+/* ledger rows */
+.ledger{margin-top:4.2mm}
+.ledger+.ledger{margin-top:4.6mm}
+.lhead{display:flex;justify-content:space-between;align-items:baseline}
+.lname{font-family:'Mono';font-size:6.6pt;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);font-weight:700}
+.ltot{font-family:'Mono';font-size:6.6pt;letter-spacing:.12em;color:var(--muted)}
+.ltot i{font-style:normal;color:var(--line);padding:0 1px}
+.lbar{display:flex;height:6.4mm;margin-top:2.2mm;background:#e2e9e5}
+.lbar i{display:block;height:100%}
+.lbar .f{background:var(--green)}
+.lbar .p{background:var(--clay)}
+.lbar .n{background:#d8e1dc;flex:1}
+.lfoot{display:flex;gap:6.4mm;margin-top:2.2mm;font-family:'Mono';font-size:6.5pt;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lfoot b{color:var(--ink);font-weight:700;font-size:8.4pt;letter-spacing:0;margin-right:1.2px}
+.lfoot .fpct{margin-left:auto;color:var(--green);font-weight:700;font-size:6.7pt;letter-spacing:.04em}
+
+/* stacked line bar */
+.stack{display:flex;height:8mm;margin-top:3.4mm;background:#e2e9e5}
+.stack i{display:block;height:100%}
+.stack .m{background:var(--green)}
+.stack .b{background:var(--teal)}
+.stack .u{background:var(--clay)}
+.legend{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.4mm;
+  border-top:1px solid var(--hair)}
+.leg{padding:2.6mm 5mm 0 0}
+.leg+.leg{border-left:1px solid var(--hair);padding-left:5mm}
+.leg .ln{font-family:'Mono';font-size:6.1pt;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.leg .lv{font-size:12.5pt;margin-top:1.2mm;letter-spacing:-.01em}
+.leg .lp{font-family:'Mono';font-size:6.2pt;color:var(--muted);margin-top:.8mm;letter-spacing:.06em}
+
+/* ---------- page 2 ---------- */
+.body.p2{padding-top:16mm}
+.counts{width:100%;border-collapse:collapse;margin-top:4.6mm;border-top:2px solid var(--ink)}
+.counts th{font-family:'Mono';font-size:6.1pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-align:right;padding:2.6mm 0 2.4mm;border-bottom:1px solid var(--hair);font-weight:400}
+.counts th:first-child{text-align:left}
+.counts td{padding:3.2mm 0;border-bottom:1px solid var(--hair);font-size:11pt;text-align:right;letter-spacing:-.01em}
+.counts td:first-child{text-align:left;font-family:'Mono';font-size:6.6pt;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink);font-weight:700}
+.counts tr:last-child td{border-bottom:1px solid var(--ink)}
+.counts .dim{color:var(--muted)}
+.counts .hi{color:var(--green)}
+.counts tfoot td{padding-top:2.8mm;border-bottom:none;font-family:'Mono';font-size:6.1pt;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;line-height:1.7}
+
+.notes{margin-top:5mm}
+.note{display:grid;grid-template-columns:9mm 1fr;gap:4mm;padding:3.2mm 0;border-bottom:1px solid var(--hair)}
+.note:last-child{border-bottom:none}
+.note .idx{font-family:'Mono';font-size:6.4pt;font-weight:700;color:var(--green);letter-spacing:.1em}
+.note .txt{font-size:8.6pt;line-height:1.62;color:var(--muted);max-width:160mm}
+.note .txt b{color:var(--ink);font-weight:700}
+.note .tag{font-family:'Mono';font-size:6.1pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);font-weight:700;display:block;margin-bottom:1.1mm}
+
+/* ---------- page 3: reasons ---------- */
+.body.p3{padding-top:13mm}
+.rblock{margin-top:5.6mm}
+.rtable{width:100%;border-collapse:collapse;margin-top:3mm;border-top:2px solid var(--ink)}
+.rtable th{font-family:'Mono';font-size:6.1pt;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-align:right;padding:2.5mm 0 2.3mm;border-bottom:1px solid var(--hair);font-weight:400}
+.rtable th:first-child{text-align:left}
+.rtable td{padding:2.45mm 0;border-bottom:1px solid var(--hair);text-align:right;
+  font-size:10.4pt;letter-spacing:-.01em;vertical-align:top}
+.rtable td:first-child{text-align:left;width:116mm;padding-right:7mm}
+.rtable td.s{font-family:'Mono';font-size:6.3pt;color:var(--muted);letter-spacing:.06em;padding-top:4.2mm}
+.rtable tr:last-child td{border-bottom:1px solid var(--ink)}
+.rtable .rname{font-size:9.1pt;line-height:1.3}
+.rtable .rnote{font-size:7.4pt;line-height:1.5;color:var(--muted);margin-top:1.1mm;letter-spacing:0}
+.rtable .rnote i{font-style:normal;color:var(--ink)}
+.rtable .rnote code{font-family:'Mono';font-size:6.5pt;color:var(--ink);letter-spacing:0}
+.rnote-line{font-size:7.6pt;line-height:1.55;color:var(--muted);margin-top:2.6mm;max-width:168mm}
+.rmethod{margin-top:4.4mm;padding-top:2.8mm;border-top:1px solid var(--hair);
+  font-size:7.4pt;line-height:1.6;color:var(--muted);max-width:168mm}
+.rmethod b{color:var(--ink);font-weight:700}
+
+/* footer */
+.foot{position:absolute;left:18mm;right:18mm;bottom:10mm;display:flex;align-items:center;gap:4mm;
+  font-family:'Mono';font-size:6.1pt;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.foot .rule{flex:1;height:1px;background:var(--hair)}
+.foot .pg b{color:var(--green);font-weight:700}
+
+@media print{
+  html,body{background:#fff;padding:0}
+  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+  .page:last-child{page-break-after:auto;break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+  <div class="mast">
+    <div class="grain"></div>
+    <div class="kicker"><span class="mk">ZoTok</span><span class="dot"></span><span>Secondary invoice report</span></div>
+    <h1>Invoice mapping <span class="serif">coverage</span></h1>
+    <div class="sub">BirlaNu <span class="sep">·</span> @@WINDOW@@</div>
+    <div class="mastmeta"><span>Prepared @@DATE@@</span><span>@@LINES_ALL@@ lines <i>·</i> @@INVOICES@@ invoices</span></div>
+  </div>
+
+  <div class="body">
+    <div class="glance">
+      <div class="lbl">At a glance</div>
+      <div class="glancegrid">
+        <div class="gcell">
+          <div class="gnum"><b>@@DIST_FULL@@</b><span>/@@DIST_TOTAL@@</span></div>
+          <div class="gcap">distributors fully identified</div>
+          <div class="gpct">@@DIST_FULL_PCT@@%</div>
+        </div>
+        <div class="gcell">
+          <div class="gnum"><b>@@RET_FULL@@</b><span>/@@RET_TOTAL@@</span></div>
+          <div class="gcap">retailers fully identified</div>
+          <div class="gpct">@@RET_FULL_PCT@@%</div>
+        </div>
+        <div class="gcell">
+          <div class="gnum"><b>@@PROD_ANY@@</b><span>/@@PROD_TOTAL@@</span></div>
+          <div class="gcap">products mapped at least once</div>
+          <div class="gpct">@@PROD_ANY_PCT@@%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sechead"><span class="num">01</span><span class="lbl">Parties</span><span class="rule"></span></div>
+      <h2>Distributors and <span class="serif">retailers</span></h2>
+      <p class="lead">Every line names a distributor and a retailer. Identification is decided once per invoice and
+      stamped on each of its lines, so within the week an account can be <b>fully</b>, <b>partly</b> or
+      <b>not at all</b> identified.</p>
+
+      <div class="ledger">
+        <div class="lhead"><span class="lname">Distributors</span><span class="ltot">@@DIST_TOTAL@@ unique</span></div>
+        <div class="lbar"><i class="f" style="width:@@DIST_W_FULL@@%"></i><i class="p" style="width:@@DIST_W_PART@@%"></i><i class="n"></i></div>
+        <div class="lfoot"><span><b>@@DIST_FULL@@</b> fully</span><span><b>@@DIST_PART@@</b> partly</span><span><b>@@DIST_NONE@@</b> nothing</span><span class="fpct">@@DIST_NONE_PCT@@% unidentified</span></div>
+      </div>
+
+      <div class="ledger">
+        <div class="lhead"><span class="lname">Retailers</span><span class="ltot">@@RET_TOTAL@@ unique</span></div>
+        <div class="lbar"><i class="f" style="width:@@RET_W_FULL@@%"></i><i class="p" style="width:@@RET_W_PART@@%"></i><i class="n"></i></div>
+        <div class="lfoot"><span><b>@@RET_FULL@@</b> fully</span><span><b>@@RET_PART@@</b> partly</span><span><b>@@RET_NONE@@</b> nothing</span><span class="fpct">@@RET_NONE_PCT@@% unidentified</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sechead"><span class="num">02</span><span class="lbl">Products</span><span class="rule"></span></div>
+      <h2>What the invoice titles <span class="serif">matched</span></h2>
+      <p class="lead">The @@LINES@@ counted lines carry @@PROD_TOTAL@@ unique product descriptions. <b>@@PROD_ANY@@</b>
+      of them (@@PROD_ANY_PCT@@%) matched a catalogue SKU at least once, landing on @@SKUS@@ distinct SKUs;
+      @@PROD_PART@@ matched on some lines and not others, and @@PROD_NEVER@@ never matched.</p>
+      <div class="stack"><i class="m" style="width:@@LINE_W_MAP@@%"></i><i class="b" style="width:@@LINE_W_MBNF@@%"></i><i class="u" style="width:@@LINE_W_UNMAP@@%"></i></div>
+      <div class="legend">
+        <div class="leg"><div class="ln">Mapped</div><div class="lv">@@LINE_MAP@@</div><div class="lp">@@LINE_MAP_PCT@@% of lines</div></div>
+        <div class="leg"><div class="ln">Branding not found</div><div class="lv">@@LINE_MBNF@@</div><div class="lp">@@LINE_MBNF_PCT@@% of lines</div></div>
+        <div class="leg"><div class="ln">Unmapped</div><div class="lv">@@LINE_UNMAP@@</div><div class="lp">@@LINE_UNMAP_PCT@@% of lines</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>ZoTok <i>·</i> BirlaNu <i>·</i> invoice mapping</span><span class="rule"></span><span class="pg"><b>1</b> / 3</span></div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page">
+  <div class="body p2">
+    <div class="sec" style="margin-top:0">
+      <div class="sechead"><span class="num">03</span><span class="lbl">The week in counts</span><span class="rule"></span></div>
+      <table class="counts">
+        <thead><tr><th></th><th>Unique</th><th>Fully mapped</th><th>Partly</th><th>Not mapped</th></tr></thead>
+        <tbody>
+          <tr><td>Distributors</td><td>@@DIST_TOTAL@@</td><td class="hi">@@DIST_FULL@@</td><td class="dim">@@DIST_PART@@</td><td class="dim">@@DIST_NONE@@</td></tr>
+          <tr><td>Retailers</td><td>@@RET_TOTAL@@</td><td class="hi">@@RET_FULL@@</td><td class="dim">@@RET_PART@@</td><td class="dim">@@RET_NONE@@</td></tr>
+          <tr><td>Products</td><td>@@PROD_TOTAL@@</td><td class="hi">@@PROD_FULL@@</td><td class="dim">@@PROD_PART@@</td><td class="dim">@@PROD_NEVER@@</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="5">@@LINES_ALL@@ lines in the export <i>·</i> @@DUPS@@ duplicate-flagged, set aside <i>·</i> @@LINES@@ counted <i>·</i> @@INVOICES@@ invoices</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="sec">
+      <div class="sechead"><span class="num">04</span><span class="lbl">Reading the numbers</span><span class="rule"></span></div>
+      <h2>How the counts are <span class="serif">built</span></h2>
+      <div class="notes">
+        <div class="note"><span class="idx">01</span><div class="txt"><span class="tag">A product is a description</span>
+          The unit is the product title printed on the invoice, normalised for case, quote marks, unit spacing and
+          known spelling variants. One catalogue SKU can account for several descriptions — the counts below are
+          descriptions, not catalogue items.</div></div>
+        <div class="note"><span class="idx">02</span><div class="txt"><span class="tag">Fully, partly, never</span>
+          A description is <b>fully mapped</b> when every line it appears on carries a SKU, <b>partly</b> when only
+          some do, and <b>never</b> when none do. Mapping runs per distributor catalogue, so the same description can
+          map for one distributor and not another in the same week.</div></div>
+        <div class="note"><span class="idx">03</span><div class="txt"><span class="tag">Branding not found counts as mapped</span>
+          Both <b>Mapped</b> and <b>Mapped — branding not found</b> carry a SKU. The second means the product was
+          identified but the invoice title did not carry the brand token; it is not a failure.</div></div>
+        <div class="note"><span class="idx">04</span><div class="txt"><span class="tag">Duplicates are set aside</span>
+          @@DUPS@@ of @@LINES_ALL@@ lines are flagged as duplicate invoices and are excluded from every count on
+          these pages. Products are counted only on the @@LINES@@ remaining lines.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sechead"><span class="num">05</span><span class="lbl">Scope</span><span class="rule"></span></div>
+      <div class="notes">
+        <div class="note"><span class="idx">A</span><div class="txt"><span class="tag">One week</span>
+          These are the counts for @@WINDOW@@ only. They describe this window, not a year-to-date population, and
+          are not comparable with counts covering a longer period.</div></div>
+        <div class="note"><span class="idx">B</span><div class="txt"><span class="tag">The export we were given</span>
+          It lists SKUs in the 9000, 9600, 9800 and 9900 series only. An item that exists solely under another
+          series cannot appear as matched here; absence from this report is not evidence that a product is missing
+          from the catalogue.</div></div>
+        <div class="note"><span class="idx">C</span><div class="txt"><span class="tag">Mapping only</span>
+          This report covers identification and product mapping counts. Line value is outside its scope.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>ZoTok <i>·</i> BirlaNu <i>·</i> invoice mapping</span><span class="rule"></span><span class="pg"><b>2</b> / 3</span></div>
+</div>
+
+<div class="page">
+  <div class="body p3">
+    <div class="sechead"><span class="num">06</span><span class="lbl">Reasons</span><span class="rule"></span></div>
+    <h2>Why these <span class="serif">did not</span> map</h2>
+    <p class="lead">Reading each line back against the catalogue on its own words and sizes sorts the
+      @@PROD_NEVER@@ descriptions into five kinds. The largest group is not a gap in the catalogue: it is the
+      same product, written the way the counter writes it.</p>
+
+    <div class="rblock">
+      <div class="lhead"><span class="lname">Products</span><span class="ltot">@@PROD_NEVER@@ descriptions <i>·</i> @@PROD_NEVER_LINES@@ lines</span></div>
+      <table class="rtable">
+        <thead><tr><th>Reason</th><th>Descriptions</th><th>Lines</th><th>Share</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="rname">Catalogue product, title written differently</div>
+              <div class="rnote">The item is in the catalogue; the invoice phrases it its own way —
+                <code>pvc pipe 90mmx4 kg birla</code> against <code>pressure pipe class 4 6m 90 mm</code>.</div></td>
+            <td>@@R_WORDING_DESC@@</td><td>@@R_WORDING_LINES@@</td><td class="s">@@R_WORDING_PCT@@%</td>
+          </tr>
+          <tr>
+            <td><div class="rname">Not in the catalogue extract</div>
+              <div class="rnote">@@R_OUTSIDE_BRAND@@ of them name another manufacturer&#8217;s brand &#8212; Watertec, Tata,
+                Astral; the rest are hardware, sanitaryware and tools the counter also sells.</div></td>
+            <td>@@R_OUTSIDE_DESC@@</td><td>@@R_OUTSIDE_LINES@@</td><td class="s">@@R_OUTSIDE_PCT@@%</td>
+          </tr>
+          <tr>
+            <td><div class="rname">Catalogue family, this size or grade not listed</div>
+              <div class="rnote">The family is carried; the size, grade or pack on the invoice is not.</div></td>
+            <td>@@R_SIZE_DESC@@</td><td>@@R_SIZE_LINES@@</td><td class="s">@@R_SIZE_PCT@@%</td>
+          </tr>
+          <tr>
+            <td><div class="rname">Catalogue family, no size in the title</div>
+              <div class="rnote">The family is named, but the title carries no size to resolve it.</div></td>
+            <td>@@R_NOSIZE_DESC@@</td><td>@@R_NOSIZE_LINES@@</td><td class="s">@@R_NOSIZE_PCT@@%</td>
+          </tr>
+          <tr>
+            <td><div class="rname">Exactly as the catalogue, still unmapped</div>
+              <div class="rnote">Word for word a catalogue name, and the line still came back unmapped.</div></td>
+            <td>@@R_EXACT_DESC@@</td><td>@@R_EXACT_LINES@@</td><td class="s">@@R_EXACT_PCT@@%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rblock">
+      <div class="lhead"><span class="lname">Retailers</span><span class="ltot">@@R_RET_NONE@@ of @@RET_TOTAL@@ never identified <i>·</i> @@R_RET_PARTIAL@@ partly <i>·</i> @@R_RET_LINES@@ lines</span></div>
+      <table class="rtable">
+        <thead><tr><th>Reason</th><th>Parties</th><th>Lines</th></tr></thead>
+        <tbody>
+          <tr><td><div class="rname">GSTIN carried, no matching account</div></td>
+            <td>@@R_RET_GST_P@@</td><td>@@R_RET_GST_L@@</td></tr>
+          <tr><td><div class="rname">No GSTIN, phone only</div></td>
+            <td>@@R_RET_PHONE_P@@</td><td>@@R_RET_PHONE_L@@</td></tr>
+          <tr><td><div class="rname">No usable identifier on the invoice</div></td>
+            <td>@@R_RET_NO_ID_P@@</td><td>@@R_RET_NO_ID_L@@</td></tr>
+        </tbody>
+      </table>
+      <p class="rnote-line">On the partly identified accounts the mobile number was blank on
+        @@R_RET_NOPHONE_PCT@@% of the missed lines, and half of them also wrote the name differently.</p>
+    </div>
+
+    <div class="rblock">
+      <div class="lhead"><span class="lname">Distributors</span><span class="ltot">@@R_DST_NONE@@ of @@DIST_TOTAL@@ never identified <i>·</i> @@R_DST_PARTIAL@@ partly <i>·</i> @@R_DST_LINES@@ lines</span></div>
+      <table class="rtable">
+        <thead><tr><th>Reason</th><th>Parties</th><th>Lines</th></tr></thead>
+        <tbody>
+          <tr><td><div class="rname">GSTIN carried, no matching account</div></td>
+            <td>@@R_DST_GST_P@@</td><td>@@R_DST_GST_L@@</td></tr>
+          <tr><td><div class="rname">No usable identifier on the invoice</div></td>
+            <td>@@R_DST_NO_ID_P@@</td><td>@@R_DST_NO_ID_L@@</td></tr>
+          <tr><td><div class="rname">Company&#8217;s own GSTIN, not a trade account</div></td>
+            <td>@@R_DST_OWN_P@@</td><td>@@R_DST_OWN_L@@</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="rmethod"><b>How each reason is read.</b> Every description and party is taken from the line
+      itself and matched against the @@CAT_SKUS@@-SKU catalogue extract of @@CAT_DATE@@: a shared product word
+      and the title&#8217;s own size decide the group, and a brand the catalogue does not carry reads as
+      another manufacturer&#8217;s product. Nothing is inferred about a party beyond the identifier the
+      invoice carried.</p>
+  </div>
+
+  <div class="foot"><span>ZoTok <i>·</i> BirlaNu <i>·</i> invoice mapping</span><span class="rule"></span><span class="pg"><b>3</b> / 3</span></div>
+</div>
+
+</body>
+</html>
